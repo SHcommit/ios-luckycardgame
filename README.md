@@ -1,11 +1,45 @@
 # 📌 iOS-LuckyCardGame
 
-## 이번주 해야 할 계획!!!
+## 23.07.04. (화) (4H 40m)
+### [Title]: 게임보드 만들기
+- [ ] [Concept] OOP 학습 (1H)
+- [ ] [Feature] header area(노란색) with OOP (15m)
+- [ ] [Feature] content area, with OOP (30m)
+- [ ] [Feature] footer area(짙은 회색) 영역 구현 with OOP (1H)
+- [ ] [Feature] 앱 기본 설정(Info.plist) 개념 학습 + 기능 적용 (10m)
+- [ ] [Docs] 구현한 기능들 기능 문서화(30m)
+- [ ] 성장노트 작성 및 그룹 회고 (15m)
 
-| 화 \| time | 수 \| time | 목 \| time | 금 \| time |
-| :---: | :---: | :---: | :---: |
-| **\[Concept\]**<br>Segment Control \| 오후 (1H) | **\[Concept\]**<br>OOP(ObjectOrientedProgramming), <br>Class vs Struct<br>\| 오전 2H | **\[Concept\]**<br>ARC개념 (클래스 arc)<br>\| 오전 2H | **\[Concept\]**<br>Unit test, XCTest공부<br>\| 오전 2H |
-| **\[Concept\]**<br>CollectionView (horizontal, vertical)<br>\| 오후 5m | **\[Concept\]**<br>화면에서 발생가능한 데이터 구조화<br>\| 오후 2H | **\[Concept\]**<br>lldb(low-level-debugger) 코드 실행 중 변수 값, thread state등<br>\| 오후 1H | **\[Concept\]**<br>TDD 기반 공부<br>\| 오후 1H |
-| **\[Concept\]**<br>스택, 힙 프로세스 메모리 개념<br>\| 오후 1H | **\[Concept\]**<br>메모리 분석<br>\| 오후 2H | **\[Concept\]**<br>Debug Memory graph<br>\| 오후 30m | **\[Feature\]**<br>게임 로직 구현<br>\| 오후 2H |
-| **\[Feature\]**<br>게임 보드 만들기<br>\| 오후 2H | **\[Feature\]**<br>럭키 카드 클래스 생성<br>\| 오후 2H | **\[Feature\]**<br>카드 나눠주기<br>\| 오후 3H | -   |
-| 성장노트 작성, 그룹 회고<br>\| 오후 15m | 성장노트 작성, 그룹 회고<br>\| 오후 15m | 성장노트 작성, 그룹 회고<br>\| 오후 15m | 성장노트 작성, 그룹 회고<br>\| 오후 15m |
+## 23.07.05. (수) (5H 15m)
+### [Title]: 럭키카드 클래스 구현하기
+- [ ] [Concept] Swift 타입 별 메모리 분석 (1H)
+- [ ] [Concept] 스택, 힙 프로세스 메모리 개념 학습 (1H)
+- [ ] [Concept] Swift 데이터 추상화 학습 (30m)
+- [ ] [Feature] 카드 데이터 추상화 후 재사용 가능한 클래스 구현 (1H)
+- [ ] [Feature] 카드 객체 랜덤 생성 후 출력하는 Provider 구현 (30m)
+- [ ] [Feature] 그림의 카드를 추상화 할 수 있는 data type 선언 (30m)
+- [ ] [Docs] 구현한 기능들 기능 문서화 (30m)
+- [ ] 성장노트 작성 및 그룹 회고 (15m)
+
+## 23.07.06. (목)
+
+### [Title]: 카드 나눠주기 (8H 15m)
+- [ ] [Concept] Struct와 클래스 개념 학습 (1H) 
+- [ ] [Concept] ARC 개념 복습 (1H)
+- [ ] [Concept] 메모리 분석 도구 학습 (1H)
+- [ ] [Feature] Player 기능 구현 (1H)
+- [ ] [Feature] 게임 진행하는 Manager기능 구현(1H 30m)
+- [ ] [Feature] 기존에 구현했던 노란색 영역 segment control로 대체(30m)
+- [ ] [Feature] 각 컨텐츠에 카드 뿌려주고 화면에서 카드가 겹침 등을 관리하는 Manager 구현(1H 30m)
+- [ ] [Docs] 구현한 기능들 기능 문서화 (30m)
+- [ ] 성장노트 작성 및 그룹 회고 (15m)
+
+## 23.07.07. (금) 
+### [Title]: 게임 로직 구현하기 (6H 45m)
+- [ ] [Feature] XCTest, Unit test 개념 학습 (1H)
+- [ ] [Feature] 이전에 구현했던 세부 기능들을 사용해 게임 로직 구현 (2H)
+- [ ] [Feature] 참가자와 화면 전체를 포함하는 LuckyGame 구현 (1H)
+- [ ] [Feature] 요구사항에 맞는 정렬 기능들 구현 (1H)
+- [ ] [Feature] 특정 참가자와 해당 참가자 카드 중에 가장 낮은 숫자 또는 가장 높은 숫자, 바닥 카드 중 아무거나를 선택해서 3개가 같은지 판단 할 수 있는 기능 구현 (1H)
+- [ ] [Docs] 구현한 기능들 기능 문서화 (30m)
+- [ ] 성장노트 작성 및 그룹 회고 (15m)
