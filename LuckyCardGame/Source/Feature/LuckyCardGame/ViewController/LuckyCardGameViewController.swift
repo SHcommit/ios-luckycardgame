@@ -8,13 +8,13 @@
 import UIKit
 
 class LuckyCardGameViewController: UIViewController {
-
+  // MARK: - Properties
+  private let luckyCardGameView = LuckyCardGameView()
+  
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
-    view.backgroundColor = .systemRed
+    view.backgroundColor = .white
+    luckyCardGameView.layout(from: view)
   }
-
-
 }
-
