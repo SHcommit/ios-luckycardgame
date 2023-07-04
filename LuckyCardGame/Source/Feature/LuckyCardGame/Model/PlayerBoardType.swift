@@ -5,6 +5,7 @@
 //  Created by 양승현 on 2023/07/04.
 //
 
+/// Player의 카드 보드 타입입니다. 
 import Foundation
 
 enum PlayerBoardType {
