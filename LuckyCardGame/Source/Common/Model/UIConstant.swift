@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// LuckyCardGame 관련 뷰에서 사용되는 공통적인 Constant 입니다.
 struct UIConstant {
   static let shared = UIConstant.init()
   private init() {}

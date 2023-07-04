@@ -7,6 +7,21 @@
 
 import Foundation
 
+/// UI spacing 정할 때 CGFloat를 쉽게 선언하기 위한 구조체
+/// # Example #
+/// ```
+/// extension FavoriteListTableViewCell {
+///   enum Constant {
+///     enum ImageView {
+///       static let spacing = UIConstantSpacing(top: 0, leading: 20, trailing: -10, bottom: -10)
+///       static let size: CGSize = ....
+///     }
+///     enum Title {
+///       static let spacing = UIConstantSpacing(leading: 20)
+///     }
+///   }
+/// }
+/// ```
 struct UISpacing {
   let top: CGFloat
   let leading: CGFloat

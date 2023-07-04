@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// UIView를 커스텀할 때 중복되는 코드 제거를 위한 BaseView 입니다.
 class BaseView: UIView, LayoutSupport {
   // MARK: - Properties
   
