@@ -18,7 +18,7 @@
 		153841822A547BE0004C41D1 /* UISpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538417C2A547BE0004C41D1 /* UISpacing.swift */; };
 		153841832A547BE0004C41D1 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538417E2A547BE0004C41D1 /* BaseView.swift */; };
 		153841992A547C2E004C41D1 /* LuckyCardGameFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153841862A547C2D004C41D1 /* LuckyCardGameFooter.swift */; };
-		1538419A2A547C2E004C41D1 /* PlayerGameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153841882A547C2D004C41D1 /* PlayerGameBoardView.swift */; };
+		1538419A2A547C2E004C41D1 /* PlayerCardBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153841882A547C2D004C41D1 /* PlayerCardBoardView.swift */; };
 		1538419B2A547C2E004C41D1 /* LuckyCardGameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153841892A547C2D004C41D1 /* LuckyCardGameContentView.swift */; };
 		1538419C2A547C2E004C41D1 /* LuckyCardGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538418A2A547C2D004C41D1 /* LuckyCardGameView.swift */; };
 		1538419D2A547C2E004C41D1 /* LuckyCardGameHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538418C2A547C2D004C41D1 /* LuckyCardGameHeader.swift */; };
@@ -45,7 +45,7 @@
 		1538417C2A547BE0004C41D1 /* UISpacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISpacing.swift; sourceTree = "<group>"; };
 		1538417E2A547BE0004C41D1 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		153841862A547C2D004C41D1 /* LuckyCardGameFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuckyCardGameFooter.swift; sourceTree = "<group>"; };
-		153841882A547C2D004C41D1 /* PlayerGameBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerGameBoardView.swift; sourceTree = "<group>"; };
+		153841882A547C2D004C41D1 /* PlayerCardBoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerCardBoardView.swift; sourceTree = "<group>"; };
 		153841892A547C2D004C41D1 /* LuckyCardGameContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuckyCardGameContentView.swift; sourceTree = "<group>"; };
 		1538418A2A547C2D004C41D1 /* LuckyCardGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuckyCardGameView.swift; sourceTree = "<group>"; };
 		1538418C2A547C2D004C41D1 /* LuckyCardGameHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuckyCardGameHeader.swift; sourceTree = "<group>"; };
@@ -173,9 +173,9 @@
 		153841842A547C2D004C41D1 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1538418A2A547C2D004C41D1 /* LuckyCardGameView.swift */,
 				153841852A547C2D004C41D1 /* Footer */,
 				153841872A547C2D004C41D1 /* Content */,
-				1538418A2A547C2D004C41D1 /* LuckyCardGameView.swift */,
 				1538418B2A547C2D004C41D1 /* Header */,
 			);
 			path = View;
@@ -192,7 +192,7 @@
 		153841872A547C2D004C41D1 /* Content */ = {
 			isa = PBXGroup;
 			children = (
-				153841882A547C2D004C41D1 /* PlayerGameBoardView.swift */,
+				153841882A547C2D004C41D1 /* PlayerCardBoardView.swift */,
 				153841892A547C2D004C41D1 /* LuckyCardGameContentView.swift */,
 			);
 			path = Content;
@@ -325,7 +325,7 @@
 				153841632A547905004C41D1 /* LuckyCardGameViewController.swift in Sources */,
 				153841822A547BE0004C41D1 /* UISpacing.swift in Sources */,
 				1538419B2A547C2E004C41D1 /* LuckyCardGameContentView.swift in Sources */,
-				1538419A2A547C2E004C41D1 /* PlayerGameBoardView.swift in Sources */,
+				1538419A2A547C2E004C41D1 /* PlayerCardBoardView.swift in Sources */,
 				1538419F2A547C2E004C41D1 /* LuckyCardGameContentView+Constant.swift in Sources */,
 				153841802A547BE0004C41D1 /* LayoutSupport.swift in Sources */,
 				153841A02A547C2E004C41D1 /* LuckyCardGamePlayerBoardView+Constant.swift in Sources */,
