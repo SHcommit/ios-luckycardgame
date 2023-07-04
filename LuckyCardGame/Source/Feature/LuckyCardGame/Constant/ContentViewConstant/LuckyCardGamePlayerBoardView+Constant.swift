@@ -11,6 +11,7 @@ extension PlayerGameBoardView {
   struct Constant {
     static let bgColor: UIColor = .lightGray.withAlphaComponent(0.5)
     static let radius: CGFloat = UIConstant.shared.radius
+    
     enum AlphabetLabel {
       static let textColor: UIColor = .gray.withAlphaComponent(0.5)
       static let textSize: CGFloat = 40

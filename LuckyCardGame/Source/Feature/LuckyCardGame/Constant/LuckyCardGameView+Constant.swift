@@ -13,6 +13,7 @@ extension LuckyCardGameView {
       let topSpacing = UIConstant.shared.statusBarHeight + UIConstant.shared.spacing.top
       return UISpacing(top: topSpacing)
     }()
+    
     enum Header {
       static let spacing: UISpacing = .init(
         leading: UIConstant.shared.spacing.leading,
@@ -28,25 +29,6 @@ extension LuckyCardGameView {
         leading: UIConstant.shared.spacing.leading,
         top: UIConstant.shared.spacing.top,
         trailing: UIConstant.shared.spacing.trailing)
-      static let height: CGFloat = {
-        let headerPlusTopSpacing = Header.size.height + Header.spacing.top
-        let footerPlusSafeAreaLayoutGuideBottomHeight = Footer.height + UIConstant
-          .shared
-          .safeAreaLayoutGuideButtomHeight
-        let contentViewTopAndBottomSpacing = UIConstant
-          .shared.spacing.top + UIConstant
-          .shared.spacing.bottom
-        
-        let screenHeight = UIConstant.shared.screenSize.height
-        return screenHeight - (
-          headerPlusTopSpacing +
-          footerPlusSafeAreaLayoutGuideBottomHeight +
-          contentViewTopAndBottomSpacing)
-      }()
-      
-      static let width: CGFloat = {
-        return UIConstant.shared.screenSize.width - spacing.leading*2
-      }()
     }
     
     enum Footer {
@@ -54,7 +36,10 @@ extension LuckyCardGameView {
         leading: UIConstant.shared.spacing.leading,
         top: UIConstant.shared.spacing.top,
         trailing: UIConstant.shared.spacing.trailing)
-      // 이미지 보고 비율로 결정. 노란색: 짙은회색 비율이 캡쳐화면속에선 70: 240이었는데 실제로 노란색이 44.
+      
+      /// 화면의 이미지를 보고 비율로 결정했습니다.
+      /// 제가 캡쳐한 화면에서의 노란색, 짙은 회색 화면 비율이 70: 240이었습니다.
+      ///  실제 노란색 height가 44이므로 짙은 회색은 151로 지정했습니다.
       static let height: CGFloat = 151
     }
   }

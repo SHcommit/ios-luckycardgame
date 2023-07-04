@@ -11,6 +11,5 @@ extension LuckyCardGameHeader {
   struct Constant {
     static let radius: CGFloat = UIConstant.shared.radius
     static let bgColor: UIColor = .yellow.withAlphaComponent(0.85)
-    
   }
 }
