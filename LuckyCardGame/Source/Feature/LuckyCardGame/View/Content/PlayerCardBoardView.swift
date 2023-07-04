@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PlayerGameBoardView: BaseView {
+final class PlayerCardBoardView: BaseView {
   // MARK: - Properties
   let alphabetLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +50,7 @@ final class PlayerGameBoardView: BaseView {
 }
 
 // MARK: - Helper
-extension PlayerGameBoardView {
+extension PlayerCardBoardView {
   func configure(with boardType: PlayerBoardType) {
     self.boardType = boardType
     alphabetLabel.text = boardType.toString
@@ -58,7 +58,7 @@ extension PlayerGameBoardView {
 }
 
 // MARK: - Private helper
-private extension PlayerGameBoardView {
+private extension PlayerCardBoardView {
   func setAlphabetLabel(with text: String) {
     _=alphabetLabel.set {
       let curAttrStr = $0.attributedText ?? NSAttributedString(string: "")
@@ -71,7 +71,7 @@ private extension PlayerGameBoardView {
 }
 
 // MARK: - Layout support helper
-extension PlayerGameBoardView {
+extension PlayerCardBoardView {
   var alphabetLabelConstraints: [NSLayoutConstraint] {
     [alphabetLabel.leadingAnchor.constraint(
       equalTo: leadingAnchor,
