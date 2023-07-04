@@ -2,13 +2,13 @@
 
 ## 23.07.04. (화) (4H 40m)
 ### [Title]: 게임보드 만들기
-- [ ] [Concept] OOP 학습 (1H)
-- [ ] [Feature] header area(노란색) with OOP (15m)
-- [ ] [Feature] content area, with OOP (30m)
-- [ ] [Feature] footer area(짙은 회색) 영역 구현 with OOP (1H)
-- [ ] [Feature] 앱 기본 설정(Info.plist) 개념 학습 + 기능 적용 (10m)
-- [ ] [Docs] 구현한 기능들 기능 문서화(30m)
-- [ ] 성장노트 작성 및 그룹 회고 (15m)
+- [x] [Concept] OOP 학습 (1H)
+- [x] [Feature] header area(노란색) with OOP (15m)
+- [x] [Feature] content area, with OOP (30m)
+- [x] [Feature] footer area(짙은 회색) 영역 구현 with OOP (1H)
+- [x] [Feature] 앱 기본 설정(Info.plist) 개념 학습 + 기능 적용 (10m)
+- [x] [Docs] 구현한 기능들 기능 문서화(30m)
+- [x] 성장노트 작성 및 그룹 회고 (15m)
 
 ## 23.07.05. (수) (5H 15m)
 ### [Title]: 럭키카드 클래스 구현하기
