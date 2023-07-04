@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension PlayerGameBoardView {
+extension PlayerCardBoardView {
   struct Constant {
     static let bgColor: UIColor = .lightGray.withAlphaComponent(0.5)
     static let radius: CGFloat = UIConstant.shared.radius
