@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// LuckyCard는 세가지 중 한가지만 갖으면 되기 때문에 enum으로 정의했습니다.
 enum LuckyCardShapeType {
   case dog
   case cat
