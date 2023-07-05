@@ -16,7 +16,17 @@ final class LuckyCardDeckImpl: Deck {
   typealias DeckError = LuckyCardDeckError
   typealias Card = LuckyCard
   
-  var cards: [Card] = []
+  var cards: [Card]
+  
+  private init(cards: [Card] = []) {
+    self.cards = cards
+  }
+  
+  convenience init() {
+    let manager = LuckyCardManager.shared
+    self.init(cards: manager.setInitialLuckyCardDeck().shuffled())
+    manager.printDeckState(self)
+  }
 }
 
 // MARK: - Helpers
@@ -46,6 +56,6 @@ extension LuckyCardDeckImpl {
 // MARK: - DeckConvertible
 extension LuckyCardDeckImpl: DeckConvertible {
   var description: String {
-    cards.map { $0.description }.joined(separator: ", ")
+    cards.map { $0.description(with: LuckyCardManager.shared.shapeStorage) }.joined(separator: ", ")
   }
 }
