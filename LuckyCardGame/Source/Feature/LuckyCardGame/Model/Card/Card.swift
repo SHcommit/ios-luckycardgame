@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+class Card<Shape: Hashable> {
+  // MARK: - Properties
+  var number: Int
+  var maximumCardType: Int
+  var shape: Shape
+  
+  // MARK: - Lifecycle
+  init(number: Int, maximumCardType: Int, shape: Shape) {
+    self.number = number
+    self.maximumCardType = maximumCardType
+    self.shape = shape
+  }
+}
