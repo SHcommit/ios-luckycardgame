@@ -12,19 +12,19 @@
 class Card<Shape: Hashable> {
   // MARK: - Properties
   var number: Int
-  var maximumCardType: Int
   var shape: Shape
   
   // MARK: - Lifecycle
-  init(number: Int, maximumCardType: Int, shape: Shape) {
+  init(number: Int, shape: Shape) {
     self.number = number
-    self.maximumCardType = maximumCardType
     self.shape = shape
   }
 }
 
 extension Card: CardConvertible {
-  var description: String {
-    "\(String(format: "%02d", number))\(shape)"
+  // 추후 에러 처리TODO: - CardShapeStorage error 처리
+  func description(with cardShapeStorage: CardShapeStorageImpl<Shape, String>) -> String {
+    let shape = cardShapeStorage.shapes[shape] ?? ""
+    return "\(shape.toUnicodeTypeString())\(String(format: "%02d", number))"
   }
 }
