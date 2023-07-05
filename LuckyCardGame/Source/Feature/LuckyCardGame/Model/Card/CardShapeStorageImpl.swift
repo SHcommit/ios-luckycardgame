@@ -11,12 +11,14 @@ import Foundation
 /// 추후 게임 상황에 따라 게임 실행 중 추가되거나 삭제될 수 있다고 판단해 유연하게 다룰 수 있도록 추상화했습니다.
 /// ShapeStorage는 **key에 따른 값을 반환** 하거나 shape 추가, 삭제 등의 shapes에 관련된 기능이 있습니다.
 final class CardShapeStorageImpl<Shape: Hashable, Value: Any> :CardShapeStorage {
-  
+  // MARK: - Properties
   private(set) var shapes: [Shape:Value] = [:]
+  
   var count: Int {
     shapes.count
   }
   
+  // MARK: - Lifecycle
   init(shapes: [Shape : Value]) {
     self.shapes = shapes
   }

@@ -5,10 +5,7 @@
 //  Created by 양승현 on 2023/07/05.
 //
 
-import Foundation
-
 final class LuckyCard: Card<LuckyCardShapeType> {
-  
   // MARK: - Lifecycle
   override init(
     number: Int,

@@ -21,6 +21,7 @@ class Card<Shape: Hashable> {
   }
 }
 
+// MARK: - CardConvertible
 extension Card: CardConvertible {
   // 추후 에러 처리TODO: - CardShapeStorage error 처리
   func description(with cardShapeStorage: CardShapeStorageImpl<Shape, String>) -> String {

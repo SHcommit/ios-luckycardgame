@@ -13,11 +13,14 @@ import Foundation
 /// 하지만 혹시 struct안에 class타입의 참조 변수 인스턴스를 갖고 있을 경우 위와 같은 사항이 발생된다는 것을 알게 되면서 class 를 선택하게 된 것 같습니다.
 /// 다만 조심 해야 할 부분은 참조 타입이기 때문에 strong reference cycle와 메모리 누수를 방지하기 위해 때로는 weak를 사용해야 한다는 점입니다.
 final class LuckyCardDeckImpl: Deck {
+  // MARK: - Constant
   typealias DeckError = LuckyCardDeckError
   typealias Card = LuckyCard
   
+  // MARK: - Properties
   var cards: [Card]
   
+  // MARK: - Lifecycle
   private init(cards: [Card] = []) {
     self.cards = cards
   }
