@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+final class LuckyCard: Card<LuckyCardShapeType> {
+  // MARK: - Constant
+  struct Constant {
+    static let MaximumCardNumType = 12
+  }
+  
+  // MARK: - Lifecycle
+  override init(
+    number: Int,
+    maximumCardType: Int = Constant.MaximumCardNumType,
+    shape: LuckyCardShapeType) {
+    super.init(number: number, maximumCardType: maximumCardType, shape: shape)
+  }
+}
