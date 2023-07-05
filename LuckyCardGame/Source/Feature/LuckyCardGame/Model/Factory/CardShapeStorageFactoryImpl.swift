@@ -8,7 +8,7 @@
 import Foundation
 
 final class CardShapeStorageFactoryImpl<Shape: Hashable, Value: Any>: CardShapeStorageFactory {
-  func make(shapes: [Shape : Value]) -> CardShapeStorage<Shape, Value> {
-    return CardShapeStorage(shapes: shapes)
+  func make(shapes: [Shape : Value]) -> CardShapeStorageImpl<Shape, Value> {
+    return CardShapeStorageImpl(shapes: shapes)
   }
 }
