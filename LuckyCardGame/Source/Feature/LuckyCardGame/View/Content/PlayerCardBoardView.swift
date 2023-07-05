@@ -53,7 +53,7 @@ final class PlayerCardBoardView: BaseView {
 extension PlayerCardBoardView {
   func configure(with boardType: PlayerBoardType) {
     self.boardType = boardType
-    alphabetLabel.text = boardType.toString
+    alphabetLabel.text = boardType.description
   }
 }
 

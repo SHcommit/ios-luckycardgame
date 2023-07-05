@@ -10,8 +10,11 @@ import Foundation
 
 enum PlayerBoardType {
   case A, B, C, D, E
-  
-  var toString: String{
+}
+
+// MARK: - CustomStringConvertible
+extension PlayerBoardType: CustomStringConvertible {
+  var description: String {
     switch self {
     case .A: return "A"
     case .B: return "B"
