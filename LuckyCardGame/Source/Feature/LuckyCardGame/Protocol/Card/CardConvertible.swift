@@ -6,5 +6,8 @@
 //
 
 protocol CardConvertible {
-  var description: String { get }
+  associatedtype Shape: Hashable
+  associatedtype Value
+  
+  func description(with cardShapeStorage: CardShapeStorageImpl<Shape, Value>) -> String
 }
