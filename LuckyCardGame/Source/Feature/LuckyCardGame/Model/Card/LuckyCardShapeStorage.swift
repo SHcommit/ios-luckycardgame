@@ -7,36 +7,29 @@
 
 import Foundation
 
-protocol CardShapeStorageProtocol  {
-  associatedtype Shape
-  func append(_ shapeType: CardShapeType, _ shape: Shape)
-  func delete(_ shapeType: CardShapeType)
-  func update(
-    with shapeType: CardShapeType,
-    _ shape: Shape)
+class CardShapeStorage<Shape: Hashable, Value: Any> :CardShapeStorageProtocol {
   
-}
-
-final class CardShapeStorage<Shape> {
-  private(set) var shapes: [CardShapeType:Shape] = [:]
+  private(set) var shapes: [Shape:Value] = [:]
   var count: Int {
     shapes.count
+  }
+  
+  init(shapes: [Shape : Value]) {
+    self.shapes = shapes
   }
 }
 
 // MARK: - CardShapeStorageProtocol
-extension CardShapeStorage: CardShapeStorageProtocol {
-  typealias Shape = Shape
-  
-  func append(_ shapeType: CardShapeType, _ shape: Shape) {
-    shapes.updateValue(shape, forKey: shapeType)
+extension CardShapeStorage {
+  func delete(_ shape: Shape) {
+    shapes.removeValue(forKey: shape)
   }
   
-  func delete(_ shapeType: CardShapeType) {
-    shapes.removeValue(forKey: shapeType)
+  func append(_ shape: Shape, _ value: Value) {
+    shapes.updateValue(value, forKey: shape)
   }
   
-  func update(with shapeType: CardShapeType, _ shape: Shape) {
-    shapes.updateValue(shape, forKey: shapeType)
+  func update(with shape: Shape, _ value: Value) {
+    append(shape, value)
   }
 }
