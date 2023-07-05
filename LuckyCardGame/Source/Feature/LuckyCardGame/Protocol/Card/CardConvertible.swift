@@ -6,5 +6,5 @@
 //
 
 protocol CardConvertible {
-  func description() -> String
+  var description: String { get }
 }

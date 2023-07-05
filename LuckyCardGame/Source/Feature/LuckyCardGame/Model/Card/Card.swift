@@ -24,7 +24,7 @@ class Card<Shape: Hashable> {
 }
 
 extension Card: CardConvertible {
-  func description() -> String {
-    return "\(String(format: "%02d", number)) \(shape)"
+  var description: String {
+    "\(String(format: "%02d", number))\(shape)"
   }
 }
