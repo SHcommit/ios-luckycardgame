@@ -16,6 +16,6 @@ class LuckyCardGameViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     luckyCardGameView.layout(from: view)
-    let luckyCardDeck = LuckyCardDeckImpl()
+    _=LuckyCardDeckImpl()
   }
 }
