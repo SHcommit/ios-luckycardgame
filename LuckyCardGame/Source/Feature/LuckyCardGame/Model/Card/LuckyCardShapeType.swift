@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CardShapeType {
+enum LuckyCardShapeType {
   case dog
   case cat
   case cow
