@@ -57,7 +57,7 @@ extension LuckyCardDeckImpl {
 }
 
 // MARK: - DeckConvertible
-extension LuckyCardDeckImpl: DeckConvertible {
+extension LuckyCardDeckImpl: CustomStringConvertible {
   var description: String {
     cards.map { $0.description(with: LuckyCardManager.shared.shapeStorage) }.joined(separator: ", ")
   }
