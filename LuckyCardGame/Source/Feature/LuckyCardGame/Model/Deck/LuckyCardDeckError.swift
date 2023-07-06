@@ -8,7 +8,6 @@
 import Foundation
 
 enum LuckyCardDeckError: Error {
-  case EmptyDeck
   case OutOfRange
 }
 
@@ -16,7 +15,6 @@ enum LuckyCardDeckError: Error {
 extension LuckyCardDeckError: LocalizedError {
   var errorDescription: String? {
     switch self {
-    case .EmptyDeck: return "Deck is Empty"
     case .OutOfRange: return "The index is outside the valid range of the deck"
     }
   }
