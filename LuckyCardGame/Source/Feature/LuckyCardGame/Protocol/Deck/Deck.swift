@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Deck: DeckConvertible, AnyObject {
+protocol Deck: CustomStringConvertible, AnyObject {
   associatedtype Card
   associatedtype DeckError: Error
   
