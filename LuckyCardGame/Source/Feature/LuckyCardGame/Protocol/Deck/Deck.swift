@@ -7,15 +7,13 @@
 
 import Foundation
 
-protocol Deck: CustomStringConvertible, AnyObject {
+protocol Deck: AnyObject {
   associatedtype Card
   associatedtype DeckError: Error
   
   var cards: [Card] { get set }
 
   func insert( _ card: Card, at index: Int) throws
-  func removeLast() throws -> Card
-  func remove(at index: Int) throws -> Card
 }
 
 // MARK: - Helpers
@@ -29,5 +27,16 @@ extension Deck {
   
   func append(_ card: Card) {
     cards.append(card)
+  }
+  
+  func removeLast() -> Card? {
+    return cards.popLast()
+  }
+  
+  func remove(at index: Int) -> Card? {
+    guard (0..<cards.count).contains(index) else {
+      return nil
+    }
+    return cards.remove(at: index)
   }
 }
