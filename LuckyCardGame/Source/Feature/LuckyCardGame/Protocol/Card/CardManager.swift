@@ -7,7 +7,6 @@
 
 protocol CardManager {
   associatedtype Card
-  associatedtype CardShapeStorage
   
   func makeInitialDeck() -> [Card]
 }
