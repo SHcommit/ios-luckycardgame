@@ -32,7 +32,11 @@ import UIKit
 ///
 final class LuckyCardGameContentView: BaseView {
   // MARK: - Constant
-  private let maximumHeadCount = 5
+  struct Constant {
+    static let spacing: UISpacing = .init(
+      top: UIConstant.shared.spacing.top)
+    static let maximumHeadCount = 5
+  }
   
   // MARK: - Properties
   private var playerHeadCount: PlayerHeadCountType!
@@ -63,7 +67,7 @@ extension LuckyCardGameContentView {
 private extension LuckyCardGameContentView {
   func initBoardViews() {
     if playerCardBoardViews == nil {
-      let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(maximumHeadCount)
+      let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(Constant.maximumHeadCount)
       let defaultY: CGFloat = bounds.origin.y
       var y: CGFloat = defaultY
       setBordeViewsFrame(y: &y, height: playerGameBoardHeight)
@@ -76,7 +80,7 @@ private extension LuckyCardGameContentView {
   }
   
   func setBordeViewsFrame(y: inout CGFloat, height: CGFloat) {
-    playerCardBoardViews = (0..<maximumHeadCount).map { i in
+    playerCardBoardViews = (0..<Constant.maximumHeadCount).map { i in
       if i > 0 { y += Constant.spacing.top + height }
       return PlayerCardBoardView(
         frame: .init(

@@ -8,6 +8,21 @@
 import UIKit
 
 final class PlayerCardBoardView: BaseView {
+  // MARK: - Constant
+  struct Constant {
+    static let bgColor: UIColor = BaseViewPalette
+      .playerCardBoardView
+      .bgColor
+    
+    static let radius: CGFloat = BaseView.Constant.radius
+    
+    enum AlphabetLabel {
+      static let textColor: UIColor = .gray.withAlphaComponent(0.5)
+      static let textSize: CGFloat = 40
+      static let spacing: UISpacing = .init(leading: 15)
+    }
+  }
+  
   // MARK: - Properties
   let alphabetLabel = UILabel().set {
     $0.translatesAutoresizingMaskIntoConstraints = false

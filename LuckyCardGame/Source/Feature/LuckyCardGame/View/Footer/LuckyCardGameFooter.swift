@@ -8,6 +8,12 @@
 import UIKit
 
 final class LuckyCardGameFooter: BaseView {
+  // MARK: - Footer
+  struct Constant {
+    static let radius: CGFloat = BaseView.Constant.radius
+    static let bgColor: UIColor = BaseViewPalette.footer.bgColor
+  }
+  
   // MARK: - Properties
   
   // MARK: - Lifecycle

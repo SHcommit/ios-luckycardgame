@@ -8,6 +8,12 @@
 import UIKit
 
 final class LuckyCardGameHeader: BaseView {
+  // MARK: - Constant
+  struct Constant {
+    static let radius: CGFloat = BaseView.Constant.radius
+    static let bgColor: UIColor = BaseViewPalette.header.bgColor
+  }
+  
   // MARK: - Lifecycle
   override init(frame: CGRect) {
     super.init(frame: frame)
