@@ -10,11 +10,6 @@ import UIKit
 final class PlayerCardBoardView: BaseView {
   // MARK: - Constant
   struct Constant {
-    static let bgColor: UIColor = BaseViewPalette
-      .playerCardBoardView
-      .bgColor
-    
-    static let radius: CGFloat = BaseView.Constant.radius
     
     enum AlphabetLabel {
       static let textColor: UIColor = .gray.withAlphaComponent(0.5)
@@ -41,26 +36,16 @@ final class PlayerCardBoardView: BaseView {
   var boardType: PlayerBoardType!
   
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    translatesAutoresizingMaskIntoConstraints = true
-    layer.cornerRadius = Constant.radius
-    backgroundColor = Constant.bgColor
+  init(frame: CGRect) {
+    super.init(with: .playerCardBoardView, frame)
+    setupUI()
   }
+  
   
   required init?(coder: NSCoder) { fatalError() }
   
   convenience init() {
     self.init(frame: .zero)
-  }
-  
-  // MARK: - LayoutSupport
-  override func addSubviews() {
-    _=[alphabetLabel].map { addSubview($0) }
-  }
-  
-  override func setConstraints() {
-    _=[alphabetLabelConstraints].map { NSLayoutConstraint.activate($0) }
   }
 }
 
@@ -82,6 +67,17 @@ private extension PlayerCardBoardView {
       $0.attributedText = attrStr
 
     }
+  }
+}
+
+// MARK: - LayoutSupport
+extension PlayerCardBoardView: LayoutSupport {
+  func addSubviews() {
+    _=[alphabetLabel].map { addSubview($0) }
+  }
+  
+  func setConstraints() {
+    _=[alphabetLabelConstraints].map { NSLayoutConstraint.activate($0) }
   }
 }
 

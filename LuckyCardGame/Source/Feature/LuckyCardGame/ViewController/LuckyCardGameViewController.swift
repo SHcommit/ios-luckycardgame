@@ -9,14 +9,15 @@ import UIKit
 
 class LuckyCardGameViewController: UIViewController {
   // MARK: - Properties
-  private let luckyCardGameView = LuckyCardGameView()
+  private var luckyCardGameView: LuckyCardGameView!
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    self.luckyCardGameView = LuckyCardGameView(frame: .zero)
     luckyCardGameView.layout(from: view)
     _=LuckyCardDeckImpl()
-    
+    print(view.bounds)
   }
 }

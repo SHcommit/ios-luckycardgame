@@ -8,6 +8,9 @@
 import UIKit
 
 enum BaseViewPalette {
+  case LuckyCardGameView
+  case NotUsing
+  
   case header
   
   //ContentView -> playerCardBoardViews -> cardViews
@@ -22,6 +25,8 @@ enum BaseViewPalette {
 extension BaseViewPalette {
   var bgColor: UIColor {
     switch self {
+    case .LuckyCardGameView:
+      return .white
     case .header:
       return .yellow.withAlphaComponent(0.85)
     case .contentView:
@@ -32,6 +37,8 @@ extension BaseViewPalette {
       return .white
     case .footer:
       return .gray
+    case .NotUsing:
+      return .white
     }
   }
 }

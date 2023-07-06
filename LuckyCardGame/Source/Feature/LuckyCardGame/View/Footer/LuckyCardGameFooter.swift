@@ -8,17 +8,15 @@
 import UIKit
 
 final class LuckyCardGameFooter: BaseView {
-  // MARK: - Footer
+  // MARK: - Constant
   struct Constant {
     static let radius: CGFloat = BaseView.Constant.radius
     static let bgColor: UIColor = BaseViewPalette.footer.bgColor
   }
   
-  // MARK: - Properties
-  
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(frame: CGRect) {
+    super.init(with: .footer, frame)
     backgroundColor = Constant.bgColor
     layer.cornerRadius = Constant.radius
   }

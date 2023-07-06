@@ -48,8 +48,8 @@ final class LuckyCardGameContentView: BaseView {
   }
   
   // MARK: - Lifecycle
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  init(frame: CGRect) {
+    super.init(with: .contentView, frame)
   }
   
   required init?(coder: NSCoder) { fatalError() }

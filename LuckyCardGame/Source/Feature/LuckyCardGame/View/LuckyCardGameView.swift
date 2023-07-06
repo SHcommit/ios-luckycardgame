@@ -58,19 +58,16 @@ final class LuckyCardGameView: BaseView {
   }
 
   // MARK: - Properties
-  private let header = LuckyCardGameHeader()
+  private let header = LuckyCardGameHeader(frame: .zero)
   
-  private let contentView = LuckyCardGameContentView()
+  private let contentView = LuckyCardGameContentView(frame: .zero)
   
-  private let footer = LuckyCardGameFooter()
+  private let footer = LuckyCardGameFooter(frame: .zero)
   
   // MARK: - Lifecycle
-  private override init(frame: CGRect) {
-    super.init(frame: frame)
-  }
-  
-  convenience init() {
-    self.init(frame: .zero)
+  init(frame: CGRect) {
+    super.init(with: .LuckyCardGameView, frame)
+    setupUI()
   }
   
   override func layoutSubviews() {
@@ -81,20 +78,6 @@ final class LuckyCardGameView: BaseView {
   }
   
   required init?(coder: NSCoder) { fatalError() }
-  
-  // MARK: - LayoutSupport
-  override func addSubviews() {
-    _=[header, contentView, footer].map { addSubview($0) }
-  }
-  
-  override func setConstraints() {
-    _=[headerConstraints,
-       contentViewConstraints,
-       footerConstraints
-    ].map {
-      NSLayoutConstraint.activate($0)
-    }
-  }
 }
 
 // MARK: - Helper
@@ -109,6 +92,22 @@ extension LuckyCardGameView {
       trailingAnchor.constraint(equalTo: superView.trailingAnchor),
       bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor)]
     NSLayoutConstraint.activate(selfConstraints)
+  }
+}
+
+// MARK: - LayoutSupport
+extension LuckyCardGameView: LayoutSupport {
+  func addSubviews() {
+    _=[header, contentView, footer].map { addSubview($0) }
+  }
+  
+  func setConstraints() {
+    _=[headerConstraints,
+       contentViewConstraints,
+       footerConstraints
+    ].map {
+      NSLayoutConstraint.activate($0)
+    }
   }
 }
 
