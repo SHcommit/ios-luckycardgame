@@ -10,7 +10,7 @@ import UIKit
 extension PlayerCardBoardView {
   struct Constant {
     static let bgColor: UIColor = .lightGray.withAlphaComponent(0.5)
-    static let radius: CGFloat = UIConstant.shared.radius
+    static let radius: CGFloat = BaseView.Constant.radius
     
     enum AlphabetLabel {
       static let textColor: UIColor = .gray.withAlphaComponent(0.5)

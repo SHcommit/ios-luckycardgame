@@ -17,5 +17,6 @@ class LuckyCardGameViewController: UIViewController {
     view.backgroundColor = .white
     luckyCardGameView.layout(from: view)
     _=LuckyCardDeckImpl()
+    
   }
 }

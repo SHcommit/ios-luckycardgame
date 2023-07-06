@@ -9,6 +9,12 @@ import UIKit
 
 /// UIView를 커스텀할 때 중복되는 코드 제거를 위한 BaseView 입니다.
 class BaseView: UIView, LayoutSupport {
+  // MARK: - Constnat
+  struct Constant {
+    static let radius: CGFloat = 10
+//    static let spacing: UISpacing = .init(
+//      leading: 20, top: 10, trailing: 20, bottom: 10)
+  }
   // MARK: - Properties
   
   // MARK: - Lifecycle

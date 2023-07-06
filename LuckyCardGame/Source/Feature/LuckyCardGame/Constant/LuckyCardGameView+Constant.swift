@@ -5,12 +5,12 @@
 //  Created by 양승현 on 2023/07/04.
 //
 
-import Foundation
+import UIKit
 
 extension LuckyCardGameView {
   struct Constant {
     static let spacing: UISpacing = {
-      let topSpacing = UIConstant.shared.statusBarHeight + UIConstant.shared.spacing.top
+      let topSpacing = UIView.Constnat.statusBarHeight  + UIConstant.shared.spacing.top
       return UISpacing(top: topSpacing)
     }()
     

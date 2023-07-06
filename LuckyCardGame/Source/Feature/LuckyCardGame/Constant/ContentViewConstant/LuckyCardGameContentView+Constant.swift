@@ -8,6 +8,7 @@
 
 extension LuckyCardGameContentView {
   struct Constant {
-    static let spacing: UISpacing = .init(top: UIConstant.shared.spacing.top)
+    static let spacing: UISpacing = .init(
+      top: UIConstant.shared.spacing.top)
   }
 }

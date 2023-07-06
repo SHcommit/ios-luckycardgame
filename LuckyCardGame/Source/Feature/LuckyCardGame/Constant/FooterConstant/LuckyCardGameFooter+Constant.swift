@@ -9,7 +9,7 @@ import UIKit
 
 extension LuckyCardGameFooter {
   struct Constant {
-    static let radius: CGFloat = UIConstant.shared.radius
+    static let radius: CGFloat = BaseView.Constant.radius
     static let bgColor: UIColor = .gray
   }
 }
