@@ -60,6 +60,7 @@ final class LuckyCardGameView: BaseView {
   // MARK: - Lifecycle
   init(frame: CGRect) {
     super.init(with: .LuckyCardGameView, frame)
+    isUserInteractionEnabled = true
     setupUI()
   }
   

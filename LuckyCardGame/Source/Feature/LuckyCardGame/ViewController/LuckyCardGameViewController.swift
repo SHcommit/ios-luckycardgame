@@ -14,6 +14,7 @@ class LuckyCardGameViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureUI()
     let manager = LuckyCardManager()
     _=LuckyCardDeckImpl(luckyCardManager: manager)
   }
