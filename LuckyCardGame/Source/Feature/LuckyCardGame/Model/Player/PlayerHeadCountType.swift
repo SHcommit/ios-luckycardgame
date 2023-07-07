@@ -7,6 +7,12 @@
 
 /// Player는 3명에서 5명까지 가능합니다.
 enum PlayerHeadCountType: CaseIterable {
+  // MARK: - Constant
+  struct Constant {
+    static let minHeadCount: Int = 3
+  }
+  
+  // MARK: - Case
   case three
   case four
   case five
@@ -17,6 +23,10 @@ enum PlayerHeadCountType: CaseIterable {
     case .four: return 4
     case .five: return 5
     }
+  }
+  
+  var toCaseIterableIdx: Int {
+    self.toInt - PlayerHeadCountType.Constant.minHeadCount
   }
   
   static var count: Int {
