@@ -70,7 +70,10 @@ final class LuckyCardGameView: BaseView {
 extension LuckyCardGameView: LayoutSupport {
   func createSubviews() {
     header = .init(frame: headerFrame)
-    contentView = .init(frame: contentViewFrame)
+    // 상위객체로부터 값 받아오기TODO: - 플레이어 수에 따라 사용자의 보드 판이 나옵니다.
+    contentView = .init(
+      frame: contentViewFrame,
+      playerHeadCount: .five)
     footer = .init(frame: footerFrame)
   }
   
