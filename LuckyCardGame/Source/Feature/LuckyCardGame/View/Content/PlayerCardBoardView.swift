@@ -10,28 +10,19 @@ import UIKit
 final class PlayerCardBoardView: BaseView {
   // MARK: - Constant
   struct Constant {
-    
     enum AlphabetLabel {
       static let textColor: UIColor = .gray.withAlphaComponent(0.5)
       static let textSize: CGFloat = 40
+      static let labelSize: CGSize = UILabel().set {
+        PlayerCardBoardView.setAlphabetLabel($0)
+        $0.sizeToFit()
+      }.bounds.size
       static let spacing: UISpacing = .init(leading: 15)
     }
   }
   
   // MARK: - Properties
-  let alphabetLabel = UILabel().set {
-    $0.translatesAutoresizingMaskIntoConstraints = false
-    let textSize = Constant.AlphabetLabel.textSize
-    let font = UIFont.systemFont(ofSize: textSize)
-    let attrStr = NSMutableAttributedString(string: ":)")
-    let italicPlusBoldFontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])!
-    let italicPlusBoldFont = UIFont(descriptor: italicPlusBoldFontDescriptor, size: textSize)
-    let attributes: [NSAttributedString.Key: Any] = [
-      .font: italicPlusBoldFont,
-      .foregroundColor: Constant.AlphabetLabel.textColor]
-    attrStr.addAttributes(attributes, range: NSRange(location: 0, length: ":)".count))
-    $0.attributedText = attrStr
-  }
+  private var alphabetLabel: UILabel!
   
   var boardType: PlayerBoardType!
   
@@ -41,19 +32,31 @@ final class PlayerCardBoardView: BaseView {
     setupUI()
   }
   
-  
   required init?(coder: NSCoder) { fatalError() }
-  
-  convenience init() {
-    self.init(frame: .zero)
-  }
 }
 
 // MARK: - Helper
 extension PlayerCardBoardView {
   func configure(with boardType: PlayerBoardType) {
     self.boardType = boardType
-    alphabetLabel.text = boardType.description
+    setAlphabetLabel(with: boardType.description)
+  }
+}
+
+// MARK: - Private helper
+fileprivate extension PlayerCardBoardView {
+  static func setAlphabetLabel(_ label: UILabel) {
+    let textSize = Constant.AlphabetLabel.textSize
+    let font = UIFont.systemFont(ofSize: textSize)
+    let attrStr = NSMutableAttributedString(string: "A")
+    let italicPlusBoldFontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])!
+    let italicPlusBoldFont = UIFont(descriptor: italicPlusBoldFontDescriptor, size: textSize)
+    let attributes: [NSAttributedString.Key: Any] = [
+      .font: italicPlusBoldFont,
+      .foregroundColor: Constant.AlphabetLabel.textColor]
+    attrStr.addAttributes(attributes, range: NSRange(location: 0, length: "A".count))
+    label.attributedText = attrStr
+    label.sizeToFit()
   }
 }
 
@@ -61,33 +64,35 @@ extension PlayerCardBoardView {
 private extension PlayerCardBoardView {
   func setAlphabetLabel(with text: String) {
     _=alphabetLabel.set {
-      let curAttrStr = $0.attributedText ?? NSAttributedString(string: "")
+      let curAttrStr = $0.attributedText ?? NSAttributedString(string: "A")
       let attrStr = NSMutableAttributedString(attributedString: curAttrStr)
       attrStr.mutableString.setString(text)
       $0.attributedText = attrStr
-
     }
   }
 }
 
 // MARK: - LayoutSupport
 extension PlayerCardBoardView: LayoutSupport {
-  func addSubviews() {
-    _=[alphabetLabel].map { addSubview($0) }
+  func createSubviews() {
+    alphabetLabel = .init(frame: alphabetLabelFrame).set {
+      PlayerCardBoardView.setAlphabetLabel($0)
+    }
   }
   
-  func setConstraints() {
-    _=[alphabetLabelConstraints].map { NSLayoutConstraint.activate($0) }
+  func addSubviews() {
+    addSubview(alphabetLabel)
   }
 }
 
-// MARK: - Layout support helper
 extension PlayerCardBoardView {
-  var alphabetLabelConstraints: [NSLayoutConstraint] {
-    [alphabetLabel.leadingAnchor.constraint(
-      equalTo: leadingAnchor,
-      constant: Constant.AlphabetLabel.spacing.leading),
-     alphabetLabel.centerYAnchor.constraint(
-      equalTo: centerYAnchor)]
+  var alphabetLabelFrame: CGRect {
+    let y = (bounds.height - Constant.AlphabetLabel.labelSize.height)/2.0
+    return .init(
+      x: Constant.AlphabetLabel.spacing.leading,
+      y: y,
+      width: Constant.AlphabetLabel.labelSize.width,
+      height: Constant.AlphabetLabel.labelSize.height)
   }
 }
+

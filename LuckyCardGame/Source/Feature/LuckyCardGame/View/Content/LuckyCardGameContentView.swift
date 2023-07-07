@@ -23,10 +23,7 @@ import UIKit
 /// Examples:
 /// ```
 /// let contentView = LuckyCardGameContentView()
-/// if !contentView.isInitBoardViews {
-///   contentView.configure(with: .five)
-///   // .three or .four or .five 중 택
-/// }
+/// contentView.configure(with: .five)
 ///
 /// ```
 ///
@@ -48,38 +45,44 @@ final class LuckyCardGameContentView: BaseView {
   }
   
   // MARK: - Lifecycle
-  init(frame: CGRect) {
+  private init(frame: CGRect) {
     super.init(with: .contentView, frame)
+  }
+  
+  convenience init(
+    frame: CGRect,
+    playerHeadCount: PlayerHeadCountType
+  ) {
+    self.init(frame: frame)
+    self.playerHeadCount = playerHeadCount
+    setupUI()
   }
   
   required init?(coder: NSCoder) { fatalError() }
 }
 
-// MARK: - Helper
-extension LuckyCardGameContentView {
-  func configure(with playerHeadCount: PlayerHeadCountType) {
-    self.playerHeadCount = playerHeadCount
-    initBoardViews()
+// MARK: - Private helper
+extension LuckyCardGameContentView: LayoutSupport {
+  func createSubviews() {
+    let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(Constant.maximumHeadCount)
+    let defaultY: CGFloat = bounds.origin.y
+    var y: CGFloat = defaultY
+    initBoardViews(y: &y, height: playerGameBoardHeight)
+    
+  }
+  
+  func addSubviews() {
+    addBorderViewsFromSuperView()
+    let playerBoardTypes :[PlayerBoardType] = [.A, .B, .C, .D, .E]
+    for (idx, type) in playerBoardTypes.enumerated() {
+      playerCardBoardViews[idx].configure(with: type)
+    }
   }
 }
 
-// MARK: - Private helper
-private extension LuckyCardGameContentView {
-  func initBoardViews() {
-    if playerCardBoardViews == nil {
-      let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(Constant.maximumHeadCount)
-      let defaultY: CGFloat = bounds.origin.y
-      var y: CGFloat = defaultY
-      setBordeViewsFrame(y: &y, height: playerGameBoardHeight)
-      addBorderViewsFromSuperView()
-      let playerBoardTypes :[PlayerBoardType] = [.A, .B, .C, .D, .E]
-      for (idx, type) in playerBoardTypes.enumerated() {
-        playerCardBoardViews[idx].configure(with: type)
-      }
-    }
-  }
-  
-  func setBordeViewsFrame(y: inout CGFloat, height: CGFloat) {
+// MARK: - LayoutSupport helpers
+extension LuckyCardGameContentView {
+  func initBoardViews(y: inout CGFloat, height: CGFloat) {
     playerCardBoardViews = (0..<Constant.maximumHeadCount).map { i in
       if i > 0 { y += Constant.spacing.top + height }
       return PlayerCardBoardView(
