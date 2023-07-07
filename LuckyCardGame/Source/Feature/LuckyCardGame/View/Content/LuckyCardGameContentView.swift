@@ -21,7 +21,7 @@ final class LuckyCardGameContentView: BaseView {
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
   var isInitBoardViews: Bool {
-    playerCardBoardViews == nil ? false : true
+    playerCardBoardViews == nil
   }
   
   // MARK: - Lifecycle
