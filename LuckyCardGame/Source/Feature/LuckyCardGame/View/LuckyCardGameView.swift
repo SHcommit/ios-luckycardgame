@@ -21,34 +21,27 @@ import UIKit
 /// 2. 위의 경우를 이용해 결국 subviews의 frame이 지정됬을 때 재사용하는 뷰가 많은 contentView의 subviews를 frame으로 position과 size를 지정했습니다.
 final class LuckyCardGameView: BaseView {
   // MARK: - Constant
-  struct Constant {
-    static let spacing: UISpacing = {
-      let topSpacing = UIView.Constnat.statusBarHeight  + UIConstant.shared.spacing.top
-      return UISpacing(top: topSpacing)
+  struct Constant {    
+    static let intrinsicWidth = {
+      let spacing = UIConstant.shared.spacing
+      let screenWidth = UIConstant.shared.screenSize.width
+      return screenWidth - (spacing.leading+spacing.trailing)
     }()
     
     enum Header {
-      static let spacing: UISpacing = .init(
-        leading: UIConstant.shared.spacing.leading,
-        trailing: UIConstant.shared.spacing.trailing)
       static let size: CGSize = {
-        let screenWidth = UIConstant.shared.screenSize.width
-        return CGSize(width: screenWidth - Header.spacing.leading*2, height: 44)
+        return CGSize(width: intrinsicWidth, height: 44)
       }()
     }
     
     enum ContentView {
       static let spacing: UISpacing = .init(
-        leading: UIConstant.shared.spacing.leading,
-        top: UIConstant.shared.spacing.top,
-        trailing: UIConstant.shared.spacing.trailing)
+        top: UIConstant.shared.spacing.top)
     }
     
     enum Footer {
       static let spacing: UISpacing = .init(
-        leading: UIConstant.shared.spacing.leading,
-        top: UIConstant.shared.spacing.top,
-        trailing: UIConstant.shared.spacing.trailing)
+        top: UIConstant.shared.spacing.top)
       
       /// 화면의 이미지를 보고 비율로 결정했습니다.
       /// 제가 캡쳐한 화면에서의 노란색, 짙은 회색 화면 비율이 70: 240이었습니다.
@@ -58,11 +51,11 @@ final class LuckyCardGameView: BaseView {
   }
 
   // MARK: - Properties
-  private let header = LuckyCardGameHeader(frame: .zero)
+  private var header: LuckyCardGameHeader!
   
-  private let contentView = LuckyCardGameContentView(frame: .zero)
+  private var contentView: LuckyCardGameContentView!
   
-  private let footer = LuckyCardGameFooter(frame: .zero)
+  private var footer: LuckyCardGameFooter!
   
   // MARK: - Lifecycle
   init(frame: CGRect) {
@@ -70,87 +63,50 @@ final class LuckyCardGameView: BaseView {
     setupUI()
   }
   
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    if !contentView.isInitBoardViews {
-      contentView.configure(with: .five)
-    }
-  }
-  
   required init?(coder: NSCoder) { fatalError() }
-}
-
-// MARK: - Helper
-extension LuckyCardGameView {
-  func layout(from superView: UIView) {
-    superView.addSubview(self)
-    let selfConstraints = [
-      leadingAnchor.constraint(equalTo: superView.leadingAnchor),
-      topAnchor.constraint(
-        equalTo: superView.topAnchor,
-        constant: Constant.spacing.top),
-      trailingAnchor.constraint(equalTo: superView.trailingAnchor),
-      bottomAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.bottomAnchor)]
-    NSLayoutConstraint.activate(selfConstraints)
-  }
 }
 
 // MARK: - LayoutSupport
 extension LuckyCardGameView: LayoutSupport {
+  func createSubviews() {
+    header = .init(frame: headerFrame)
+    contentView = .init(frame: contentViewFrame)
+    footer = .init(frame: footerFrame)
+  }
+  
   func addSubviews() {
     _=[header, contentView, footer].map { addSubview($0) }
   }
-  
-  func setConstraints() {
-    _=[headerConstraints,
-       contentViewConstraints,
-       footerConstraints
-    ].map {
-      NSLayoutConstraint.activate($0)
-    }
-  }
 }
 
-// MARK: - Layout support helper
+// MARK: - LayoutSupport helpers
 extension LuckyCardGameView {
-  var headerConstraints: [NSLayoutConstraint] {
-    [header.leadingAnchor.constraint(
-      equalTo: leadingAnchor,
-      constant: Constant.Header.spacing.leading),
-     header.trailingAnchor.constraint(
-      equalTo: trailingAnchor,
-      constant: -Constant.Header.spacing.trailing),
-     header.topAnchor.constraint(
-      equalTo: topAnchor),
-     header.heightAnchor.constraint(
-      equalToConstant: Constant.Header.size.height)]
+  var headerFrame: CGRect {
+    .init(
+      x: 0,
+      y: 0,
+      width:Constant.intrinsicWidth,
+      height: Constant.Header.size.height)
   }
   
-  var contentViewConstraints: [NSLayoutConstraint] {
-    [contentView.leadingAnchor.constraint(
-      equalTo: leadingAnchor,
-      constant: Constant.ContentView.spacing.leading),
-     contentView.trailingAnchor.constraint(
-      equalTo: trailingAnchor,
-      constant: -Constant.ContentView.spacing.trailing),
-     contentView.topAnchor.constraint(
-      equalTo: header.bottomAnchor,
-      constant: Constant.ContentView.spacing.top)]
+  var contentViewFrame: CGRect {
+    let topPlusBottomSpacing = Constant.ContentView.spacing
+      .top + Constant.Footer.spacing.top
+    let headerHeight = Constant.Header.size.height
+    let footerHeight = Constant.Footer.height
+    let height = bounds.height - (topPlusBottomSpacing + headerHeight + footerHeight)
+    return .init(
+      x: 0,
+      y: Constant.ContentView.spacing.top + headerHeight,
+      width: Constant.intrinsicWidth,
+      height: height)
   }
   
-  var footerConstraints: [NSLayoutConstraint] {
-    [footer.topAnchor.constraint(
-      equalTo: contentView.bottomAnchor,
-      constant: Constant.Footer.spacing.top),
-     footer.leadingAnchor.constraint(
-      equalTo: leadingAnchor,
-      constant: Constant.Footer.spacing.leading),
-     footer.trailingAnchor.constraint(
-      equalTo: trailingAnchor,
-      constant: -Constant.Footer.spacing.trailing),
-     footer.bottomAnchor.constraint(
-      equalTo: bottomAnchor),
-     footer.heightAnchor.constraint(
-      equalToConstant: Constant.Footer.height)]
+  var footerFrame: CGRect {
+    .init(
+      x: 0,
+      y: bounds.height - Constant.Footer.height,
+      width: Constant.intrinsicWidth,
+      height: Constant.Footer.height)
   }
 }
