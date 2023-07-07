@@ -6,7 +6,7 @@
 //
 
 /// 카드 넘버 타입은 식별 가능함과 동시에 number가 아닌 문자 등을 반환할 수 있는 enum 구조체로 선정했습니다.
-enum LuckyCardNumberType: Int, CaseIterable {
+enum LuckyCardNumberType: Int, CaseIterable, CardNumberEnumProtocol {
   case One = 1
   case Two
   case Three
