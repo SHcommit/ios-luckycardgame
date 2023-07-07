@@ -15,9 +15,35 @@ class LuckyCardGameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
-    self.luckyCardGameView = LuckyCardGameView(frame: .zero)
-    luckyCardGameView.layout(from: view)
+    setupUI()
     let manager = LuckyCardManager()
     _=LuckyCardDeckImpl(luckyCardManager: manager)
+  }
+}
+
+// MARK: - LayoutSupport
+extension LuckyCardGameViewController: LayoutSupport {
+  func createSubviews() {
+    luckyCardGameView = .init(frame: luckyCardGameViewFrame)
+  }
+  
+  func addSubviews() {
+    view.addSubview(luckyCardGameView)
+  }
+  
+}
+
+// MARK: - LayoutSupperot helpers
+extension LuckyCardGameViewController {
+  var luckyCardGameViewFrame: CGRect {
+    let statusBarHeight = UIView.Constnat.statusBarHeight
+    let safeAreaBottomHeight = UIView.Constnat.safeAreaLayoutGuideButtomHeight
+    let screenSize = UIConstant.shared.screenSize
+    let leadingSpacing = UIConstant.shared.spacing.leading
+    return .init(
+      x: leadingSpacing,
+      y: statusBarHeight,
+      width: screenSize.width - leadingSpacing*2,
+      height: screenSize.height - safeAreaBottomHeight - statusBarHeight)
   }
 }
