@@ -11,7 +11,7 @@
 /// Hashable 타입으로 선언해서, CardShapeStorage 클래스를 통해 Shape타입에 해당하는 값을 출력하거나 화면에 보여줄 수 있습니다.
 ///
 
-class Card<Shape: Hashable, Number: Hashable> {
+class Card<Shape: CardShapeEnumProtocol, Number: Hashable> {
   enum Appearance {
     case front
     case rear
