@@ -6,7 +6,7 @@
 //
 
 /// Player는 3명에서 5명까지 가능합니다.
-enum PlayerHeadCountType {
+enum PlayerHeadCountType: CaseIterable {
   case three
   case four
   case five
@@ -17,5 +17,16 @@ enum PlayerHeadCountType {
     case .four: return 4
     case .five: return 5
     }
+  }
+  
+  var count: Int {
+    PlayerHeadCountType.allCases.count
+  }
+}
+
+// MARK: - CustomStringConvertible
+extension PlayerHeadCountType: CustomStringConvertible {
+  var description: String {
+    return "\(self.toInt)명"
   }
 }
