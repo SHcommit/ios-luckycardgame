@@ -14,10 +14,17 @@ class LuckyCardGameViewController: UIViewController {
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
-    setupUI()
     let manager = LuckyCardManager()
     _=LuckyCardDeckImpl(luckyCardManager: manager)
+  }
+}
+
+// MARK: - Helper
+extension LuckyCardGameViewController {
+  func configureUI() {
+    navigationController?.navigationBar.isUserInteractionEnabled = false
+    view.backgroundColor = .white
+    setupUI()
   }
 }
 
