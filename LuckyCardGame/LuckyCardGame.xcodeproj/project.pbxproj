@@ -39,6 +39,9 @@
 		153841E62A574336004C41D1 /* CardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153841E52A574336004C41D1 /* CardManager.swift */; };
 		15847E0F2A57D3EB000C3B04 /* LuckyCardShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15847E0E2A57D3EB000C3B04 /* LuckyCardShapeType.swift */; };
 		15847E112A57D599000C3B04 /* CardShapeStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15847E102A57D599000C3B04 /* CardShapeStorageImpl.swift */; };
+		15847E392A5861CA000C3B04 /* CardAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15847E382A5861CA000C3B04 /* CardAreaViewController.swift */; };
+		15847E3B2A58693C000C3B04 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15847E3A2A58693C000C3B04 /* Notification+.swift */; };
+		15847E3F2A58AE5C000C3B04 /* CardNumberEnumProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15847E3E2A58AE5C000C3B04 /* CardNumberEnumProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +84,9 @@
 		153841E52A574336004C41D1 /* CardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardManager.swift; sourceTree = "<group>"; };
 		15847E0E2A57D3EB000C3B04 /* LuckyCardShapeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LuckyCardShapeType.swift; sourceTree = "<group>"; };
 		15847E102A57D599000C3B04 /* CardShapeStorageImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardShapeStorageImpl.swift; sourceTree = "<group>"; };
+		15847E382A5861CA000C3B04 /* CardAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardAreaViewController.swift; sourceTree = "<group>"; };
+		15847E3A2A58693C000C3B04 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
+		15847E3E2A58AE5C000C3B04 /* CardNumberEnumProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardNumberEnumProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,7 @@
 		153841742A547975004C41D1 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				15847E382A5861CA000C3B04 /* CardAreaViewController.swift */,
 				153841622A547905004C41D1 /* LuckyCardGameViewController.swift */,
 			);
 			path = ViewController;
@@ -294,6 +301,7 @@
 				153841B72A55A5C9004C41D1 /* CardShapeStorage.swift */,
 				153841E32A574152004C41D1 /* CardShapeEnumProtocol.swift */,
 				153841E52A574336004C41D1 /* CardManager.swift */,
+				15847E3E2A58AE5C000C3B04 /* CardNumberEnumProtocol.swift */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -327,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				153841DA2A565A0B004C41D1 /* UIView+Constant.swift */,
+				15847E3A2A58693C000C3B04 /* Notification+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -401,6 +410,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15847E3B2A58693C000C3B04 /* Notification+.swift in Sources */,
+				15847E3F2A58AE5C000C3B04 /* CardNumberEnumProtocol.swift in Sources */,
 				153841C62A55C48E004C41D1 /* LuckyCardDeckImpl.swift in Sources */,
 				153841632A547905004C41D1 /* LuckyCardGameViewController.swift in Sources */,
 				153841822A547BE0004C41D1 /* UISpacing.swift in Sources */,
@@ -415,6 +426,7 @@
 				153841E42A574152004C41D1 /* CardShapeEnumProtocol.swift in Sources */,
 				1538419C2A547C2E004C41D1 /* LuckyCardGameView.swift in Sources */,
 				153841A42A547C2E004C41D1 /* PlayerHeadCountType.swift in Sources */,
+				15847E392A5861CA000C3B04 /* CardAreaViewController.swift in Sources */,
 				153841B82A55A5C9004C41D1 /* CardShapeStorage.swift in Sources */,
 				1507EDFA2A57D1C300F88EF1 /* Card.swift in Sources */,
 				153841DD2A565DB4004C41D1 /* BaseViewPalette.swift in Sources */,
