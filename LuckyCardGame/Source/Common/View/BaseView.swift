@@ -23,14 +23,6 @@ class BaseView: UIView {
   init(with childViewCase: BaseViewPalette, _ frame: CGRect) {
     super.init(frame: frame)
     backgroundColor = childViewCase.bgColor
-    let autoLayoutList: [BaseViewPalette] = [
-      .LuckyCardGameView,
-      .header,
-      .contentView,
-      .footer]
-    if autoLayoutList.contains(childViewCase) {
-      translatesAutoresizingMaskIntoConstraints = false
-    }
     layer.cornerRadius = Constant.radius
   }
   
