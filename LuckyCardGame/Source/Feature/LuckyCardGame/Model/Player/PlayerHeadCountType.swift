@@ -19,7 +19,7 @@ enum PlayerHeadCountType: CaseIterable {
     }
   }
   
-  var count: Int {
+  static var count: Int {
     PlayerHeadCountType.allCases.count
   }
 }
