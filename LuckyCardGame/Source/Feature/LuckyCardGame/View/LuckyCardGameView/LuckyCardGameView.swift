@@ -7,110 +7,160 @@
 
 import UIKit
 
-/// LuckyCardGameView는 게임 플레이 화면을 담당합니다.
-///
-/// - Param header : 화면의 노란색 영역 화면 담당
-/// - Param contentView : 플레이어들의 카드가 보여지는 영역 담당
-/// - Param footer : 짙은 회색 영역 담당
-///
-///  **Notes:**
-/// 1. Frame을 더 효율적으로 사용하기 위해 기본적인 3 영역은 auto layout으로 지정했습니다.
-///   auto layout을 사용하더라도 결국에 시스템은 각각의 subviews에 대한 frame을 지정하기 때문입니다.
-///   결국 오토 레이아웃과 이들의 제약조건을 통해 각 뷰에 할당될 정확한 frame을 지정합니다.
-///
-/// 2. 위의 경우를 이용해 결국 subviews의 frame이 지정됬을 때 재사용하는 뷰가 많은 contentView의 subviews를 frame으로 position과 size를 지정했습니다.
 final class LuckyCardGameView: BaseView {
   // MARK: - Constant
-  struct Constant {    
-    static let intrinsicWidth = {
-      let spacing = UIConstant.shared.spacing
-      let screenWidth = UIConstant.shared.screenSize.width
-      return screenWidth - (spacing.leading+spacing.trailing)
-    }()
+  struct Constant {
     
     enum Header {
       static let size: CGSize = {
+        let intrinsicWidth = UIConstant.shared.screenSize.width
         return CGSize(width: intrinsicWidth, height: 44)
       }()
     }
     
-    enum ContentView {
+    enum CardAreaPageView {
       static let spacing: UISpacing = .init(
+        leading: UIConstant.shared.spacing.leading,
         top: UIConstant.shared.spacing.top)
-    }
-    
-    enum Footer {
-      static let spacing: UISpacing = .init(
-        top: UIConstant.shared.spacing.top)
-      
-      /// 화면의 이미지를 보고 비율로 결정했습니다.
-      /// 제가 캡쳐한 화면에서의 노란색, 짙은 회색 화면 비율이 70: 240이었습니다.
-      ///  실제 노란색 height가 44이므로 짙은 회색은 151로 지정했습니다.
-      static let height: CGFloat = 151
     }
   }
 
   // MARK: - Properties
   private var header: LuckyCardGameHeader!
   
-  private var contentView: LuckyCardGameContentView!
+  private var playersCardAreaViewControllers: [PlayersCardAreaViewController]!
   
-  private var footer: LuckyCardGameFooter!
+  private lazy var cardAreaPageViewController = UIPageViewController(
+    transitionStyle: .scroll,
+    navigationOrientation: .horizontal
+  ).set {
+    $0.setViewControllers(
+      [playersCardAreaViewControllers[0]],
+      direction: .forward,
+      animated: true)
+    $0.view.frame = cardAreaPageViewFrame
+  }
+  
+  private var pageVCPresntingIdx = 0
   
   // MARK: - Lifecycle
   init(frame: CGRect) {
     super.init(with: .LuckyCardGameView, frame)
     isUserInteractionEnabled = true
     setupUI()
+    playersCardAreaViewControllers = [
+      .init(playerHeadCountType: .three, viewFrame: cardAreaPageViewFrame),
+      .init(playerHeadCountType: .four, viewFrame: cardAreaPageViewFrame),
+      .init(playerHeadCountType: .five, viewFrame: cardAreaPageViewFrame)]
+    addSubview(cardAreaPageViewController.view)
+    bind()
   }
   
-  required init?(coder: NSCoder) { fatalError() }
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    isUserInteractionEnabled = true
+    setupUI()
+    playersCardAreaViewControllers = [
+      .init(playerHeadCountType: .three, viewFrame: cardAreaPageViewFrame),
+      .init(playerHeadCountType: .four, viewFrame: cardAreaPageViewFrame),
+      .init(playerHeadCountType: .five, viewFrame: cardAreaPageViewFrame)]
+    addSubview(cardAreaPageViewController.view)
+    bind()
+  }
+  
+  deinit {
+    cardAreaPageViewController.setViewControllers(
+      nil,
+      direction: .forward,
+      animated: false)
+    
+    NotificationCenter.default.removeObserver(
+      self,
+      name: .playerHeadCountMenuDidChange,
+      object: nil)
+  }
+}
+
+// MARK: - Private helper
+private extension LuckyCardGameView {
+  func bind() {
+    bindIfPlayerHeadCountMenuDidChanged()
+  }
+  
+  func bindIfPlayerHeadCountMenuDidChanged() {
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(handleMenuChange),
+      name: .playerHeadCountMenuDidChange,
+      object: nil)
+  }
+
+  func gotoNextPage() {
+    cardAreaPageViewController.setViewControllers(
+      [playersCardAreaViewControllers[pageVCPresntingIdx]],
+      direction: .forward,
+      animated: true)
+  }
+  
+  func gotoPrevPage() {
+    cardAreaPageViewController.setViewControllers(
+      [playersCardAreaViewControllers[pageVCPresntingIdx]],
+      direction: .reverse,
+      animated: true)
+  }
+}
+
+// MARK: - Action
+extension LuckyCardGameView {
+  @objc func handleMenuChange(_ notification: Notification) {
+    guard
+      let selectedOption = notification
+        .userInfo?[PlayerHeadCountType.notificationUserInfoKey] as? PlayerHeadCountType
+    else {
+      return
+    }
+    let selectedIdx = selectedOption.toCaseIterableIdx
+    print(selectedIdx)
+    if pageVCPresntingIdx > selectedIdx && (0..<PlayerHeadCountType.caseCount).contains(selectedIdx) {
+      pageVCPresntingIdx = selectedIdx
+      gotoPrevPage()
+    } else if (0..<PlayerHeadCountType.caseCount).contains(selectedIdx) {
+      pageVCPresntingIdx = selectedIdx
+      gotoNextPage()
+    }
+    layoutIfNeeded()
+  }
 }
 
 // MARK: - LayoutSupport
 extension LuckyCardGameView: LayoutSupport {
   func createSubviews() {
     header = .init(frame: headerFrame)
-    // 상위객체로부터 값 받아오기TODO: - 플레이어 수에 따라 사용자의 보드 판이 나옵니다.
-    contentView = .init(
-      frame: contentViewFrame,
-      playerHeadCount: .five)
-    footer = .init(frame: footerFrame)
   }
   
   func addSubviews() {
-    _=[header, contentView, footer].map { addSubview($0) }
+    addSubview(header)
   }
 }
 
 // MARK: - LayoutSupport helpers
 extension LuckyCardGameView {
-  var headerFrame: CGRect {
+  private var headerFrame: CGRect {
     .init(
       x: 0,
       y: 0,
-      width:Constant.intrinsicWidth,
+      width: bounds.width,
       height: Constant.Header.size.height)
   }
   
-  var contentViewFrame: CGRect {
-    let topPlusBottomSpacing = Constant.ContentView.spacing
-      .top + Constant.Footer.spacing.top
+  private var cardAreaPageViewFrame: CGRect {
     let headerHeight = Constant.Header.size.height
-    let footerHeight = Constant.Footer.height
-    let height = bounds.height - (topPlusBottomSpacing + headerHeight + footerHeight)
+    let topSpacing = Constant.CardAreaPageView.spacing.top
+    
     return .init(
       x: 0,
-      y: Constant.ContentView.spacing.top + headerHeight,
-      width: Constant.intrinsicWidth,
-      height: height)
-  }
-  
-  var footerFrame: CGRect {
-    .init(
-      x: 0,
-      y: bounds.height - Constant.Footer.height,
-      width: Constant.intrinsicWidth,
-      height: Constant.Footer.height)
+      y: headerHeight+topSpacing,
+      width: bounds.width,
+      height: bounds.height - headerHeight - topSpacing)
   }
 }
