@@ -20,10 +20,6 @@ final class LuckyCardGameContentView: BaseView {
   
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
-  var isInitBoardViews: Bool {
-    playerCardBoardViews == nil
-  }
-  
   // MARK: - Lifecycle
   init(frame: CGRect, playerHeadCount: PlayerHeadCountType) {
     super.init(with: .contentView, frame)
@@ -59,7 +55,7 @@ extension LuckyCardGameContentView {
       if i > 0 { y += Constant.spacing.top + height }
       return PlayerCardBoardView(
         frame: .init(
-          x: Constant.spacing.leading,
+          x: 0,
           y: y,
           width: bounds.width,
           height: height))
