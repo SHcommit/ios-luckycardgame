@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LuckyCardGameViewController: UIViewController {
+final class LuckyCardGameViewController: UIViewController {
   // MARK: - Properties
   private var luckyCardGameView: LuckyCardGameView!
   

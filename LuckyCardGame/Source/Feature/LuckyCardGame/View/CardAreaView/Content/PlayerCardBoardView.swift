@@ -24,7 +24,7 @@ final class PlayerCardBoardView: BaseRoundView {
   // MARK: - Properties
   private var alphabetLabel: UILabel!
   
-  var boardType: PlayerBoardType!
+  private var boardType: PlayerBoardType!
   
   // MARK: - Lifecycle
   init(frame: CGRect) {
