@@ -119,7 +119,6 @@ extension LuckyCardGameView {
       return
     }
     let selectedIdx = selectedOption.toCaseIterableIdx
-    print(selectedIdx)
     if pageVCPresntingIdx > selectedIdx && (0..<PlayerHeadCountType.caseCount).contains(selectedIdx) {
       pageVCPresntingIdx = selectedIdx
       gotoPrevPage()
