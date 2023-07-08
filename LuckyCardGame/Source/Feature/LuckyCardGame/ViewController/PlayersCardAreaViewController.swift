@@ -72,6 +72,19 @@ final class PlayersCardAreaViewController: UIViewController {
     super.viewDidLoad()
     setupUI()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    UIView.animate(withDuration: 0.5) {
+      self.view.alpha = 0.5
+    }
+  }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    UIView.animate(withDuration: 0.5) {
+      self.view.alpha = 1
+    }
+  }
 }
 
 // MARK: - LayoutSupport
