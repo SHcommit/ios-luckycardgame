@@ -55,7 +55,6 @@ final class PlayersCardAreaViewController: UIViewController {
   
   convenience init(playerHeadCountType: PlayerHeadCountType, viewFrame: CGRect) {
     self.init(nibName: nil, bundle: nil, playerHeadCountType: playerHeadCountType, viewFrame: viewFrame)
-    print("hahahaah",view.frame)
   }
   
   required init?(coder: NSCoder) {
@@ -92,7 +91,7 @@ extension PlayersCardAreaViewController: LayoutSupport {
   }
 }
 
-// MARK: - LayoutSupport helpers
+// MARK: - LayoutSupport helper
 extension PlayersCardAreaViewController {
   fileprivate var playersCardBoardAreaViewHeight: CGFloat {
     Constant

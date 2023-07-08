@@ -41,7 +41,7 @@ extension LuckyCardGameViewController: LayoutSupport {
   
 }
 
-// MARK: - LayoutSupperot helpers
+// MARK: - LayoutSupperot helper
 extension LuckyCardGameViewController {
   var luckyCardGameViewFrame: CGRect {
     let statusBarHeight = UIView.Constnat.statusBarHeight

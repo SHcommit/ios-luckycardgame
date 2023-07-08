@@ -27,7 +27,12 @@ final class LuckyCardGameContentView: BaseView {
     setupUI()
   }
   
-  required init?(coder: NSCoder) { fatalError() }
+  // playerHeadCountFIXME: - PlayerHeadCount 값을 변경해야합니다.
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    playerHeadCount = .none
+    setupUI()
+  }
 }
 
 // MARK: - Private helper
@@ -48,7 +53,7 @@ extension LuckyCardGameContentView: LayoutSupport {
   }
 }
 
-// MARK: - LayoutSupport helpers
+// MARK: - LayoutSupport helper
 extension LuckyCardGameContentView {
   func initBoardViews(y: inout CGFloat, height: CGFloat) {
     playerCardBoardViews = (0..<Constant.maximumHeadCount).map { i in

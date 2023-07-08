@@ -10,7 +10,6 @@ import UIKit
 final class LuckyCardGameView: BaseView {
   // MARK: - Constant
   struct Constant {
-    
     enum Header {
       static let size: CGSize = {
         let intrinsicWidth = UIConstant.shared.screenSize.width
@@ -128,7 +127,6 @@ extension LuckyCardGameView {
       pageVCPresntingIdx = selectedIdx
       gotoNextPage()
     }
-    layoutIfNeeded()
   }
 }
 

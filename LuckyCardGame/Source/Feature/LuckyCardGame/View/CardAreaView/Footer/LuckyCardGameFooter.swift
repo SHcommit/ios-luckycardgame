@@ -21,5 +21,9 @@ final class LuckyCardGameFooter: BaseView {
     layer.cornerRadius = Constant.radius
   }
   
-  required init?(coder: NSCoder) { fatalError() }
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    backgroundColor = Constant.bgColor
+    layer.cornerRadius = Constant.radius
+  }
 }
