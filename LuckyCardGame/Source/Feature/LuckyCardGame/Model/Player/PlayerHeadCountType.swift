@@ -29,8 +29,16 @@ enum PlayerHeadCountType: CaseIterable {
     self.toInt - PlayerHeadCountType.Constant.minHeadCount
   }
   
-  static var count: Int {
+  static var caseCount: Int {
     PlayerHeadCountType.allCases.count
+  }
+  
+  static var maximumHeadCountToInt: Int {
+    PlayerHeadCountType.five.toInt
+  }
+  
+  static var notificationUserInfoKey: String {
+    String(describing: PlayerHeadCountType.self)
   }
 }
 
