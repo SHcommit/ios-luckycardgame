@@ -49,10 +49,10 @@ extension LuckyCardGameHeader {
       .allCases
       .first(
         where: {
-          ($0.toInt - PlayerHeadCountType.count) == segment.selectedSegmentIndex }) ?? .three
-    
-    let userInfo: [String: PlayerHeadCountType] = [specificType.description: specificType]
-    
+          ($0.toInt - PlayerHeadCountType.caseCount) == segment.selectedSegmentIndex }) ?? .three
+    let userInfo: [String: PlayerHeadCountType] = [
+      PlayerHeadCountType.notificationUserInfoKey: specificType]
+    print(specificType)
     NotificationCenter.default.post(
       name: .playerHeadCountMenuDidChange,
       object: nil,
