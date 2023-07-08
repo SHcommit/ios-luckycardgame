@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LuckyCardGameView: BaseView {
+final class LuckyCardGameView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
     enum Header {

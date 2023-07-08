@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class LuckyCardGameFooter: BaseView {
+final class LuckyCardGameFooter: BaseRoundView {
   // MARK: - Constant
   struct Constant {
-    static let radius: CGFloat = BaseView.Constant.radius
+    static let radius: CGFloat = BaseRoundView.Constant.radius
     static let bgColor: UIColor = BaseViewPalette.footer.bgColor
   }
   

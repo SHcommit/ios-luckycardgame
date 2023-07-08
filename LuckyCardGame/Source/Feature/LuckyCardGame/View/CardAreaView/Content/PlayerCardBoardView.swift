@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PlayerCardBoardView: BaseView {
+final class PlayerCardBoardView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
     enum AlphabetLabel {

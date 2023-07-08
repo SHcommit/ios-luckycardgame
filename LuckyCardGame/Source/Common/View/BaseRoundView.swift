@@ -8,7 +8,7 @@
 import UIKit
 
 /// UIView를 커스텀할 때 중복되는 코드 제거를 위한 BaseView 입니다.
-class BaseView: UIView {
+class BaseRoundView: UIView {
   // MARK: - Constnat
   struct Constant {
     static let radius: CGFloat = 10
@@ -32,7 +32,7 @@ class BaseView: UIView {
   }
 }
 
-extension BaseView {
+extension BaseRoundView {
   func updateRadius(with radius: CGFloat) {
     DispatchQueue.main.async {
       self.layer.cornerRadius = radius

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LuckyCardGameContentView: BaseView {
+final class LuckyCardGameContentView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
     static let spacing: UISpacing = .init(

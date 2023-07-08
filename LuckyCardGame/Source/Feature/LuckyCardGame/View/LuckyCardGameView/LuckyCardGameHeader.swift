@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LuckyCardGameHeader: BaseView {
+final class LuckyCardGameHeader: BaseRoundView {
   // MARK: - Properties
   private lazy var playerHeadCountMenu: UISegmentedControl = {
     return .init(
