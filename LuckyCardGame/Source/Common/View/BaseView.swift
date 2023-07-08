@@ -27,7 +27,15 @@ class BaseView: UIView {
   }
   
   required init?(coder: NSCoder) {
-    fatalError()
+    super.init(coder: coder)
+    layer.cornerRadius = Constant.radius
   }
 }
 
+extension BaseView {
+  func updateRadius(with radius: CGFloat) {
+    DispatchQueue.main.async {
+      self.layer.cornerRadius = radius
+    }
+  }
+}
