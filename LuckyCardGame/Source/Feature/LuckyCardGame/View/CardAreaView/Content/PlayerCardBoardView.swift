@@ -32,7 +32,10 @@ final class PlayerCardBoardView: BaseView {
     setupUI()
   }
   
-  required init?(coder: NSCoder) { fatalError() }
+  required init?(coder: NSCoder) {
+    super.init(coder: coder)
+    setupUI()
+  }
 }
 
 // MARK: - Helper
@@ -44,7 +47,7 @@ extension PlayerCardBoardView {
 }
 
 // MARK: - Private helper
-fileprivate extension PlayerCardBoardView {
+private extension PlayerCardBoardView {
   static func setAlphabetLabel(_ label: UILabel) {
     let textSize = Constant.AlphabetLabel.textSize
     let font = UIFont.systemFont(ofSize: textSize)
@@ -58,10 +61,7 @@ fileprivate extension PlayerCardBoardView {
     label.attributedText = attrStr
     label.sizeToFit()
   }
-}
-
-// MARK: - Private helper
-private extension PlayerCardBoardView {
+  
   func setAlphabetLabel(with text: String) {
     _=alphabetLabel.set {
       let curAttrStr = $0.attributedText ?? NSAttributedString(string: "A")
@@ -85,6 +85,7 @@ extension PlayerCardBoardView: LayoutSupport {
   }
 }
 
+// MARK: - LayoutSupport helper
 extension PlayerCardBoardView {
   var alphabetLabelFrame: CGRect {
     let y = (bounds.height - Constant.AlphabetLabel.labelSize.height)/2.0
@@ -95,4 +96,3 @@ extension PlayerCardBoardView {
       height: Constant.AlphabetLabel.labelSize.height)
   }
 }
-
