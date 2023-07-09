@@ -73,4 +73,8 @@ extension LuckyCardGameContentView {
       addSubview(playerCardBoardViews[$0])
     }
   }
+  
+  func cardSize() -> CGSize {
+    return PlayerCardBoardView.Constant.intrinsicCardSize(from: playerCardBoardViews[0])
+  }
 }
