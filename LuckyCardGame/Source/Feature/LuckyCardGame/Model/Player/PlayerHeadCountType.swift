@@ -42,6 +42,24 @@ enum PlayerHeadCountType: CaseIterable {
     }
   }
   
+  // Footer일 떄, 가로로 한 줄일 때 카드 놓일 개수
+  var bottomCardsCountInOneHoriLine: Int {
+    switch self {
+    case .three: return 5
+    case .four: return 4
+    case .five: return 6
+    }
+  }
+  
+  // Footer일 때 세로로 한 줄 놓일 때 카드 개수
+  var bottomCardsCountInOneVertiLine: Int {
+    switch self {
+    case .three: return 2
+    case .four: return 2
+    case .five: return 1
+    }
+  }
+  
   var toCaseIterableIdx: Int {
     self.toInt - PlayerHeadCountType.Constant.minHeadCount
   }
