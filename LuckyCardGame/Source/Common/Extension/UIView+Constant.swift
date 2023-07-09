@@ -28,6 +28,9 @@ extension UIView {
           .first { $0.isKeyWindow }?
         .safeAreaInsets
       else { return 0 }
+      if UIScreen.main.bounds.size.width == 375 && UIScreen.main.bounds.size.height == 667 {
+        return insets.bottom + 10
+      }
       return insets.bottom
     }
   }
