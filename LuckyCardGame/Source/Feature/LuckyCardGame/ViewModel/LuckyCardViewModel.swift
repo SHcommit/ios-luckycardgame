@@ -10,12 +10,12 @@ import Foundation
 final class LuckyCardViewModel {
   // MARK: - Properteis
   private let gameManager: LuckyCardManager
-  private let cardModel: Card<LuckyCardShapeType, LuckyCardNumberType>
+  private let cardModel: LuckyCard
   
   // MARK: - Lifecycle
   init(
     gameManager: LuckyCardManager,
-    cardModel: Card<LuckyCardShapeType, LuckyCardNumberType>
+    cardModel: LuckyCard
   ) {
     self.gameManager = gameManager
     self.cardModel = cardModel
@@ -25,7 +25,10 @@ final class LuckyCardViewModel {
 // MARK: - LuckyCardViewModelProtocol
 extension LuckyCardViewModel: LuckyCardViewModelProtocol {
   var shape: String {
-    gameManager.shapeStorage.shapes[cardModel.shape] ?? ""
+    guard let shape = gameManager.shapeStorage.shapes[cardModel.shape] else {
+      return ""
+    }
+    return shape.toUnicodeTypeString()
   }
   
   var number: String {
