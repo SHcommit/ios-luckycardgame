@@ -53,4 +53,12 @@ extension LuckyCardDeckImpl {
     let end = start + headCount.playerCardsCountInBoard
     return (start..<end).map { cards[$0] }
   }
+  
+  func divideBottomCards(
+    with headCount: PlayerHeadCountType
+  ) -> [LuckyCard] {
+    let start = headCount.playerCardsCountInBoard*headCount.toInt
+    let end = start + headCount.bottomCardsCountInBoard
+    return (start..<end).map { cards[$0] }
+  }
 }
