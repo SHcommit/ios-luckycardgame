@@ -58,6 +58,7 @@ final class LuckyCardView: UIView {
     // 뒷장일 때
     enum LogoImageView {
       static let size: CGSize = .init(width: 40, height: 40)
+      static let logoName: String = Constant.LogoImageView.logoName
       static func computedSpacing(
         from superView: UIView?,
         subview me: UIView?
@@ -112,29 +113,8 @@ final class LuckyCardView: UIView {
   }
 }
 
-// MARK: - LayoutSupport
-extension LuckyCardView: LayoutSupport {
-  func createSubviews() {
-    switch cardAppearance {
-    case .front:
-      leftTopNumberLabel = UILabel(frame: leftTopNumberLabelFrame)
-      emojiLabel = UILabel(frame: emojiLabelFrame)
-      rightBottomNubmerLabel = UILabel(frame: rightBottomNumberLabelFrame)
-    case .rear:
-      logoImageView = UIImageView(frame: logoImageViewFrame)
-    }
-  }
-  
-  func addSubviews() {
-    switch cardAppearance {
-    case .front:
-      addFrontCardAppearanceSubviews()
-    case .rear:
-      guard let logoImageView = logoImageView else { return }
-      addSubview(logoImageView)
-    }
-  }
-  
+// MARK: - Private helper
+extension LuckyCardView {
   private func addFrontCardAppearanceSubviews() {
     guard
       let leftTopNumberLabel = leftTopNumberLabel,
@@ -150,6 +130,60 @@ extension LuckyCardView: LayoutSupport {
       .map {
         addSubview($0)
       }
+  }
+  
+  private func initLeftTopNumberLabel() -> UILabel {
+    return UILabel(frame: leftTopNumberLabelFrame).set {
+      $0.text = vm.number
+      $0.font = .italicSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize)
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initEmojiLabel() -> UILabel {
+    return UILabel(frame: emojiLabelFrame).set {
+      $0.text = vm.shape
+      $0.font = .systemFont(ofSize: Constant.EmojiLabel.fontSize)
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initRightBottomNubmerLabel() -> UILabel {
+    return UILabel(frame: rightBottomNumberLabelFrame).set {
+      $0.text = vm.number
+      $0.font = .italicSystemFont(ofSize: Constant.RightTopNumberLabel.fontSize)
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initLogoImageView() -> UIImageView {
+    return UIImageView(frame: logoImageViewFrame).set {
+      $0.image = UIImage(named: Constant.LogoImageView.logoName)
+    }
+  }
+}
+
+// MARK: - LayoutSupport
+extension LuckyCardView: LayoutSupport {
+  func createSubviews() {
+    switch cardAppearance {
+    case .front:
+      leftTopNumberLabel = initLeftTopNumberLabel()
+      emojiLabel = initEmojiLabel()
+      rightBottomNubmerLabel = initRightBottomNubmerLabel()
+    case .rear:
+      logoImageView = initLogoImageView()
+    }
+  }
+  
+  func addSubviews() {
+    switch cardAppearance {
+    case .front:
+      addFrontCardAppearanceSubviews()
+    case .rear:
+      guard let logoImageView = logoImageView else { return }
+      addSubview(logoImageView)
+    }
   }
 }
 
