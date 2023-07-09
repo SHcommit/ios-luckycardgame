@@ -19,7 +19,19 @@ final class LuckyCardManager {
   }
   
   // MARK: - Properties
-  let shapeStorage: LuckyCardShapeStorageImpl = .init(shapes: Constant.Card.shapes)
+  private(set) var shapeStorage: LuckyCardShapeStorageImpl = .init(shapes: Constant.Card.shapes)
+  
+  private(set) var headCount: PlayerHeadCountType
+  
+  private(set) var luckyCardDeckImpl: LuckyCardDeckImpl!
+  
+  // MARK: - Lifecycle
+  init(headCount: PlayerHeadCountType) {
+    self.headCount = headCount
+
+    luckyCardDeckImpl = LuckyCardDeckImpl(cards: self.makeInitialDeck(with: headCount))
+    printDeckState(luckyCardDeckImpl, manager: self)
+  }
 }
 
 // MARK: - CardManager
@@ -31,10 +43,11 @@ extension LuckyCardManager: CardManager {
     print(deck.description(with: manager))
   }
   
-  func makeInitialDeck() -> [Card] {
+  func makeInitialDeck(with headCount: PlayerHeadCountType) -> [Card] {
     let totalCards = Constant.Card.NumberOfCards
     let specificShapeCardsCount = Constant.Card.NumberOfSpecificShapeCards
-    return (0..<totalCards)
+    
+    var allCards = (0..<totalCards)
       .map {
         let moduloPlusOne = ($0 % specificShapeCardsCount) + 1
         switch $0 / specificShapeCardsCount {
@@ -51,5 +64,9 @@ extension LuckyCardManager: CardManager {
           return LuckyCard(number: LuckyCardNumberType(rawValue: -99999) ?? .One, shape: .cat, appearance: .front)
         }
       }
+    if headCount == .three {
+      allCards.removeAll(where: {$0.number.rawValue == 12})
+    }
+    return allCards
   }
 }
