@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class LuckyCardView: UIView {
+final class LuckyCardView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
     enum LeftTopNumberLabel {
       static let fontSize: CGFloat = 12
       static let spacing: UISpacing = .init(
-        leading: 10, top: 10)
+        leading: 7, top: 7)
     }
     
     enum RightTopNumberLabel {
@@ -29,8 +29,8 @@ final class LuckyCardView: UIView {
           return .init()
         }
         me.sizeToFit()
-        let leftSpacing = superView.bounds.width - me.bounds.width - 10
-        let topSpacing = superView.bounds.height - me.bounds.height - 10
+        let leftSpacing = superView.bounds.width - me.bounds.width - 7
+        let topSpacing = superView.bounds.height - me.bounds.height - 7
         return .init(leading: leftSpacing, top: topSpacing)
       }
     }
@@ -60,17 +60,13 @@ final class LuckyCardView: UIView {
       static let size: CGSize = .init(width: 40, height: 40)
       static let logoName: String = "luckyLogo"
       static func computedSpacing(
-        from superView: UIView?,
-        subview me: UIView?
+        from superView: UIView?
       ) -> UISpacing {
-        guard
-          let superView = superView,
-          let me = me
-        else {
+        guard let superView = superView else {
           return .init()
         }
-        let leadingSpacingForCenterX = superView.bounds.width/2.0 - me.bounds.width/2.0
-        let topSpacingForCenterY = superView.bounds.height/2.0 - me.bounds.height/2.0
+        let leadingSpacingForCenterX = superView.bounds.width/2.0 - size.width/2.0
+        let topSpacingForCenterY = superView.bounds.height/2.0 - size.height/2.0
         return .init(
           leading: leadingSpacingForCenterX,
           top: topSpacingForCenterY)
@@ -90,22 +86,18 @@ final class LuckyCardView: UIView {
   private var logoImageView: UIImageView?
   
   private var cardAppearance: LuckyCard.Appearance
-  
-  private override init(frame: CGRect) {
-    cardAppearance = .front
-    super.init(frame: frame)
-    setupUI()
-  }
-  
   // MARK: - Lifecycle
   init(frame: CGRect, viewModel: LuckyCardViewModelProtocol, cardAppearance: LuckyCard.Appearance) {
     vm = viewModel
     self.cardAppearance = cardAppearance
-    super.init(frame: frame)
+    super.init(with: .cardView, frame)
+    layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
+    layer.borderWidth = 0.7
     setupUI()
+    
   }
   
-  // viewModelFIXME: - viewModel 초기화 하지 않았습니다.
+  // viewModelFIXME: - viewModel, appearnce 초기화 하지 않았습니다.
   required init?(coder: NSCoder) {
     cardAppearance = .front
     super.init(coder: coder)
@@ -133,15 +125,15 @@ extension LuckyCardView {
   }
   
   private func initLeftTopNumberLabel() -> UILabel {
-    return UILabel(frame: leftTopNumberLabelFrame).set {
+    return UILabel(frame: .zero).set {
+      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
       $0.text = vm.number
-      $0.font = .italicSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize)
       $0.sizeToFit()
     }
   }
   
   private func initEmojiLabel() -> UILabel {
-    return UILabel(frame: emojiLabelFrame).set {
+    return UILabel(frame: .zero).set {
       $0.text = vm.shape
       $0.font = .systemFont(ofSize: Constant.EmojiLabel.fontSize)
       $0.sizeToFit()
@@ -149,15 +141,15 @@ extension LuckyCardView {
   }
   
   private func initRightBottomNubmerLabel() -> UILabel {
-    return UILabel(frame: rightBottomNumberLabelFrame).set {
+    return UILabel(frame: .zero).set {
       $0.text = vm.number
-      $0.font = .italicSystemFont(ofSize: Constant.RightTopNumberLabel.fontSize)
+      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
       $0.sizeToFit()
     }
   }
   
   private func initLogoImageView() -> UIImageView {
-    return UIImageView(frame: logoImageViewFrame).set {
+    return UIImageView(frame: .zero).set {
       $0.image = UIImage(named: Constant.LogoImageView.logoName)
     }
   }
@@ -171,8 +163,12 @@ extension LuckyCardView: LayoutSupport {
       leftTopNumberLabel = initLeftTopNumberLabel()
       emojiLabel = initEmojiLabel()
       rightBottomNubmerLabel = initRightBottomNubmerLabel()
+      leftTopNumberLabel?.frame = leftTopNumberLabelFrame
+      emojiLabel?.frame = emojiLabelFrame
+      rightBottomNubmerLabel?.frame = rightBottomNumberLabelFrame
     case .rear:
       logoImageView = initLogoImageView()
+      logoImageView?.frame = logoImageViewFrame
     }
   }
   
@@ -204,8 +200,9 @@ private extension LuckyCardView {
     guard let emojiLabel = emojiLabel else { return .zero }
     let spacing = LuckyCardView
       .Constant
-      .RightTopNumberLabel
+      .EmojiLabel
       .computedSpacing(from: self, subview: emojiLabel)
+    print(spacing)
     return .init(
       x: spacing.leading,
       y: spacing.top,
@@ -227,11 +224,10 @@ private extension LuckyCardView {
   }
   
   var logoImageViewFrame: CGRect {
-    guard let logoImageView = logoImageView else { return .zero }
     let spacing = LuckyCardView
       .Constant
       .LogoImageView
-      .computedSpacing(from: self, subview: logoImageView)
+      .computedSpacing(from: self)
     return .init(
       x: spacing.leading,
       y: spacing.top,
