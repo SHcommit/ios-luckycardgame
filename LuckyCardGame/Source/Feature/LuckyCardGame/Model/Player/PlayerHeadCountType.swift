@@ -25,6 +25,23 @@ enum PlayerHeadCountType: CaseIterable {
     }
   }
   
+  var playerCardsCountInBoard: Int {
+    switch self {
+    case .three: return 8
+    case .four: return 7
+    case .five: return 6
+    }
+  }
+  
+  var bottomCardsCountInBoard: Int {
+    switch self {
+      //12번 3장 버려야 한다.
+    case .three: return 9
+    case .four: return 8
+    case .five: return 6
+    }
+  }
+  
   var toCaseIterableIdx: Int {
     self.toInt - PlayerHeadCountType.Constant.minHeadCount
   }
