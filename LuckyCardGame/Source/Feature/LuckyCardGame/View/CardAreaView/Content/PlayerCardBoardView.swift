@@ -10,6 +10,7 @@ import UIKit
 final class PlayerCardBoardView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
+    static let topSpacing: CGFloat = 7
     static func cardContentWidthWithoutHoriSpacing(
       from superView: UIView, edgeSpacing: UISpacing
     ) -> CGFloat {
@@ -17,8 +18,6 @@ final class PlayerCardBoardView: BaseRoundView {
         .width - (edgeSpacing
           .leading + edgeSpacing.trailing)
     }
-    
-   
     
     // 기준은 사용자 5명일 때 각각의 카드에 대한 interitem spacing = 0을 기준으로 했습니다.
     // 첫 카드와 보드 edge간 leading spacing = 12 , top spacing = 7
@@ -28,8 +27,7 @@ final class PlayerCardBoardView: BaseRoundView {
         edgeSpacing: HeadCountIsFive.edgeSpacing)
       
       let intrinsicCardHeight = superView.bounds
-        .width - (HeadCountIsFive.edgeSpacing
-          .top + HeadCountIsFive.edgeSpacing.bottom)
+        .height - (topSpacing*2)
       
       let intrinsicCardWidth = cardContentWidthWithoutHoriSpacing / CGFloat(
         PlayerHeadCountType.five.playerCardsCountInBoard)
@@ -86,10 +84,6 @@ final class PlayerCardBoardView: BaseRoundView {
     }
   }
   
-  typealias ConstThree = Constant.HeadCountIsThree
-  typealias ConstFour = Constant.HeadCountIsFour
-  typealias ConstFive = Constant.HeadCountIsFive
-  
   // MARK: - Properties
   private var cardViews: [LuckyCardView]!
   
@@ -117,18 +111,16 @@ final class PlayerCardBoardView: BaseRoundView {
 
 // MARK: - Private helper
 private extension PlayerCardBoardView {
-  func initCards() {
+  func initCards(with cardsFrameList: [CGRect]) {
     let cardsCount = vm.gameManager.headCount.playerCardsCountInBoard
     guard vm.boardType == .A else {
       // other
-      // MARK: - 잘하며 여기 문제잇을수도?
       cardViews = (0..<cardsCount).map {
         let viewModel = LuckyCardViewModel(
           gameManager: vm.gameManager,
           cardModel: vm.playerOwnTheDeck.cards[$0])
-        // MARK: - 카드뷰 프레임 지정해야함.
         return LuckyCardView(
-          frame: .zero,
+          frame: cardsFrameList[$0],
           viewModel: viewModel,
           cardAppearance: .rear)
       }
@@ -139,9 +131,8 @@ private extension PlayerCardBoardView {
       let viewModel = LuckyCardViewModel(
         gameManager: vm.gameManager,
         cardModel: vm.playerOwnTheDeck.cards[$0])
-      // MARK: - 카드뷰 프레임 지정해야함.
       return LuckyCardView(
-        frame: .zero,
+        frame: cardsFrameList[$0],
         viewModel: viewModel,
         cardAppearance: .front)
     }
@@ -151,8 +142,7 @@ private extension PlayerCardBoardView {
 // MARK: - LayoutSupport
 extension PlayerCardBoardView: LayoutSupport {
   func createSubviews() {
-    initCards()
-    
+    initCards(with: makeCardViewsFrame())
   }
   
   func addSubviews() {
@@ -162,7 +152,41 @@ extension PlayerCardBoardView: LayoutSupport {
 
 // MARK: - LayoutSupport helper
 private extension PlayerCardBoardView {
-  func cardViewFrame(with idx: Int) {
+  func makeCardViewsFrame() -> [CGRect] {
+    let headCount = vm.gameManager.headCount
+    let cardSize = Constant.intrinsicCardSize(from: self)
+    var startX: CGFloat = 0
+    var interItemSpacing: UISpacing = .init()
     
+    switch headCount {
+    case .three:
+      startX = Constant.HeadCountIsThree.edgeSpacing.leading
+      interItemSpacing = Constant.interItemSpacing(
+        from: self,
+        edgeSpacing: Constant.HeadCountIsThree.edgeSpacing,
+        headCount: headCount)
+    case .four:
+      startX = Constant.HeadCountIsFour.edgeSpacing.leading
+      interItemSpacing = Constant.interItemSpacing(
+        from: self,
+        edgeSpacing: Constant.HeadCountIsFour.edgeSpacing,
+        headCount: headCount)
+    case .five:
+      startX = Constant.HeadCountIsFive.edgeSpacing.leading
+      interItemSpacing = Constant.interItemSpacing(
+        from: self,
+        edgeSpacing: Constant.HeadCountIsFive.edgeSpacing,
+        headCount: headCount)
+    }
+    
+    return (0..<headCount.playerCardsCountInBoard).map {
+      var x = CGFloat($0)*cardSize.width + startX
+      if $0 > 0 {
+        x -= interItemSpacing.leading*CGFloat($0)
+      }
+      return CGRect(
+        origin: .init(x: x, y: Constant.topSpacing),
+        size: cardSize)
+    }
   }
 }
