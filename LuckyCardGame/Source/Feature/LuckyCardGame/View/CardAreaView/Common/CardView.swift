@@ -202,7 +202,6 @@ private extension LuckyCardView {
       .Constant
       .EmojiLabel
       .computedSpacing(from: self, subview: emojiLabel)
-    print(spacing)
     return .init(
       x: spacing.leading,
       y: spacing.top,
