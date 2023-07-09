@@ -118,7 +118,7 @@ private extension PlayerCardBoardView {
       cardViews = (0..<cardsCount).map {
         let viewModel = LuckyCardViewModel(
           gameManager: vm.gameManager,
-          cardModel: vm.playerOwnTheDeck.cards[$0])
+          cardModel: vm.showPlayerCard($0))
         return LuckyCardView(
           frame: cardsFrameList[$0],
           viewModel: viewModel,
@@ -130,7 +130,7 @@ private extension PlayerCardBoardView {
     cardViews = (0..<cardsCount).map {
       let viewModel = LuckyCardViewModel(
         gameManager: vm.gameManager,
-        cardModel: vm.playerOwnTheDeck.cards[$0])
+        cardModel: vm.showPlayerCard($0))
       return LuckyCardView(
         frame: cardsFrameList[$0],
         viewModel: viewModel,
