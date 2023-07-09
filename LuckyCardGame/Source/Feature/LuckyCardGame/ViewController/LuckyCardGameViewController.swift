@@ -15,8 +15,6 @@ final class LuckyCardGameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureUI()
-    let manager = LuckyCardManager()
-    _=LuckyCardDeckImpl(luckyCardManager: manager)
   }
 }
 
