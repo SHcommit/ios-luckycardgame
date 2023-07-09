@@ -47,10 +47,31 @@ final class LuckyCardGameView: BaseRoundView {
     super.init(with: .LuckyCardGameView, frame)
     isUserInteractionEnabled = true
     setupUI()
+    
+    let viewModels: [PlayersCardboardAreaViewModel] = [
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .three),
+        playerHeadCount: .three),
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .four),
+        playerHeadCount: .four),
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .five),
+        playerHeadCount: .five)]
+    
     playersCardAreaViewControllers = [
-      .init(playerHeadCountType: .three, viewFrame: cardAreaPageViewFrame),
-      .init(playerHeadCountType: .four, viewFrame: cardAreaPageViewFrame),
-      .init(playerHeadCountType: .five, viewFrame: cardAreaPageViewFrame)]
+      .init(
+        playerHeadCountType: .three,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[0]),
+      .init(
+        playerHeadCountType: .four,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[1]),
+      .init(
+        playerHeadCountType: .five,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[2])]
     addSubview(cardAreaPageViewController.view)
     bind()
   }
@@ -59,10 +80,30 @@ final class LuckyCardGameView: BaseRoundView {
     super.init(coder: coder)
     isUserInteractionEnabled = true
     setupUI()
+    let viewModels: [PlayersCardboardAreaViewModel] = [
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .three),
+        playerHeadCount: .three),
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .four),
+        playerHeadCount: .four),
+      PlayersCardboardAreaViewModel(
+        gameManager: .init(headCount: .five),
+        playerHeadCount: .five)]
+    
     playersCardAreaViewControllers = [
-      .init(playerHeadCountType: .three, viewFrame: cardAreaPageViewFrame),
-      .init(playerHeadCountType: .four, viewFrame: cardAreaPageViewFrame),
-      .init(playerHeadCountType: .five, viewFrame: cardAreaPageViewFrame)]
+      .init(
+        playerHeadCountType: .three,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[0]),
+      .init(
+        playerHeadCountType: .four,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[1]),
+      .init(
+        playerHeadCountType: .five,
+        viewFrame: cardAreaPageViewFrame,
+        vm: viewModels[2])]
     addSubview(cardAreaPageViewController.view)
     bind()
   }
