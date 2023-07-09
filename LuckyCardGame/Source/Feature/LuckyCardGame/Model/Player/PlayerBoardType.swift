@@ -24,3 +24,20 @@ extension PlayerBoardType: CustomStringConvertible {
     }
   }
 }
+
+// MARK: - Helper
+extension PlayerBoardType {
+  private var toInt: Int {
+    switch self {
+    case .A: return 0
+    case .B: return 1
+    case .C: return 2
+    case .D: return 3
+    case .E: return 4
+    }
+  }
+  
+  func toIndex(with headCount: PlayerHeadCountType) -> Int {
+    return self.toInt * headCount.playerCardsCountInBoard
+  }
+}
