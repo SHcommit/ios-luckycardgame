@@ -102,9 +102,12 @@ extension PlayersCardAreaViewController: LayoutSupport {
     playersCardBoardAreaView = .init(
       frame: playersCardBoardAreaViewFrame,
       gameManager: vm.gameManager)
+    
+    let footerViewModlel = LuckyCardGameFooterViewModel(gameManager: vm.gameManager)
     footerCardBoardView = .init(
       frame: footerCardBoardViewFrame,
-      gameManager: vm.gameManager)
+      vm: footerViewModlel,
+      cardSize: playersCardBoardAreaView.cardSize())
   }
   
   func addSubviews() {
