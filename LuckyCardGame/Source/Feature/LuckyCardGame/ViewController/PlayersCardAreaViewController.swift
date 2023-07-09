@@ -17,7 +17,13 @@ final class PlayersCardAreaViewController: UIViewController {
     }
     
     enum FooterCardBoardView {
-      static let height: CGFloat = 151
+      
+      static let height: CGFloat = {
+        if UIScreen.main.bounds.size.width == 375 && UIScreen.main.bounds.size.height == 667 {
+          return 131
+        }
+        return 151
+      }()
       static let spacing: UISpacing = .init(
         top: UIConstant.shared.spacing.top)
     }
