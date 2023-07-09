@@ -48,19 +48,28 @@ final class PlayersCardAreaViewController: UIViewController {
     nibName nibNameOrNil: String?,
     bundle nibBundleOrNil: Bundle?,
     playerHeadCountType: PlayerHeadCountType,
-    viewFrame: CGRect
+    viewFrame: CGRect,
+    vm: PlayersCardboardAreaViewModel
   ) {
     // MARK: - 주의. init시점에 view.frame = viewFrame을 하면안됨
     // 이유: 아직 vc의 view가 초기화되지 않을 수도 있다고 한다....
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    vm = PlayersCardboardAreaViewModel(
-      gameManager: vm.gameManager,
-      playerHeadCount: playerHeadCountType)
+    self.vm = vm
     parentViewBounds = viewFrame
   }
   
-  convenience init(playerHeadCountType: PlayerHeadCountType, viewFrame: CGRect) {
-    self.init(nibName: nil, bundle: nil, playerHeadCountType: playerHeadCountType, viewFrame: viewFrame)
+  convenience init(
+    playerHeadCountType: PlayerHeadCountType,
+    viewFrame: CGRect,
+    vm: PlayersCardboardAreaViewModel
+  ) {
+    self.init(
+      nibName: nil,
+      bundle: nil,
+      playerHeadCountType: playerHeadCountType,
+      viewFrame: viewFrame,
+      vm: vm)
+    parentViewBounds = viewFrame
   }
   
   // vmFIXME: - vm 디폴트 값 저장

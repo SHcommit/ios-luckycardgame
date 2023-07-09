@@ -8,6 +8,9 @@
 protocol PlayersCardBoardAreaViewModelProtocol {
   associatedtype Card
   
+  var gameManager: LuckyCardManager { get }
+  var playerHeadCount: PlayerHeadCountType { get }
+  
   func divideCards(
     in board: PlayerBoardType,
     with headCount: PlayerHeadCountType) -> [Card]
