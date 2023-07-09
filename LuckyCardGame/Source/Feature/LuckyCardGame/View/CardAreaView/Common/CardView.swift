@@ -57,7 +57,7 @@ final class LuckyCardView: BaseRoundView {
     }
     // 뒷장일 때
     enum  LogoImageView {
-      static let size: CGSize = .init(width: 40, height: 40)
+      static let size: CGSize = .init(width: 34, height: 34)
       static let logoName: String = "luckyLogo"
       static func computedSpacing(
         from superView: UIView?
