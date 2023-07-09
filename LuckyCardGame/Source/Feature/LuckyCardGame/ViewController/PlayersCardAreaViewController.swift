@@ -37,11 +37,8 @@ final class PlayersCardAreaViewController: UIViewController {
     nibName nibNameOrNil: String?,
     bundle nibBundleOrNil: Bundle?
   ) {
-    // vmFIXME: - vm default 값 저장
+    // vmFIXME: - vm 미구현
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    vm = PlayersCardboardAreaViewModel(
-      gameManager: vm.gameManager,
-      playerHeadCount: .three)
   }
   
   init(
@@ -72,12 +69,9 @@ final class PlayersCardAreaViewController: UIViewController {
     parentViewBounds = viewFrame
   }
   
-  // vmFIXME: - vm 디폴트 값 저장
+  // vmFIXME: - vm 미구현
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    vm = PlayersCardboardAreaViewModel(
-      gameManager: vm.gameManager,
-      playerHeadCount: .three)
   }
   
   // 이 시점에 view는 초기화 되고, view에 대한 frame을 지정 후 하면 된다.
