@@ -49,7 +49,27 @@ final class LuckyCardView: UIView {
         }
         me.sizeToFit()
         let leadingSpacingForCenterX = superView.bounds.width/2.0 - me.bounds.width/2.0
-        let topSpacingForCenterY = superView.bounds.height - me.bounds.height - 10
+        let topSpacingForCenterY = superView.bounds.height/2.0 - me.bounds.height/2.0
+        return .init(
+          leading: leadingSpacingForCenterX,
+          top: topSpacingForCenterY)
+      }
+    }
+    // 뒷장일 때
+    enum LogoImageView {
+      static let size: CGSize = .init(width: 40, height: 40)
+      static func computedSpacing(
+        from superView: UIView?,
+        subview me: UIView?
+      ) -> UISpacing {
+        guard
+          let superView = superView,
+          let me = me
+        else {
+          return .init()
+        }
+        let leadingSpacingForCenterX = superView.bounds.width/2.0 - me.bounds.width/2.0
+        let topSpacingForCenterY = superView.bounds.height/2.0 - me.bounds.height/2.0
         return .init(
           leading: leadingSpacingForCenterX,
           top: topSpacingForCenterY)
@@ -66,19 +86,27 @@ final class LuckyCardView: UIView {
   
   private var rightBottomNubmerLabel: UILabel?
   
+  private var logoImageView: UIImageView?
+  
+  private var cardAppearance: LuckyCard.Appearance
+  
   private override init(frame: CGRect) {
+    cardAppearance = .front
     super.init(frame: frame)
+    setupUI()
   }
   
   // MARK: - Lifecycle
-  init(frame: CGRect, viewModel: LuckyCardViewModelProtocol) {
+  init(frame: CGRect, viewModel: LuckyCardViewModelProtocol, cardAppearance: LuckyCard.Appearance) {
     vm = viewModel
+    self.cardAppearance = cardAppearance
     super.init(frame: frame)
     setupUI()
   }
   
   // viewModelFIXME: - viewModel 초기화 하지 않았습니다.
   required init?(coder: NSCoder) {
+    cardAppearance = .front
     super.init(coder: coder)
     setupUI()
   }
@@ -87,12 +115,27 @@ final class LuckyCardView: UIView {
 // MARK: - LayoutSupport
 extension LuckyCardView: LayoutSupport {
   func createSubviews() {
-    leftTopNumberLabel = UILabel(frame: leftTopNumberLabelFrame)
-    emojiLabel = UILabel(frame: emojiLabelFrame)
-    rightBottomNubmerLabel = UILabel(frame: rightBottomNumberLabelFrame)
+    switch cardAppearance {
+    case .front:
+      leftTopNumberLabel = UILabel(frame: leftTopNumberLabelFrame)
+      emojiLabel = UILabel(frame: emojiLabelFrame)
+      rightBottomNubmerLabel = UILabel(frame: rightBottomNumberLabelFrame)
+    case .rear:
+      logoImageView = UIImageView(frame: logoImageViewFrame)
+    }
   }
   
   func addSubviews() {
+    switch cardAppearance {
+    case .front:
+      addFrontCardAppearanceSubviews()
+    case .rear:
+      guard let logoImageView = logoImageView else { return }
+      addSubview(logoImageView)
+    }
+  }
+  
+  private func addFrontCardAppearanceSubviews() {
     guard
       let leftTopNumberLabel = leftTopNumberLabel,
       let rightBottomNubmerLabel = rightBottomNubmerLabel,
@@ -147,5 +190,18 @@ private extension LuckyCardView {
       size: .init(
         width: rightBottomNLabel.bounds.width,
         height: rightBottomNLabel.bounds.height))
+  }
+  
+  var logoImageViewFrame: CGRect {
+    guard let logoImageView = logoImageView else { return .zero }
+    let spacing = LuckyCardView
+      .Constant
+      .LogoImageView
+      .computedSpacing(from: self, subview: logoImageView)
+    return .init(
+      x: spacing.leading,
+      y: spacing.top,
+      width: LuckyCardView.Constant.LogoImageView.size.width,
+      height: LuckyCardView.Constant.LogoImageView.size.height)
   }
 }
