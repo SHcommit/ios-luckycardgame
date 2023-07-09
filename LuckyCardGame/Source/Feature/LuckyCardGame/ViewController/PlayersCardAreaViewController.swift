@@ -24,20 +24,24 @@ final class PlayersCardAreaViewController: UIViewController {
   }
   
   // MARK: - Properties
-  private var playerHeadCountType: PlayerHeadCountType?
-  
   private var playersCardBoardAreaView: LuckyCardGameContentView!
   
   private var footerCardBoardView: LuckyCardGameFooter!
   
   private var parentViewBounds: CGRect?
   
+  private var vm: PlayersCardboardAreaViewModel!
+  
   // MARK: - Lifecycles
   private override init(
     nibName nibNameOrNil: String?,
     bundle nibBundleOrNil: Bundle?
   ) {
+    // vmFIXME: - vm default 값 저장
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    vm = PlayersCardboardAreaViewModel(
+      gameManager: vm.gameManager,
+      playerHeadCount: .three)
   }
   
   init(
@@ -49,7 +53,9 @@ final class PlayersCardAreaViewController: UIViewController {
     // MARK: - 주의. init시점에 view.frame = viewFrame을 하면안됨
     // 이유: 아직 vc의 view가 초기화되지 않을 수도 있다고 한다....
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    self.playerHeadCountType = playerHeadCountType
+    vm = PlayersCardboardAreaViewModel(
+      gameManager: vm.gameManager,
+      playerHeadCount: playerHeadCountType)
     parentViewBounds = viewFrame
   }
   
@@ -57,8 +63,12 @@ final class PlayersCardAreaViewController: UIViewController {
     self.init(nibName: nil, bundle: nil, playerHeadCountType: playerHeadCountType, viewFrame: viewFrame)
   }
   
+  // vmFIXME: - vm 디폴트 값 저장
   required init?(coder: NSCoder) {
     super.init(coder: coder)
+    vm = PlayersCardboardAreaViewModel(
+      gameManager: vm.gameManager,
+      playerHeadCount: .three)
   }
   
   // 이 시점에 view는 초기화 되고, view에 대한 frame을 지정 후 하면 된다.
@@ -92,9 +102,10 @@ extension PlayersCardAreaViewController: LayoutSupport {
   func createSubviews() {
     playersCardBoardAreaView = .init(
       frame: playersCardBoardAreaViewFrame,
-      playerHeadCount: playerHeadCountType ?? .three)
+      playerHeadCount: vm.playerHeadCount)
     footerCardBoardView = .init(
-      frame: footerCardBoardViewFrame)
+      frame: footerCardBoardViewFrame,
+      gameManager: vm.gameManager)
   }
   
   func addSubviews() {
@@ -133,7 +144,7 @@ extension PlayersCardAreaViewController {
     let playersCardboardVerticalTotalInterItemSpacing = playerInterItemSpacingCount * playersCardBoardVerticalInterItemSpacing
     let playerCardBoardHeightWithoutSpacing = playersCardBoardAreaViewHeight - playersCardboardVerticalTotalInterItemSpacing
     let aPlayerCardBoardHeight = playerCardBoardHeightWithoutSpacing / playerMaxHeadCount
-    let footerCardBoardHeight = playerHeadCountType == .five ? Constant
+    let footerCardBoardHeight = vm.playerHeadCount == .five ? Constant
       .FooterCardBoardView
       .height : Constant.FooterCardBoardView.height + aPlayerCardBoardHeight
     
