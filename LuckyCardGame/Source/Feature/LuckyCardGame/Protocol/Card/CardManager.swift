@@ -8,5 +8,5 @@
 protocol CardManager {
   associatedtype Card
   
-  func makeInitialDeck() -> [Card]
+  func makeInitialDeck(with headCount: PlayerHeadCountType) -> [Card]
 }
