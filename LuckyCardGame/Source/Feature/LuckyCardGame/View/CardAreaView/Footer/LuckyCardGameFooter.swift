@@ -8,28 +8,126 @@
 import UIKit
 
 final class LuckyCardGameFooter: BaseRoundView {
-  // MARK: - Constant
-  struct Constant {
-    static let radius: CGFloat = BaseRoundView.Constant.radius
-    static let bgColor: UIColor = BaseViewPalette.footer.bgColor
-  }
-  
   // MARK: - Properties
-  private var gameManager: LuckyCardManager!
+  private var vm: LuckyCardGameFooterViewModel
+  
+  private var cardViews: [LuckyCardView]!
+  
+  private var cardSize: CGSize
   
   // MARK: - Lifecycle
-  init(frame: CGRect, gameManager: LuckyCardManager) {
+  init(frame: CGRect, vm: LuckyCardGameFooterViewModel, cardSize: CGSize) {
+    self.vm = vm
+    self.cardSize = cardSize
     super.init(with: .footer, frame)
-    self.gameManager = gameManager
-    backgroundColor = Constant.bgColor
-    layer.cornerRadius = Constant.radius
+    setupUI()
   }
   
-  // gameManagerFIXME: - gmaeManager 초기화 x
+  // vmFIXME: - vm, cardSize 초기화 디폴트값, 동기화x
   required init?(coder: NSCoder) {
+    vm = LuckyCardGameFooterViewModel(gameManager: .init(headCount: .three))
+    cardSize = .zero
     super.init(coder: coder)
-    gameManager = nil
-    backgroundColor = Constant.bgColor
-    layer.cornerRadius = Constant.radius
+  }
+}
+
+// MARK: - Action
+extension LuckyCardGameFooter {
+  @objc func handleACardSize(_ notification: Notification) {
+    guard
+      let selectedOpt = notification.userInfo?["ACardSize"] as? CGSize
+    else {
+      return
+    }
+    cardSize = selectedOpt
+  }
+}
+
+// MARK: - LayoutSupprot
+extension LuckyCardGameFooter: LayoutSupport {
+  func createSubviews() {
+    initCards(with: makeCardViewsFrame())
+  }
+  
+  func addSubviews() {
+    _=cardViews.map { addSubview($0) }
+  }
+  
+  func initCards(with cardFrameList: [CGRect]) {
+    let cardsCnt = vm.gameManager.headCount.bottomCardsCountInBoard
+    cardViews = (0..<cardsCnt).map {
+      let viewModel = LuckyCardViewModel(
+        gameManager: vm.gameManager,
+        cardModel: vm.remainingDeck.cards[$0])
+      
+      return LuckyCardView(
+        frame: cardFrameList[$0],
+        viewModel: viewModel,
+        cardAppearance: .rear)
+    }
+  }
+}
+
+// MARK: - LayoutSupport helper
+private extension LuckyCardGameFooter {
+  
+  func interItemSpacing() -> UISpacing {
+    let bottomCardsCountInOneHoriLinePlusOne = CGFloat(
+      vm.gameManager
+        .headCount
+        .bottomCardsCountInOneHoriLine+1)
+    let bottomCardsCntInOneHoriLine = CGFloat(
+      vm.gameManager
+        .headCount
+        .bottomCardsCountInOneHoriLine)
+    let totalCardWidth = cardSize.width*bottomCardsCntInOneHoriLine
+    let leadingSpacing: CGFloat = (bounds
+      .width - totalCardWidth) / bottomCardsCountInOneHoriLinePlusOne
+
+    let bottomCardsCountInOneVertiLinePlusOne = CGFloat(
+      vm.gameManager
+        .headCount
+        .bottomCardsCountInOneVertiLine+1)
+    let bottomCardsCntInOneVertiLine = CGFloat(
+      vm.gameManager
+        .headCount
+        .bottomCardsCountInOneVertiLine)
+    let totalCardHeight = cardSize.height*bottomCardsCntInOneVertiLine
+    let topSpacing: CGFloat = (bounds
+      .height - totalCardHeight) / bottomCardsCountInOneVertiLinePlusOne
+    return .init(
+      leading: leadingSpacing,
+      top: topSpacing)
+  }
+  
+  func makeCardViewsFrame() -> [CGRect] {
+    let headCount = vm.gameManager.headCount
+    var interItemSpacing: UISpacing = interItemSpacing()
+    var startX: CGFloat = interItemSpacing.leading
+    var startY: CGFloat = interItemSpacing.top
+    
+    if headCount == .five {
+      let leading = (bounds.width - cardSize.width*CGFloat(headCount.bottomCardsCountInBoard))/2
+      interItemSpacing = .init(leading: leading, top: interItemSpacing.top)
+    }
+    
+    return (0..<headCount.bottomCardsCountInBoard).map {
+      let idx = CGFloat($0%headCount.bottomCardsCountInOneHoriLine)
+      startX = idx * cardSize.width + interItemSpacing.leading*(idx+1)
+      if headCount == .five && $0 > 0 {
+        startX -= interItemSpacing.leading*(idx)
+      }
+      if $0 == headCount.bottomCardsCountInOneHoriLine {
+        if headCount == .three || headCount == .four {
+          startX = interItemSpacing.leading
+          startY += interItemSpacing.top + cardSize.height
+        }
+      }
+      return CGRect(
+        x: startX,
+        y: startY,
+        width: cardSize.width,
+        height: cardSize.height)
+    }
   }
 }
