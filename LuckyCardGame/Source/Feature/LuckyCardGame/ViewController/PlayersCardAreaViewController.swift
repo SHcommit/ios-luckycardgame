@@ -44,7 +44,6 @@ final class PlayersCardAreaViewController: UIViewController {
   init(
     nibName nibNameOrNil: String?,
     bundle nibBundleOrNil: Bundle?,
-    playerHeadCountType: PlayerHeadCountType,
     viewFrame: CGRect,
     vm: PlayersCardboardAreaViewModel
   ) {
@@ -56,17 +55,14 @@ final class PlayersCardAreaViewController: UIViewController {
   }
   
   convenience init(
-    playerHeadCountType: PlayerHeadCountType,
     viewFrame: CGRect,
     vm: PlayersCardboardAreaViewModel
   ) {
     self.init(
       nibName: nil,
       bundle: nil,
-      playerHeadCountType: playerHeadCountType,
       viewFrame: viewFrame,
       vm: vm)
-    parentViewBounds = viewFrame
   }
   
   // vmFIXME: - vm 미구현

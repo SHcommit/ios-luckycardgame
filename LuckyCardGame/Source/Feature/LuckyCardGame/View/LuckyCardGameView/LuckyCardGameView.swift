@@ -61,15 +61,12 @@ final class LuckyCardGameView: BaseRoundView {
     
     playersCardAreaViewControllers = [
       .init(
-        playerHeadCountType: .three,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[0]),
       .init(
-        playerHeadCountType: .four,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[1]),
       .init(
-        playerHeadCountType: .five,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[2])]
     addSubview(cardAreaPageViewController.view)
@@ -93,15 +90,12 @@ final class LuckyCardGameView: BaseRoundView {
     
     playersCardAreaViewControllers = [
       .init(
-        playerHeadCountType: .three,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[0]),
       .init(
-        playerHeadCountType: .four,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[1]),
       .init(
-        playerHeadCountType: .five,
         viewFrame: cardAreaPageViewFrame,
         vm: viewModels[2])]
     addSubview(cardAreaPageViewController.view)
