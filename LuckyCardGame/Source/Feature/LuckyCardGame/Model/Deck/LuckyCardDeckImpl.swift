@@ -21,10 +21,9 @@ final class LuckyCardDeckImpl: Deck {
   var cards: [Card]
   
   // MARK: - Lifecycle
-  init(luckyCardManager manager: LuckyCardManager) {
-    cards = manager.makeInitialDeck()
-    cards.shuffle()
-    manager.printDeckState(self, manager: manager)
+  init(cards: [Card]) {
+    self.cards = cards
+    self.cards.shuffle()
   }
 }
 
@@ -41,5 +40,17 @@ extension LuckyCardDeckImpl {
     return cards.map {
       $0.description(with: manager.shapeStorage)
     }.joined(separator: ", ")
+  }
+}
+
+// MARK: - LuckyCardDeckRule
+extension LuckyCardDeckImpl {
+  func divideCards(
+    in board: PlayerBoardType,
+    with headCount: PlayerHeadCountType
+  ) -> [LuckyCard] {
+    let start = board.toIndex(with: headCount)
+    let end = start + headCount.playerCardsCountInBoard
+    return (start..<end).map { cards[$0] }
   }
 }
