@@ -10,7 +10,7 @@ import Foundation
 final class PlayerCardBoardViewModel {
   // MARK: - Properties
   private(set) var boardType: PlayerBoardType
-  private(set) var playerOwnTheDeck: LuckyCardDeckImpl
+  private(set) var player: Player
   private(set) var gameManager: LuckyCardManager
   
   // MARK: - Lifecycle
@@ -20,10 +20,16 @@ final class PlayerCardBoardViewModel {
   ) {
     self.boardType = boardType
     self.gameManager = gameManager
-    playerOwnTheDeck = .init(
+    let playerOwnTheDeck: LuckyCardDeckImpl = .init(
       cards: gameManager.luckyCardDeckImpl.divideCards(
         in: boardType,
         with: gameManager.headCount))
-    print(playerOwnTheDeck.description(with: gameManager))
+    self.player = .init(cardDeck: playerOwnTheDeck)
+  }
+}
+
+extension PlayerCardBoardViewModel {
+  func showPlayerCard(_ idx: Int) -> LuckyCard {
+    return player.showMyCard(idx)
   }
 }
