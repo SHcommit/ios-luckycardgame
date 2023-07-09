@@ -48,6 +48,8 @@
 		15DD40392A5A9566002BC5F8 /* PlayersCardBoardAreaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD40382A5A9566002BC5F8 /* PlayersCardBoardAreaViewModel.swift */; };
 		15DD403B2A5A970E002BC5F8 /* PlayersCardBoardAreaViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD403A2A5A970E002BC5F8 /* PlayersCardBoardAreaViewModelProtocol.swift */; };
 		15DD403D2A5A9EC4002BC5F8 /* PlayerCardBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD403C2A5A9EC4002BC5F8 /* PlayerCardBoardViewModel.swift */; };
+		15DD40412A5AF739002BC5F8 /* LuckyCardGameFooterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD40402A5AF739002BC5F8 /* LuckyCardGameFooterViewModel.swift */; };
+		15DD40432A5B1780002BC5F8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DD40422A5B1780002BC5F8 /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +101,8 @@
 		15DD40382A5A9566002BC5F8 /* PlayersCardBoardAreaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersCardBoardAreaViewModel.swift; sourceTree = "<group>"; };
 		15DD403A2A5A970E002BC5F8 /* PlayersCardBoardAreaViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersCardBoardAreaViewModelProtocol.swift; sourceTree = "<group>"; };
 		15DD403C2A5A9EC4002BC5F8 /* PlayerCardBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCardBoardViewModel.swift; sourceTree = "<group>"; };
+		15DD40402A5AF739002BC5F8 /* LuckyCardGameFooterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuckyCardGameFooterViewModel.swift; sourceTree = "<group>"; };
+		15DD40422A5B1780002BC5F8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +289,7 @@
 			children = (
 				153841972A547C2E004C41D1 /* PlayerBoardType.swift */,
 				153841982A547C2E004C41D1 /* PlayerHeadCountType.swift */,
+				15DD40422A5B1780002BC5F8 /* Player.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -369,6 +374,7 @@
 				15DD401B2A599921002BC5F8 /* LuckyCardViewModel.swift */,
 				15DD40382A5A9566002BC5F8 /* PlayersCardBoardAreaViewModel.swift */,
 				15DD403C2A5A9EC4002BC5F8 /* PlayerCardBoardViewModel.swift */,
+				15DD40402A5AF739002BC5F8 /* LuckyCardGameFooterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -480,12 +486,14 @@
 				153841B82A55A5C9004C41D1 /* CardShapeStorage.swift in Sources */,
 				1507EDFA2A57D1C300F88EF1 /* Card.swift in Sources */,
 				15DD40392A5A9566002BC5F8 /* PlayersCardBoardAreaViewModel.swift in Sources */,
+				15DD40412A5AF739002BC5F8 /* LuckyCardGameFooterViewModel.swift in Sources */,
 				153841DD2A565DB4004C41D1 /* BaseViewPalette.swift in Sources */,
 				1538417F2A547BE0004C41D1 /* ConvenienceInit.swift in Sources */,
 				1538415F2A547905004C41D1 /* AppDelegate.swift in Sources */,
 				153841CA2A55D1F8004C41D1 /* LuckyCardDeckError.swift in Sources */,
 				153841992A547C2E004C41D1 /* LuckyCardGameFooter.swift in Sources */,
 				15DD401C2A599921002BC5F8 /* LuckyCardViewModel.swift in Sources */,
+				15DD40432A5B1780002BC5F8 /* Player.swift in Sources */,
 				153841612A547905004C41D1 /* SceneDelegate.swift in Sources */,
 				153841812A547BE0004C41D1 /* UIConstant.swift in Sources */,
 				153841E62A574336004C41D1 /* CardManager.swift in Sources */,
