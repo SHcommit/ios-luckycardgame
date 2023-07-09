@@ -10,64 +10,62 @@ import UIKit
 final class PlayerCardBoardView: BaseRoundView {
   // MARK: - Constant
   struct Constant {
-    enum AlphabetLabel {
-      static let textColor: UIColor = .gray.withAlphaComponent(0.5)
-      static let textSize: CGFloat = 40
-      static let labelSize: CGSize = UILabel().set {
-        PlayerCardBoardView.setAlphabetLabel($0)
-        $0.sizeToFit()
-      }.bounds.size
-      static let spacing: UISpacing = .init(leading: 15)
-    }
   }
   
   // MARK: - Properties
-  private var alphabetLabel: UILabel!
+  private var cardViews: [LuckyCardView]!
   
-  private var boardType: PlayerBoardType!
+  private var vm: PlayerCardBoardViewModel
   
   // MARK: - Lifecycle
-  init(frame: CGRect) {
+  init(
+    frame: CGRect,
+    vm: PlayerCardBoardViewModel
+  ) {
+    self.vm = vm
     super.init(with: .playerCardBoardView, frame)
     setupUI()
   }
   
+  // vm, boardTypeFIXME: - vm, boardType를 추가 구현해야 합니다. 디퐅트 값 넣음.
   required init?(coder: NSCoder) {
+    vm = .init(
+      boardType: .A,
+      gameManager: .init(headCount: .five))
     super.init(coder: coder)
     setupUI()
   }
 }
 
-// MARK: - Helper
-extension PlayerCardBoardView {
-  func configure(with boardType: PlayerBoardType) {
-    self.boardType = boardType
-    setAlphabetLabel(with: boardType.description)
-  }
-}
-
 // MARK: - Private helper
 private extension PlayerCardBoardView {
-  static func setAlphabetLabel(_ label: UILabel) {
-    let textSize = Constant.AlphabetLabel.textSize
-    let font = UIFont.systemFont(ofSize: textSize)
-    let attrStr = NSMutableAttributedString(string: "A")
-    let italicPlusBoldFontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold])!
-    let italicPlusBoldFont = UIFont(descriptor: italicPlusBoldFontDescriptor, size: textSize)
-    let attributes: [NSAttributedString.Key: Any] = [
-      .font: italicPlusBoldFont,
-      .foregroundColor: Constant.AlphabetLabel.textColor]
-    attrStr.addAttributes(attributes, range: NSRange(location: 0, length: "A".count))
-    label.attributedText = attrStr
-    label.sizeToFit()
-  }
-  
-  func setAlphabetLabel(with text: String) {
-    _=alphabetLabel.set {
-      let curAttrStr = $0.attributedText ?? NSAttributedString(string: "A")
-      let attrStr = NSMutableAttributedString(attributedString: curAttrStr)
-      attrStr.mutableString.setString(text)
-      $0.attributedText = attrStr
+  func initCards() {
+    let cardsCount = vm.gameManager.headCount.playerCardsCountInBoard
+    guard vm.boardType == .A else {
+      // other
+      // MARK: - 잘하며 여기 문제잇을수도?
+      cardViews = (0..<cardsCount).map {
+        let viewModel = LuckyCardViewModel(
+          gameManager: vm.gameManager,
+          cardModel: vm.playerOwnTheDeck.cards[$0])
+        // MARK: - 카드뷰 프레임 지정해야함.
+        return LuckyCardView(
+          frame: .zero,
+          viewModel: viewModel,
+          cardAppearance: .rear)
+      }
+      return
+    }
+    // me
+    cardViews = (0..<cardsCount).map {
+      let viewModel = LuckyCardViewModel(
+        gameManager: vm.gameManager,
+        cardModel: vm.playerOwnTheDeck.cards[$0])
+      // MARK: - 카드뷰 프레임 지정해야함.
+      return LuckyCardView(
+        frame: .zero,
+        viewModel: viewModel,
+        cardAppearance: .front)
     }
   }
 }
@@ -75,24 +73,14 @@ private extension PlayerCardBoardView {
 // MARK: - LayoutSupport
 extension PlayerCardBoardView: LayoutSupport {
   func createSubviews() {
-    alphabetLabel = .init(frame: alphabetLabelFrame).set {
-      PlayerCardBoardView.setAlphabetLabel($0)
-    }
+    initCards()
   }
   
   func addSubviews() {
-    addSubview(alphabetLabel)
   }
 }
 
 // MARK: - LayoutSupport helper
 extension PlayerCardBoardView {
-  var alphabetLabelFrame: CGRect {
-    let y = (bounds.height - Constant.AlphabetLabel.labelSize.height)/2.0
-    return .init(
-      x: Constant.AlphabetLabel.spacing.leading,
-      y: y,
-      width: Constant.AlphabetLabel.labelSize.width,
-      height: Constant.AlphabetLabel.labelSize.height)
-  }
+  
 }
