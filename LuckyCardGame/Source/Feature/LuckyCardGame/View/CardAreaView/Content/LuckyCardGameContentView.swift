@@ -16,21 +16,24 @@ final class LuckyCardGameContentView: BaseRoundView {
   }
   
   // MARK: - Properties
-  private var playerHeadCount: PlayerHeadCountType!
-  
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
+  private var gameManager :LuckyCardManager
+  
   // MARK: - Lifecycle
-  init(frame: CGRect, playerHeadCount: PlayerHeadCountType) {
+  init(
+    frame: CGRect,
+    gameManager: LuckyCardManager
+  ) {
+    self.gameManager = gameManager
     super.init(with: .contentView, frame)
-    self.playerHeadCount = playerHeadCount
     setupUI()
   }
   
-  // playerHeadCountFIXME: - PlayerHeadCount 값을 변경해야합니다.
+  // gameManagerFIXME: - gameManager를 상위 객체로부터 상속받아야 합니다.
   required init?(coder: NSCoder) {
+    gameManager = .init(headCount: .three)
     super.init(coder: coder)
-    playerHeadCount = .none
     setupUI()
   }
 }
@@ -46,29 +49,27 @@ extension LuckyCardGameContentView: LayoutSupport {
   
   func addSubviews() {
     addBorderViewsFromSuperView()
-    let playerBoardTypes :[PlayerBoardType] = [.A, .B, .C, .D, .E]
-    for (idx, type) in playerBoardTypes.enumerated() {
-      playerCardBoardViews[idx].configure(with: type)
-    }
   }
 }
 
 // MARK: - LayoutSupport helper
 extension LuckyCardGameContentView {
   func initBoardViews(y: inout CGFloat, height: CGFloat) {
-    playerCardBoardViews = (0..<Constant.maximumHeadCount).map { i in
+    let playerBoardTypes :[PlayerBoardType] = [.A, .B, .C, .D, .E]
+    playerCardBoardViews = (0..<gameManager.headCount.toInt).map { i in
       if i > 0 { y += Constant.spacing.top + height }
+      let rect: CGRect = .init(x: 0, y: y, width: bounds.width, height: height)
+      let vm = PlayerCardBoardViewModel(
+        boardType: playerBoardTypes[i],
+        gameManager: gameManager)
       return PlayerCardBoardView(
-        frame: .init(
-          x: 0,
-          y: y,
-          width: bounds.width,
-          height: height))
+        frame: rect,
+        vm: vm)
     }
   }
   
   func addBorderViewsFromSuperView() {
-    _=(0..<playerHeadCount.toInt).map {
+    _=(0..<gameManager.headCount.toInt).map {
       addSubview(playerCardBoardViews[$0])
     }
   }
