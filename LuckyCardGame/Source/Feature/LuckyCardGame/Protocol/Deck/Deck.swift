@@ -16,7 +16,7 @@ protocol Deck: AnyObject {
   func insert( _ card: Card, at index: Int) throws
 }
 
-// MARK: - Helpers
+// MARK: - Helper
 extension Deck {
   func shuffle() {
     _=(0..<cards.count-1).map {

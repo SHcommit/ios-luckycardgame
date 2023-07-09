@@ -19,6 +19,7 @@ protocol CardShapeStorage: AnyObject  {
   var shapes: [Shape: Value] { get set }
 }
 
+// MARK: - Helper
 extension CardShapeStorage {
   func append(_ value: Value, forKey shape: Shape) {
     shapes[shape] = value

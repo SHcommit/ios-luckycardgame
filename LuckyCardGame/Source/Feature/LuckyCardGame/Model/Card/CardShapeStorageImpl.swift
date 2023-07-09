@@ -8,6 +8,7 @@
 import Foundation
 
 final class LuckyCardShapeStorageImpl: CardShapeStorage {
+  // MARK: - Constant
   typealias Shape = LuckyCardShapeType
   typealias Value = String
  

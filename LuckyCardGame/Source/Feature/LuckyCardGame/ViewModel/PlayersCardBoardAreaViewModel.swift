@@ -10,6 +10,7 @@ import Foundation
 final class PlayersCardboardAreaViewModel {
   // MARK: - Constant
   typealias Card = LuckyCard
+  
   // MARK: - Properties
   // 참조를 통해.. 상위 객채와 카드 공유..
   private(set) var gameManager: LuckyCardManager

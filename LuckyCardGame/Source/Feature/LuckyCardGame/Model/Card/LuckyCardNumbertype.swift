@@ -19,7 +19,10 @@ enum LuckyCardNumberType: Int, CaseIterable, CardNumberEnumProtocol {
   case Ten
   case eleven
   case twelve
-  
+}
+
+// MARK: - Helper
+extension LuckyCardNumberType {
   static func rawValue(from number: Int) -> LuckyCardNumberType? {
     return LuckyCardNumberType.allCases.first { $0.rawValue == number }
   }

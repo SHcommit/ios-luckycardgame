@@ -12,6 +12,7 @@
 ///
 
 class Card<Shape: CardShapeEnumProtocol, Number: CardNumberEnumProtocol> {
+  // MARK: - Model
   enum Appearance {
     case front
     case rear
