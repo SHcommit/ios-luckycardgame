@@ -20,20 +20,27 @@ class Card<Shape: CardShapeEnumProtocol, Number: CardNumberEnumProtocol> {
   // MARK: - Properties
   private(set) var number: Number
   private(set) var shape: Shape
-  private var _appearance: Appearance
-  
-  var appearance: Appearance {
-    get {
-      _appearance
-    } set {
-      _appearance = newValue
-    }
-  }
+  private(set) var appearance: Appearance
   
   // MARK: - Lifecycle
   init(number: Number, shape: Shape, appearance: Appearance) {
     self.number = number
     self.shape = shape
-    self._appearance = appearance
+    self.appearance = appearance
+  }
+}
+
+// MARK: - Helper
+extension Card {
+  func flip(to newApperance: Appearance) {
+    if appearance != newApperance {
+      appearance = newApperance
+    }
+  }
+  func isEqual(_ card: Card) -> Bool {
+    return number == card.number && shape == card.shape
+  }
+  func isEqualShape(_ card: Card) -> Bool {
+    return shape == card.shape
   }
 }
