@@ -56,9 +56,9 @@ final class LuckyCardView: UIView {
       }
     }
     // 뒷장일 때
-    enum LogoImageView {
+    enum  LogoImageView {
       static let size: CGSize = .init(width: 40, height: 40)
-      static let logoName: String = Constant.LogoImageView.logoName
+      static let logoName: String = "luckyLogo"
       static func computedSpacing(
         from superView: UIView?,
         subview me: UIView?
