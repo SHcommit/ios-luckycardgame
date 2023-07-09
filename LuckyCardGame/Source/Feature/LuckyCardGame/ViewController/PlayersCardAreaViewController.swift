@@ -101,7 +101,7 @@ extension PlayersCardAreaViewController: LayoutSupport {
   func createSubviews() {
     playersCardBoardAreaView = .init(
       frame: playersCardBoardAreaViewFrame,
-      playerHeadCount: vm.playerHeadCount)
+      gameManager: vm.gameManager)
     footerCardBoardView = .init(
       frame: footerCardBoardViewFrame,
       gameManager: vm.gameManager)
