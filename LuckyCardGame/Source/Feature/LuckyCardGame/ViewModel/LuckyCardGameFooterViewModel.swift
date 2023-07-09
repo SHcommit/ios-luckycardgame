@@ -17,9 +17,8 @@ final class LuckyCardGameFooterViewModel {
     gameManager: LuckyCardManager
   ) {
     self.gameManager = gameManager
-    // 플레이어가 소유중인ㄷ 덱
+    // 남은 카드들
     remainingDeck = .init(
       cards: gameManager.luckyCardDeckImpl.divideBottomCards(with: gameManager.headCount))
-    print(remainingDeck.cards.description)
   }
 }
