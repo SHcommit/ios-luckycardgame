@@ -6,8 +6,7 @@
 //
 
 final class LuckyCard: Card<LuckyCardShapeType, LuckyCardNumberType> {
-  func description(with shapeStorage: LuckyCardShapeStorageImpl) -> String {
-    let shape = shapeStorage.shapes[shape] ?? ""
-    return "\(shape.toUnicodeTypeString())\(String(format: "%02d", number.rawValue))"
+  override func description() -> String {
+    return "\(shape.description)\(String(format: "%02d", number.rawValue))"
   }
 }
