@@ -109,6 +109,27 @@ final class PlayerCardBoardView: BaseRoundView {
   }
 }
 
+// MARK: - Helper
+extension PlayerCardBoardView {
+  func animDealCardViews() {
+    _=cardViews.enumerated()
+      .map { idx, cardView in
+        cardView.alpha = 0.0
+        cardView.transform = CGAffineTransform(
+          translationX: bounds.width, y: 0)
+    
+        UIView.animate(
+          withDuration: 0.1,
+          delay: 0.1 * Double(idx),
+          options: .curveEaseInOut
+        ) {
+          cardView.transform = .identity
+          cardView.alpha = 1
+      }
+    }
+  }
+}
+
 // MARK: - Private helper
 private extension PlayerCardBoardView {
   func initCards(with cardsFrameList: [CGRect]) {

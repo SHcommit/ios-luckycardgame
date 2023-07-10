@@ -38,7 +38,16 @@ final class LuckyCardGameContentView: BaseRoundView {
   }
 }
 
-// MARK: - Private helper
+// MARK: - Helper
+extension LuckyCardGameContentView {
+  func animDealCardViewsInEachPalyerBoard() {
+    _=playerCardBoardViews.map {
+      $0.animDealCardViews()
+    }
+  }
+}
+
+// MARK: - LayoutSupport
 extension LuckyCardGameContentView: LayoutSupport {
   func createSubviews() {
     let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(Constant.maximumHeadCount)

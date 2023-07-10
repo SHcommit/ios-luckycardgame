@@ -31,15 +31,20 @@ final class LuckyCardGameFooter: BaseRoundView {
   }
 }
 
-// MARK: - Action
 extension LuckyCardGameFooter {
-  @objc func handleACardSize(_ notification: Notification) {
-    guard
-      let selectedOpt = notification.userInfo?["ACardSize"] as? CGSize
-    else {
-      return
+  func animDealCardViews() {
+    _=cardViews.enumerated().map { n, cardView in
+      let beforeY = bounds.height + cardView.bounds.height
+      cardView.transform = CGAffineTransform(translationX: 0, y: beforeY)
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.1*Double(n),
+        options: .curveEaseInOut
+      ) {
+        cardView.transform = .identity
+        cardView.alpha = 1
+      }
     }
-    cardSize = selectedOpt
   }
 }
 
@@ -63,7 +68,8 @@ extension LuckyCardGameFooter: LayoutSupport {
       return LuckyCardView(
         frame: cardFrameList[$0],
         viewModel: viewModel,
-        cardAppearance: .rear)
+        cardAppearance: .rear
+      ).set { $0.alpha = 0 }
     }
   }
 }
