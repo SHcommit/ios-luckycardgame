@@ -7,56 +7,66 @@
 
 import Foundation
 
-/// LuckyCard, LuckyCardDeck을 관리할 수 있는 manager입니다. 앞에 언급한 두 인스턴스는 존재하지 않습니다.
 final class LuckyCardManager {
   // MARK: - Constant
   struct Constant {
-    enum GameSetting {
+    enum Card {
       static let NumberOfCards = 36
       static let NumberOfSpecificShapeCards = 12
+      static let shapes: [LuckyCardShapeType: String] = [
+        .cat: "U+1F431", .cow: "U+1F42E", .dog: "U+1F436"]
     }
   }
   
   // MARK: - Properties
-  typealias Shape = LuckyCardShapeType
+  private(set) var shapeStorage: LuckyCardShapeStorageImpl = .init(shapes: Constant.Card.shapes)
   
-  static let shared = LuckyCardManager()
+  private(set) var headCount: PlayerHeadCountType
   
-  let shapeStorage: CardShapeStorageImpl<Shape, String> = {
-    let shapes: [Shape: String] = [.cat: "U+1F431", .cow: "U+1F42E", .dog: "U+1F436"]
-    let factory = CardShapeStorageFactoryImpl<Shape, String>()
-    return factory.make(shapes: shapes)
-  }()
+  private(set) var luckyCardDeckImpl: LuckyCardDeckImpl!
   
   // MARK: - Lifecycle
-  private init() {}
+  init(headCount: PlayerHeadCountType) {
+    self.headCount = headCount
+
+    luckyCardDeckImpl = LuckyCardDeckImpl(cards: self.makeInitialDeck(with: headCount))
+    printDeckState(luckyCardDeckImpl, manager: self)
+  }
 }
 
-// MARK: - Helpers
-extension LuckyCardManager {
-  func printDeckState(_ luckyCardDeck: LuckyCardDeckImpl) {
-    print(luckyCardDeck.description)
+// MARK: - CardManager
+extension LuckyCardManager: CardManager {
+  typealias Card = LuckyCard
+  
+  // MARK: - Helpers
+  func printDeckState(_ deck: LuckyCardDeckImpl, manager: LuckyCardManager) {
+    print(deck.description(with: manager))
   }
   
-  func setInitialLuckyCardDeck() -> [LuckyCard] {
-    let totalCards = Constant.GameSetting.NumberOfCards
-    let specificShapeCardsCount = Constant.GameSetting.NumberOfSpecificShapeCards
-    return (0..<totalCards)
+  func makeInitialDeck(with headCount: PlayerHeadCountType) -> [Card] {
+    let totalCards = Constant.Card.NumberOfCards
+    let specificShapeCardsCount = Constant.Card.NumberOfSpecificShapeCards
+    
+    var allCards = (0..<totalCards)
       .map {
         let moduloPlusOne = ($0 % specificShapeCardsCount) + 1
         switch $0 / specificShapeCardsCount {
         case 0:
           return LuckyCard(
-            number: moduloPlusOne, shape: .cat)
+            number: LuckyCardNumberType.rawValue(from: moduloPlusOne) ?? .One, shape: .cat, appearance: .front)
         case 1:
           return LuckyCard(
-            number: moduloPlusOne, shape: .cow)
+            number: LuckyCardNumberType.rawValue(from: moduloPlusOne) ?? .One, shape: .cow, appearance: .front)
         case 2:
           return LuckyCard(
-            number: moduloPlusOne, shape: .dog)
+            number: LuckyCardNumberType.rawValue(from: moduloPlusOne) ?? .One, shape: .dog, appearance: .front)
         default:
-          return LuckyCard(number: -99999, shape: .cat)
+          return LuckyCard(number: LuckyCardNumberType(rawValue: -99999) ?? .One, shape: .cat, appearance: .front)
         }
       }
+    if headCount == .three {
+      allCards.removeAll(where: {$0.number.rawValue == 12})
+    }
+    return allCards
   }
 }

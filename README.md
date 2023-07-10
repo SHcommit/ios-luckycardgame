@@ -112,24 +112,97 @@ JK님의 PR을 통해 언제 auto layout의 frame이 명확하게 superview로�
 
 # 23.07.06. (목)
 
-### [Title]: 카드 나눠주기 (8H 15m)
-- [ ] [Concept] Struct와 클래스 개념 학습 (1H) 
-- [ ] [Concept] ARC 개념 복습 (1H)
-- [ ] [Concept] 메모리 분석 도구 학습 (1H)
-- [ ] [Feature] Player 기능 구현 (1H)
-- [ ] [Feature] 게임 진행하는 Manager기능 구현(1H 30m)
-- [ ] [Feature] 기존에 구현했던 노란색 영역 segment control로 대체(30m)
-- [ ] [Feature] 각 컨텐츠에 카드 뿌려주고 화면에서 카드가 겹침 등을 관리하는 Manager 구현(1H 30m)
-- [ ] [Docs] 구현한 기능들 기능 문서화 (30m)
-- [ ] 성장노트 작성 및 그룹 회고 (15m)
+## 📌 \[요약\]
 
-# 23.07.07. (금) 
-### [Title]: 게임 로직 구현하기 (6H 45m)
-- [ ] [Feature] XCTest, Unit test 개념 학습 (1H)
-- [ ] [Feature] 이전에 구현했던 세부 기능들을 사용해 게임 로직 구현 (2H)
-- [ ] [Feature] 참가자와 화면 전체를 포함하는 LuckyGame 구현 (1H)
-- [ ] [Feature] 요구사항에 맞는 정렬 기능들 구현 (1H)
-- [ ] [Feature] 특정 참가자와 해당 참가자 카드 중에 가장 낮은 숫자 또는 가장 높은 숫자, 바닥 카드 중 아무거나를 선택해서 3개가 같은지 판단 할 수 있는 기능 구현 (1H)
-- [ ] [Docs] 구현한 기능들 기능 문서화 (30m)
-- [ ] 성장노트 작성 및 그룹 회고 (15m)
+### \[Title\]: 카드 나눠주기 (8H 15m)
 
+- [x] \[Concept\] Struct와 클래스 개념 학습 (1H)
+- [x] \[Concept\] ARC 개념 복습 (1H)
+- [ ] \[Concept\] 메모리 분석 도구 학습 (1H)
+- [x] \[Feature\] Player 기능 구현 (1H)
+- [x] \[Feature\] 게임 진행하는 Manager기능 구현(1H 30m)
+- [x] \[Feature\] 기존에 구현했던 노란색 영역 segment control로 대체(30m)
+- [x] \[Feature\] 각 컨텐츠에 카드 뿌려주고 화면에서 카드가 겹침 등을 관리하는 Manager 구현(1H 30m)
+- [ ] \[Docs\] 구현한 기능들 기능 문서화 (30m)
+- [x] 성장노트 작성 및 그룹 회고 (15m)
+
+🚨 **과제 완성날짜 시간: 2023.07.07 | 완성 시간: 12H:00m**
+🚨 **주요 작업**
+
+- [x] struct, class, enum 개념 학습 (1H)
+- [x] protocol 과 enmu, genric 개념 학습 (3H)
+- [x] 1일, 2일차 PR 피드백에 대한 전반적인 리펙터링 (10H)
+- [x] player의 카드가 놓일 layout에 대한 frame 길이 설계 (1H)
+
+## 📌 \[요약\]
+
+- UISpacing 세분화
+- baseView 공통적으로 view 타입에 따라 기본 색 지정 + radius 지정
+- 카드 모양과 숫자 generic타입으로 구현해서 다양한 enum을 받을 수 있도록. + 다른 개발자도 알기 쉽게 enum 전용 프로토콜 선언
+- 팩터리 패턴 도입의 모호성으로 제거
+- 예기치 못한 상황에 대해 전부 에러타입으로 할 생각이었는데.. 옵셔널 타입을 이용하면 do-try-catch 이나 rethrows안해도 되는 장점. throw-> 옵셔널 타입으로 변경
+- LuckyCardManager 싱글톤 제거
+- header, contentView, footer 오토 레이아웃 -> frame으로 layout 지정. ( LayoutSubviews()에서 초기화 해야 하는 문제 해결 )
+
+## ✨ [느낀점]
+
+### validation 등에 대해서 오류가 났을 때 등 예기치 못한 상황이 발생할 가능성이 있다면 거의 에러 타입을 만들고 던져서 handling 했습니다. PR에서 JK님의 코드 리뷰를 통해 '옵셔널'타입을 사용해도 좋다는 것을 깨닫게 되었습니다. 
+
+### Card를 상속받아 다양한 타입의 카드 ex) LuckyCard, PockerCard, BicycleCard를 받는다고 가정했을 때 이들의 모양과 숫자가 전부 다르다는 것을 가정했고 모양과 숫자가 enum타입이나 struct타입일 때 어떻게 이런 카드타입을 허용하는 base class인 Card 객체를 생성할 수 있을까 고민했고..키가 될 수 있는 타입인 Hashable을 적용한 특정 protcol을 채택하도록 제너릭 타입을 적용했습니다.
+
+## 📸 \[개선된 점\]
+
+- layoutSubviews()에서 초기화 x
+<img width="400" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/5fd456fc-7ebb-49fc-b365-9bb66a982621"> 
+
+사실 제 코드의 가장 큰 문제는 auto layout으로 header, contentView, footer를 정한 후 bounds가 지정될 때 contentView안 subviews를 contentView.bounds를 통해 지정하는 것이었습니다. 하지만 header, contentView, footer와 LuckyCardGameView 또한 frame으로 지정해주면서 문제를 해결했습니다. header, contentView, footer의 containerView인 LuckyCardGameView는 viewDidLoad시점에 statusBar 높이와 safeAreaLaoutGuide Bottom height를 구함으로써 모든 문제가 해결되었습니다.
+
+- 오토레이아웃 -> frame으로 코드 길이 간소화.
+### 오토레이아웃으로 코드 지정했을 때 Constraints
+<img src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/dacb4189-bf04-4bf7-a8f9-ca8b87e948a1" width="350" >
+
+<img width="729" alt="리펙터-제약2" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/50e54423-a333-41fa-b576-d6a7ceb33f34">
+### frame을 지정했을 때
+
+<img width="819" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/c472885e-c7a1-4ce8-a879-5a3cd5747e62">
+
+# 23.07.07. (금, 토, 일)
+
+### \[Title\]: 게임 카드 나눠주기
+
+## 📌 \[요약\]
+
+- 이전 PR 코드리뷰에 대한 리펙터링, 코드 보완을 중심으로 했습니다.
+- Frame만 사용해서 디바이스의 화면 별로 **비율**을 통해 layout 잡히도록 구현했습니다.
+- 플레이어 수 3명, 4명, 5명일 별로 각기 다른 룰 적용 가능하도록 LuckyCardManager를 class타입으로 구현해 참조를 이루었습니다.
+- 카드 나눠주기 완료
+- 플레이어 추가
+---
+
+## 📸 \[구현 기능\]
+
+![ezgif com-video-to-gif](https://github.com/SHcommit/ios-luckycardgame/assets/96910404/6f0fc4aa-c96d-48af-9092-9d8bcb99b3d7)
+
+오토레이아웃 사용하지 않고 **프레임**으로 디바이스의 bounds에 따라 상대적인 width, height를 구해가며 작업했습니다. 살짝 예상은 했지만 디바이스 별로 카드 길이가 늘어나고 줄어드는 것이 마치 오토 레이아웃처럼.. 됩니다.
+
+처음부터 화면들을 접근할 때 사실 오토레이아웃이나 프레임이나 똑같이 spacing만큼 상대적으로 "디바이스를 기준으로 처리해주면 되는거 아닌가?" 생각 했는데 주말 내내 할 줄 몰랐습니다...
+
+디바이스 화면 UI 작업할 때 iOS 14 pro로 초기 화면 비율을 지정된 높이 노란색영역(44..네비바..) 에 맞춰서 회색 영역의 크기를 노란색에 대한 상대적인 비율로 높이를 잡았었는데, 작은 화면에서 잡았으면 작은 화면에서도 잘 동작 될지 궁금증합니다.
+
+
+이번에 확실하게 안 개념은 bounds입니다. 이것은 마치 오토레이아웃처럼 spacing을 주면 동작되는게 신기했습니다. 개발자 소들이의 frame vs bounds를 예전에 공부하며 봤을때는 잘 이해가 안갔는데 오늘에서야 이해를 한 것 같습니다. frame vs bounds...
+
+피드백을 통해서 보완하고 리펙터링하면서 목, 금 피드백과 PR 코드 리뷰를 보며 부족하지만 조금은OOP에 대해서 알게 되었습니다.
+
+1주차 미션 할 때  상속 단계 3단계?까지 있는 자식 객체도 구현하면서 "클래스를 왜쓰지?" 하면서 주말에서야 확실히 블로그에 개념을 정리하며 기본 개념을 많이 까먹었다는 것을 알게 되었습니다. 
+
+
+<img width="500" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/dc4e6768-99fe-467a-be95-bfe9b73da277">
+
+세그먼트 바가 네비게이션 바 높이와 딱 알맞게 44인걸 초반에 전혀 알지 못했습니다. 미션 처음 봤을 때 "상태바 아래부터 top spacing 0으로 해서 44만큼의 길이를 세그먼트 바로 지정하면 되겠다"는 생각을 했습니다. 추후에 세그먼트 바가 동작을 안해서 3시간정도 고민하다가 자식뷰에서 터치가 동작되려면 상위뷰에서 isUserInteractive를 허용했지만 결국 뷰 계층 구조를 통해 네비게이션 바가 있음을 알게 되었습니다.
+
+
+위 사진은 제 뷰 구성입니다. 여기서 궁금한 점은 화면 단위를 영역으로 나눠서 영역 안에 또 다른 영역을 나눠서 화면 구현을 진행했습니다. 이렇게 하는 경우의 장 단점이 궁금합니다..
+
+
+이전에 자신이 짠 코드를 구성하는 시간에 struct 와 클래스에 대한 대화가 오갔고 그 대화 속에서 특정 예시를 통해 클래스의 참조를 다시 이해하게 되었습니다. 그렇게 LuckyCardManager를 참조로 적극 활용했습니다.

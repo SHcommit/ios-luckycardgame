@@ -21,14 +21,9 @@ final class LuckyCardDeckImpl: Deck {
   var cards: [Card]
   
   // MARK: - Lifecycle
-  private init(cards: [Card] = []) {
+  init(cards: [Card]) {
     self.cards = cards
-  }
-  
-  convenience init() {
-    let manager = LuckyCardManager.shared
-    self.init(cards: manager.setInitialLuckyCardDeck().shuffled())
-    manager.printDeckState(self)
+    self.cards.shuffle()
   }
 }
 
@@ -41,24 +36,29 @@ extension LuckyCardDeckImpl {
     cards.insert(card, at: index)
   }
   
-  func removeLast() throws -> Card {
-    guard let card = cards.popLast() else {
-      throw DeckError.EmptyDeck
-    }
-    return card
-  }
-  
-  func remove(at index: Int) throws -> Card {
-    guard (0..<cards.count).contains(index) else {
-      throw DeckError.OutOfRange
-    }
-    return cards.remove(at: index)
+  func description(with manager: LuckyCardManager) -> String {
+    return cards.map {
+      $0.description(with: manager.shapeStorage)
+    }.joined(separator: ", ")
   }
 }
 
-// MARK: - DeckConvertible
-extension LuckyCardDeckImpl: DeckConvertible {
-  var description: String {
-    cards.map { $0.description(with: LuckyCardManager.shared.shapeStorage) }.joined(separator: ", ")
+// MARK: - LuckyCardDeckRule
+extension LuckyCardDeckImpl {
+  func divideCards(
+    in board: PlayerBoardType,
+    with headCount: PlayerHeadCountType
+  ) -> [LuckyCard] {
+    let start = board.toIndex(with: headCount)
+    let end = start + headCount.playerCardsCountInBoard
+    return (start..<end).map { cards[$0] }
+  }
+  
+  func divideBottomCards(
+    with headCount: PlayerHeadCountType
+  ) -> [LuckyCard] {
+    let start = headCount.playerCardsCountInBoard*headCount.toInt
+    let end = start + headCount.bottomCardsCountInBoard
+    return (start..<end).map { cards[$0] }
   }
 }

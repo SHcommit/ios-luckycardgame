@@ -9,15 +9,15 @@
 protocol LayoutSupport {
   
   /// Add subviews in root view
-  func addSubviews()
+  func createSubviews()
   
   /// Set subviews constraints in root view
-  func setConstraints()
+  func addSubviews()
 }
 
 extension LayoutSupport {
   func setupUI() {
+    createSubviews()
     addSubviews()
-    setConstraints()
   }
 }
