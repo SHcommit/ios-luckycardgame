@@ -129,7 +129,7 @@ extension LuckyCardGameManager {
       }
   }
   
-  func divideRemainingCardsToPlayer() -> [LuckyCard] {
+  func divideRemainingCardsToFooter() -> [LuckyCard] {
     let start = headCount.playerCardsCountInBoard*headCount.toInt
     let end = start + headCount.bottomCardsCountInBoard
     guard let luckyCardDeckImpl = luckyCardDeckImpl else {
