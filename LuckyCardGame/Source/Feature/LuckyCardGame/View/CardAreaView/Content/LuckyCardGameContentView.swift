@@ -18,12 +18,12 @@ final class LuckyCardGameContentView: BaseRoundView {
   // MARK: - Properties
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
-  private var gameManager :LuckyCardManager
+  private var gameManager :LuckyCardGameManager
   
   // MARK: - Lifecycle
   init(
     frame: CGRect,
-    gameManager: LuckyCardManager
+    gameManager: LuckyCardGameManager
   ) {
     self.gameManager = gameManager
     super.init(with: .contentView, frame)
