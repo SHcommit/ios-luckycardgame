@@ -44,15 +44,18 @@ extension Card {
     }
   }
   
-  func isLargerThan(_ card: Card) -> Bool {
-    number > card.number
-  }
-  
-  func isEqualNumber(_ card: Card) -> Bool {
-    return number == card.number
-  }
-  
   func isEqualShape(_ card: Card) -> Bool {
     return shape.rawValue == card.shape.rawValue
+  }
+}
+
+// MARK: - Equatable, Comparable
+extension Card: Equatable, Comparable {
+  static func == (lhs: Card<Shape, Number>, rhs: Card<Shape, Number>) -> Bool {
+    return lhs.number == rhs.number
+  }
+  
+  static func < (lhs: Card<Shape, Number>, rhs: Card<Shape, Number>) -> Bool {
+    return lhs.number < rhs.number
   }
 }
