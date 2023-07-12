@@ -30,7 +30,7 @@ class LuckyCardDeckImplTests: XCTestCase {
 }
 
 extension LuckyCardDeckImplTests {
-  func testLuckyCardDeckImpl_WhenCalledCardDeckDescriptionAndMustSameCountBetweenCardDeckANdSplitedCard_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenCalledCardDeckDescriptionAndMustSameCountBetweenCardDeckAndSplitedCard_ShouldReturnTrue() {
     // Arrange
     let cardDescription: String = sut.description
     var splitedCardDescriptionCount: Int = 0
@@ -49,7 +49,7 @@ extension LuckyCardDeckImplTests {
       "The luckyCardDeckImpl's description should have returned Equal for total cards of lucky card deck that appointed LuckyCardGameManager.Constant: \(numberOfTotalLuckyCards). But it has return false")
   }
   
-  func testLuckyCardDeckImpl_WhenCardDeckShuffledComparePrevCardDeck_ShouldReturnNotEqual() {
+  func testLuckyCardDeckImpl_WhenTheCardDeckShuffledToComparePrevCardDeck_ShouldReturnNotEqual() {
     // Arrange
     let prevCardDeck = sut.cards
     
@@ -63,7 +63,7 @@ extension LuckyCardDeckImplTests {
       "The luckyCardDeckImpl's shuffle() should have returned Not Equal for shuffle the card deck but it has returned Equal.")
   }
   
-  func testLuckyCardDeckImpl_WhenCardDeckContainSomeCards_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenTheCardDeckContainSomeCards_ShouldReturnTrue() {
     // Arrange
     let mockLuckyCardNumbers: [LuckyCardNumberType] = [.eight, .five, .one, .six]
     let mockLuckyCardShapes: [LuckyCardShapeType] = [.cat, .cat, .cow, .dog]
@@ -98,7 +98,7 @@ extension LuckyCardDeckImplTests {
       "The contain(_:) should have returned TRUE to matching a lucky card in sut's card deck, but it has returned FALSE")
   }
   
-  func testLuckyCardDeckImpl_WhenLuckyCardDeckSorted_ShouldReturnNotEqual () {
+  func testLuckyCardDeckImpl_WhenTheLuckyCardDeckSorted_ShouldReturnNotEqual () {
     // Arrange
     var prevCardDeck = sut.cards
     
@@ -113,7 +113,7 @@ extension LuckyCardDeckImplTests {
       "The sort() should have returned Not Equal for sorting card deck with ascending order, but it has returned equal")
   }
   
-  func testLuckyCardDeckImpl_WhenClearCardDeck_ShouldReturnEqual() {
+  func testLuckyCardDeckImpl_WhenClearTHeCardDeck_ShouldReturnEqual() {
     // Act
     sut.clearDeck()
     
@@ -124,7 +124,7 @@ extension LuckyCardDeckImplTests {
       "The clearDeck() should have returned Equal for cleared deck with count: \(sut.cards.count), but it has retruned Not Equal")
   }
   
-  func testLuckyCardDeckImpl_WhenCalledRemoveAtInCardDeck_ShouldReturnNil() {
+  func testLuckyCardDeckImpl_WhenCalledRemoveAtInTheCardDeck_ShouldReturnNil() {
     // Act
     let removedCard = sut.remove(at: gameManager.numberOfCards)
     
