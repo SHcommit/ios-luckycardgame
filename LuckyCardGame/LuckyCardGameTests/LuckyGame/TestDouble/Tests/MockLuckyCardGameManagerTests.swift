@@ -91,7 +91,7 @@ extension MockLuckyCardGameManagerTests {
   
   func testMockLuckyCardGame_WhenDivideRemainingCardsToFooter_ShouldReutrnNotEqual() {
     // Arrange
-    let eachPlayersDeck: [Card] = sut
+    let eachPlayersDeck: [Card] = stubGameManager
       .showAllPlayerCards()
     
     // Act
