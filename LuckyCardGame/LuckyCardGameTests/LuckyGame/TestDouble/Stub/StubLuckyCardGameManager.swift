@@ -61,4 +61,15 @@ final class StubLuckyCardGameManager: CardGameManager {
   func divideRemainingCardsToFooter() -> [LuckyCard] {
     return []
   }
+  
+  func showAllPlayerCards() -> [Card] {
+    guard let _=cardDeck else { return [] }
+    return [
+      divideCardsToPlayer(in: .A),
+      divideCardsToPlayer(in: .B),
+      divideCardsToPlayer(in: .C),
+      divideCardsToPlayer(in: .D),
+      divideCardsToPlayer(in: .E)
+    ].flatMap { $0 }
+  }
 }
