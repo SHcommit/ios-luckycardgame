@@ -14,21 +14,35 @@ import Foundation
 /// 2. 삽입추가 등을 하기 위해 Card타입은 Comparable, Equatable을 준수하는 타입이어야 합니다.
 protocol Deck: AnyObject {
   associatedtype Card: Comparable, Equatable
-  associatedtype DeckError: Error
   
   var cards: [Card] { get set }
   var description: String { get }
-
-  func insert( _ card: Card, at index: Int) throws
 }
 
 // MARK: - Helper
 extension Deck {
+  
+  var isEmpty: Bool {
+    cards.isEmpty
+  }
+  
+  func insert(_ card: Card, at index: Int) -> Card? {
+    guard (0...cards.count).contains(index) else {
+      return nil
+    }
+    cards.insert(card, at: index)
+    return card
+  }
+  
   func shuffle() {
     _=(0..<cards.count-1).map {
       let randInt = Int.random(in: $0..<cards.count)
       if $0 != randInt { cards.swapAt($0, randInt) }
     }
+  }
+  
+  func sort(_ comparer: (Card, Card) -> Bool) {
+    cards.sort(by: comparer)
   }
   
   func append(_ card: Card) {
@@ -51,6 +65,10 @@ extension Deck {
   }
   
   func contains(of cards: [Card]) -> Bool {
-    return self.cards.contains(cards)
+    return self.cards.contains(where: {!cards.contains($0)})
+  }
+  
+  func clearDeck() {
+    cards = []
   }
 }
