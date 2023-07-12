@@ -26,7 +26,7 @@ class MockLuckyCardGameManager: CardGameManager {
   }
 }
 
-// MARK: - Test
+// MARK: - Helper
 extension MockLuckyCardGameManager {
   // Use stub lucky card game manager
   func initCardDeck() -> [Card] { [] }
