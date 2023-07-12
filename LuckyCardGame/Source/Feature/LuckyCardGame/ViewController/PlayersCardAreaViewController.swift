@@ -38,6 +38,8 @@ final class PlayersCardAreaViewController: UIViewController {
   
   private var vm: PlayersCardboardAreaViewModel!
   
+  private var isInitialViewWillAppear: Bool = false
+  
   // MARK: - Lifecycles
   private override init(
     nibName nibNameOrNil: String?,
@@ -99,6 +101,14 @@ final class PlayersCardAreaViewController: UIViewController {
     UIView.animate(withDuration: 0.5) {
       self.view.alpha = 1
     }
+    if !isInitialViewWillAppear {
+      isInitialViewWillAppear.toggle()
+      playersCardBoardAreaView.animDealCardViewsInEachPalyerBoard()
+      DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+        self.footerCardBoardView.animDealCardViews()
+      }
+    }
+    
   }
 }
 

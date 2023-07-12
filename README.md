@@ -206,3 +206,45 @@ JK님의 PR을 통해 언제 auto layout의 frame이 명확하게 superview로�
 
 
 이전에 자신이 짠 코드를 구성하는 시간에 struct 와 클래스에 대한 대화가 오갔고 그 대화 속에서 특정 예시를 통해 클래스의 참조를 다시 이해하게 되었습니다. 그렇게 LuckyCardManager를 참조로 적극 활용했습니다.
+
+# 23.07.11. (화)
+
+### \[Title\]: 게임 카드 나눠주기 + unit test를 위한 의존성 역전으로 연관성 있는 의존성들 전부 의존성 분리 리펙터링
+
+## 📌 \[요약\]
+
+- testable한 코드를 만들고자 전부 리펙터링했습니다.
+- 기존 CardShapeStroage라는 카드 모양을 저장하거나 추가할 수 있는 model은 결국 enum 의 case가 추가되야해서 제거했습니다.
+- model간 protocol을 통해 의존성을 최소화 했습니다.
+- Card에 올 수 있는 모양, 숫자 제너릭 타입 enum 한정으로 제약했습니다.
+- 카드 나눠줄 때 간단한 애니메이션을 도입했습니다.
+
+---
+
+## 📸 \[구현 기능\]
+
+<img width="500" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/6a767939-7332-4a94-ba5d-8cebc2271998">
+
+카드 모양의 경우 다양한 enum 타입만 올 수 있도록 RawRepresentable을 채택했습니다.
+
+<img width="500" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/88ea24ce-4759-4cf5-b05e-b6639b1fc265">
+
+카드 숫자의 경우 다양한 enum타입만 올 수있도록 했고 추가적으로 카드간 숫자를 비교하기 위해 Equatable, Comparable을 채택했습니다.
+
+<img width="500" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/ac4a13ee-a2e9-48bd-a10b-5d4ed5439ea4">
+
+카드는 enum 타입의 shape, enum타입의 shape만 제너릭 타입으로 올 수 있습니다. 컴파일 단계 오류를 방지하기 위함입니다.
+
+<img width="500" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/0ece5427-c1f7-4ce0-8243-dcbf96d052f0">
+
+LuckyCard는 Card의 자식 객체로 description을 오버라이드해서 자신의 현재 카드 상태를 문자열로 반환합니다.
+
+의존성 분리에 힘썼고 클린 코드를 위해 길이가 긴 함수는 네이밍으로 쉽게 파악하고자 함수를 선언해서 분리했습니다.
+
+중복되는 코드를 제거하기 위해 리펙터링했습니다.
+
+각 객체가 맡아야할 역할을 정했고 의존성 역전 원칙에 의한 DI를 통해 mock객체로 추후  test를 위해 protocol로 기능 관련 함수를 정의 했습니다.
+
+카드가 처음 세팅될 때 애니메이션을 넣었습니다.
+
+<img width="847" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/04946022-6863-4c9d-af9b-50ae435c0090">

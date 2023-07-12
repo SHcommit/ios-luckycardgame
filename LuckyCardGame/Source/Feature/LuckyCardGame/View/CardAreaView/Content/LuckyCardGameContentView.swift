@@ -18,12 +18,12 @@ final class LuckyCardGameContentView: BaseRoundView {
   // MARK: - Properties
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
-  private var gameManager :LuckyCardManager
+  private var gameManager :LuckyCardGameManager
   
   // MARK: - Lifecycle
   init(
     frame: CGRect,
-    gameManager: LuckyCardManager
+    gameManager: LuckyCardGameManager
   ) {
     self.gameManager = gameManager
     super.init(with: .contentView, frame)
@@ -38,7 +38,16 @@ final class LuckyCardGameContentView: BaseRoundView {
   }
 }
 
-// MARK: - Private helper
+// MARK: - Helper
+extension LuckyCardGameContentView {
+  func animDealCardViewsInEachPalyerBoard() {
+    _=playerCardBoardViews.map {
+      $0.animDealCardViews()
+    }
+  }
+}
+
+// MARK: - LayoutSupport
 extension LuckyCardGameContentView: LayoutSupport {
   func createSubviews() {
     let playerGameBoardHeight = (bounds.height - Constant.spacing.top*4)/CGFloat(Constant.maximumHeadCount)

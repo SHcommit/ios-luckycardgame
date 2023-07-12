@@ -5,12 +5,12 @@
 //  Created by 양승현 on 2023/07/05.
 //
 
-/// 모든 카드 종류는 이 카드를 상속받아야 합니다.
-/// 카드 숫자는 Int타입입니다.
-/// 카드 모양은 게임 유형에 따라 개, 고양이, 말 등이 될 수도 있습니다. 또는 마름모, 원, 하트 등이 될 수 있습니다.
-/// Hashable 타입으로 선언해서, CardShapeStorage 클래스를 통해 Shape타입에 해당하는 값을 출력하거나 화면에 보여줄 수 있습니다.
+/// 다형성을 고려한 base card.
 ///
-
+/// Notes:
+/// 1. 포커Card, LuckyCard 등 다양한 카드들은 공통적으로 모양, 숫자가 있습니다.
+/// 2. 두 제너릭 타입은 각각 특징이 다른데, 전자의 경우 enum타입만 올 수 있도록, RawRepresentable을 준수했습니다.
+///   후자의 경우 Equatable, Comparable을 준수해 카드간 대소비교, 동등비교가 가능하도록 구현했습니다.
 class Card<Shape: CardShapeEnumProtocol, Number: CardNumberEnumProtocol> {
   // MARK: - Model
   enum Appearance {
@@ -29,6 +29,11 @@ class Card<Shape: CardShapeEnumProtocol, Number: CardNumberEnumProtocol> {
     self.shape = shape
     self.appearance = appearance
   }
+  
+  /// Card's info with strnig
+  func description() -> String {
+    fatalError("If use this method, must override this func :)")
+  }
 }
 
 // MARK: - Helper
@@ -38,10 +43,19 @@ extension Card {
       appearance = newApperance
     }
   }
-  func isEqual(_ card: Card) -> Bool {
-    return number == card.number && shape == card.shape
-  }
+  
   func isEqualShape(_ card: Card) -> Bool {
-    return shape == card.shape
+    return shape.rawValue == card.shape.rawValue
+  }
+}
+
+// MARK: - Equatable, Comparable
+extension Card: Equatable, Comparable {
+  static func == (lhs: Card<Shape, Number>, rhs: Card<Shape, Number>) -> Bool {
+    return lhs.number == rhs.number
+  }
+  
+  static func < (lhs: Card<Shape, Number>, rhs: Card<Shape, Number>) -> Bool {
+    return lhs.number < rhs.number
   }
 }

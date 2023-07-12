@@ -10,15 +10,14 @@ import Foundation
 final class LuckyCardGameFooterViewModel {
   // MARK: - Properties
   private(set) var remainingDeck: LuckyCardDeckImpl
-  private(set) var gameManager: LuckyCardManager
+  private(set) var gameManager: LuckyCardGameManager
   
   // MARK: - Lifecycle
   init(
-    gameManager: LuckyCardManager
+    gameManager: LuckyCardGameManager
   ) {
     self.gameManager = gameManager
-    // 남은 카드들
-    remainingDeck = .init(
-      cards: gameManager.luckyCardDeckImpl.divideBottomCards(with: gameManager.headCount))
+
+    remainingDeck = .init(cards: gameManager.divideRemainingCardsToFooter())
   }
 }
