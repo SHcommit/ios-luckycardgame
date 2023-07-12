@@ -10,7 +10,7 @@ import Foundation
 final class Player {
   // MARK: - Properties
   private(set) var cardDeck: LuckyCardDeckImpl
-  private(set) var selectedCardDeck: SelectedLuckyCardDeckImpl
+  private(set) var selectedCardDeck: SelectedLuckyCardDeckImpl?
   
   // MARK: - Lifecycle
   init(
