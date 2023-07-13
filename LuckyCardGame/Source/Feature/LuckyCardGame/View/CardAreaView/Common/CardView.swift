@@ -94,7 +94,9 @@ final class LuckyCardView: BaseRoundView {
     layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
     layer.borderWidth = 0.7
     setupUI()
-    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCard))
+    isUserInteractionEnabled = true
+    addGestureRecognizer(tapGesture)
   }
   
   // viewModelFIXME: - viewModel, appearnce 초기화 하지 않았습니다.
@@ -105,9 +107,40 @@ final class LuckyCardView: BaseRoundView {
   }
 }
 
+// MARK: - Action
+extension LuckyCardView {
+  @objc func didTapCard() {
+    updateAppearance()
+  }
+}
+
+// MARK: - Helper
+extension LuckyCardView {
+  func updateAppearance() {
+    guard cardAppearance == .rear else {
+      showRearAppearanceWithAnimation()
+      cardAppearance = .rear
+      return
+    }
+    showFrontAppearanceWithAnimaiton()
+    cardAppearance = .front
+  }
+}
+
 // MARK: - Private helper
 extension LuckyCardView {
-  private func addFrontCardAppearanceSubviews() {
+  
+  private func showFrontAppearanceWithAnimaiton() {
+    hiddenRearAppearance()
+    revealFrontAppearance()
+  }
+  
+  private func showRearAppearanceWithAnimation() {
+    hiddenFrontAppearance()
+    revealRearAppearance()
+  }
+  
+  private func addSubviewsInFrontCardAppearance() {
     guard
       let leftTopNumberLabel = leftTopNumberLabel,
       let rightBottomNubmerLabel = rightBottomNubmerLabel,
@@ -124,6 +157,36 @@ extension LuckyCardView {
       }
   }
   
+  private func initSubviewsInFrontCardAppearnce() {
+    leftTopNumberLabel = initLeftTopNumberLabel()
+    leftTopNumberLabel?.frame = leftTopNumberLabelFrame
+    emojiLabel = initEmojiLabel()
+    emojiLabel?.frame = emojiLabelFrame
+    rightBottomNubmerLabel = initRightBottomNubmerLabel()
+    rightBottomNubmerLabel?.frame = rightBottomNumberLabelFrame
+  }
+  
+  private func initSubviewsInRearCardAppearance() {
+    logoImageView = initLogoImageView()
+    logoImageView?.frame = logoImageViewFrame
+  }
+  
+  var frontViews: [UIView] {
+    guard
+      let leftTopNumberLabel = leftTopNumberLabel,
+      let emojiLabel = emojiLabel,
+      let rightBottomNubmerLabel = rightBottomNubmerLabel
+    else {
+      return []
+    }
+    return [leftTopNumberLabel, emojiLabel, rightBottomNubmerLabel]
+  }
+  
+  private func addSubviewsInRearCardAppearance() {
+    guard let logoImageView = logoImageView else { return }
+    addSubview(logoImageView)
+  }
+
   private func initLeftTopNumberLabel() -> UILabel {
     return UILabel(frame: .zero).set {
       $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
@@ -153,33 +216,40 @@ extension LuckyCardView {
       $0.image = UIImage(named: Constant.LogoImageView.logoName)
     }
   }
+  
+  private func hiddenRearAppearance() {
+    logoImageView?.isHidden = true
+  }
+  
+  private func revealRearAppearance() {
+    logoImageView?.isHidden = false
+  }
+  
+  private func hiddenFrontAppearance() {
+    _=frontViews.map { $0.isHidden = true }
+  }
+  
+  private func revealFrontAppearance() {
+    _=frontViews.map { $0.isHidden = false }
+  }
 }
 
 // MARK: - LayoutSupport
 extension LuckyCardView: LayoutSupport {
   func createSubviews() {
+    initSubviewsInRearCardAppearance()
+    initSubviewsInFrontCardAppearnce()
     switch cardAppearance {
     case .front:
-      leftTopNumberLabel = initLeftTopNumberLabel()
-      emojiLabel = initEmojiLabel()
-      rightBottomNubmerLabel = initRightBottomNubmerLabel()
-      leftTopNumberLabel?.frame = leftTopNumberLabelFrame
-      emojiLabel?.frame = emojiLabelFrame
-      rightBottomNubmerLabel?.frame = rightBottomNumberLabelFrame
-    case .rear:
-      logoImageView = initLogoImageView()
-      logoImageView?.frame = logoImageViewFrame
+      hiddenRearAppearance()
+    case .rear: 
+      hiddenFrontAppearance()
     }
   }
   
   func addSubviews() {
-    switch cardAppearance {
-    case .front:
-      addFrontCardAppearanceSubviews()
-    case .rear:
-      guard let logoImageView = logoImageView else { return }
-      addSubview(logoImageView)
-    }
+    addSubviewsInFrontCardAppearance()
+    addSubviewsInRearCardAppearance()
   }
 }
 
