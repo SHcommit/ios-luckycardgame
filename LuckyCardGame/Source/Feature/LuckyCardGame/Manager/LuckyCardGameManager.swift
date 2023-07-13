@@ -21,14 +21,18 @@ final class LuckyCardGameManager: CardGameManager {
   typealias _Card = LuckyCard
   typealias CardDeck = LuckyCardDeckImpl
   
+  private let totalCards = Constant.LuckyCard.numberOfCards
+  
+  private let specificShapeCardsCount = Constant
+    .LuckyCard
+    .numberOfSpecificShapeCards
+  
   // MARK: - Properties
   private(set) var headCount: PlayerHeadCountType
+
+  @Published private(set) var luckyCardDeckImpl: CardDeck?
   
-  private(set) var ownerPlayer: Player = .init(
-    cardDeck: .init(cards: []),
-    selectedCardDeck: .init(cards: []))
-  
-  private(set) var otherPlayers: [Player] = [
+  private(set) var players: [Player] = [
     .init(
       cardDeck: .init(cards: []),
       selectedCardDeck: .init(cards: []))]
@@ -37,40 +41,34 @@ final class LuckyCardGameManager: CardGameManager {
     luckyCardDeckImpl
   }
   
-  @Published private(set) var luckyCardDeckImpl: CardDeck?
-  
-  private let totalCards = Constant.LuckyCard.numberOfCards
-  
-  private let specificShapeCardsCount = Constant
-    .LuckyCard
-    .numberOfSpecificShapeCards
-  
   private var subscription: AnyCancellable?
   
   // MARK: - Lifecycle
   init(headCount: PlayerHeadCountType) {
     self.headCount = headCount
-    let boardTypes: [PlayerBoardType] = [
+    luckyCardDeckImpl = LuckyCardDeckImpl(
+      cards: initCardDeck())
+    
+    var boardTypes: [PlayerBoardType] = [
       .A, .B, .C, .D, .E]
+    boardTypes = (0..<headCount.toInt).map {
+      boardTypes[$0]
+    }
     
     let luckyCardDeckImpls = boardTypes.map {
       return LuckyCardDeckImpl(
         cards: divideCardsToPlayer(in: $0))
     }
-    ownerPlayer = .init(
-      cardDeck: luckyCardDeckImpls[0],
-      selectedCardDeck: .init(cards: []))
     
-    otherPlayers = (1..<boardTypes.count).map {
+    players = luckyCardDeckImpls.map {
       return Player(
-        cardDeck: luckyCardDeckImpls[$0],
+        cardDeck: $0,
         selectedCardDeck: .init(cards: []))
     }
     bind()
-    luckyCardDeckImpl = LuckyCardDeckImpl(
-      cards: initCardDeck())
   }
 }
+
 
 // MARK: - Private helper
 private extension LuckyCardGameManager {
@@ -153,7 +151,6 @@ extension LuckyCardGameManager {
     }
     return (start..<end)
       .map {
-        
         luckyCardDeckImpl.cards[$0]
       }
   }
@@ -169,5 +166,16 @@ extension LuckyCardGameManager {
       .map {
         luckyCardDeckImpl.cards[$0]
       }
+  }
+  
+  func player(with boardType: PlayerBoardType) -> Player {
+    return players[boardType.toInt]
+  }
+  
+  func showPlayerCard(
+    with boardType: PlayerBoardType,
+    at idx: Int
+  ) -> _Card {
+    player(with: boardType).showMyCard(idx)
   }
 }
