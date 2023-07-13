@@ -32,10 +32,33 @@ final class StubLuckyCardGameManager: CardGameManager {
     .playerCardsCountInBoard
   
   // MARK: - Properties
-  var headCount: LuckyCardGame.PlayerHeadCountType
+  var headCount: PlayerHeadCountType
   
-  var cardDeck: LuckyCardGame.LuckyCardDeckImpl?
+  var cardDeck: LuckyCardDeckImpl?
   
+  lazy var players: [Player] = {
+    cardDeck = LuckyCardDeckImpl(
+      cards: initCardDeck())
+    
+    var boardTypes: [PlayerBoardType] = [
+      .A, .B, .C, .D, .E]
+    boardTypes = (0..<headCount.toInt).map {
+      boardTypes[$0]
+    }
+    
+    let luckyCardDeckImpls = boardTypes.map {
+      return LuckyCardDeckImpl(
+        cards: divideCardsToPlayer(in: $0))
+    }
+    
+    return luckyCardDeckImpls.map {
+      return Player(
+        cardDeck: $0,
+        selectedCardDeck: .init(cards: []))
+    }
+  }()
+  
+  // MARK: - Lifecycle
   init(
     headCount: PlayerHeadCountType,
     cardDeck: LuckyCardDeckImpl? = nil
@@ -59,13 +82,24 @@ final class StubLuckyCardGameManager: CardGameManager {
     return catCardDeck + cowCardDeck + dogCardDeck
   }
   
-  // MARK: - Helper
+  func player(with boardType: PlayerBoardType) -> Player {
+    return players[boardType.boardTypeToIndex]
+  }
+  
+  func showPlayerCard(
+    with boardType: PlayerBoardType,
+    at idx: Int
+  ) -> LuckyCard {
+    .init(number: .eight, shape: .cat, appearance: .front)
+  }
+  
   func printCardDeckDescription() { print() }
+  
   func divideCardsToPlayer(
     in board: PlayerBoardType
   ) -> [LuckyCard] {
     guard let cardDeck = cardDeck else { return [] }
-    let boardHeadCount = board.toIndex(with: .five)
+    let boardHeadCount = board.boardTypeToIdxMultiplyHeadCount(with: .five)
     
     return (boardHeadCount..<boardHeadCount+headCount.toInt)
       .map { cardDeck.cards[$0] }
