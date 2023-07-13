@@ -11,7 +11,9 @@ import Foundation
 /// 플레이어 인원 5명일 경우로 가정했습니다.
 final class StubLuckyCardGameManager: CardGameManager {
   // MARK: - Constant
-  typealias Card = LuckyCard
+  typealias CardShape = LuckyCardShapeType
+  typealias CardNumber = LuckyCardNumberType
+  typealias _Card = LuckyCard
   
   typealias CardDeck = LuckyCardDeckImpl
   
@@ -77,7 +79,7 @@ final class StubLuckyCardGameManager: CardGameManager {
     return (start..<end).map { cardDeck.cards[$0] }
   }
   
-  func showAllPlayerCards() -> [Card] {
+  func showAllPlayerCards() -> [_Card] {
     guard let _=cardDeck else { return [] }
     return [
       divideCardsToPlayer(in: .A),
