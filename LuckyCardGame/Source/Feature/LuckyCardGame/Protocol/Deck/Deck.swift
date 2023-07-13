@@ -26,6 +26,13 @@ extension Deck {
     cards.isEmpty
   }
   
+  func showCard(at index: Int) -> Card? {
+    guard cards.isEmpty else {
+      return nil
+    }
+    return cards[index]
+  }
+  
   func insert(_ card: Card, at index: Int) -> Card? {
     guard (0...cards.count).contains(index) else {
       return nil
