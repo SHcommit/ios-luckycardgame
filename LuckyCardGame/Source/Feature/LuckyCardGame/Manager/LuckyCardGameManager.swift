@@ -9,15 +9,6 @@ import Foundation
 import Combine
 
 final class LuckyCardGameManager: CardGameManager {
-  typealias CardShape = LuckyCardShapeType
-  typealias CardNumber = LuckyCardNumberType
-  typealias _Card = LuckyCard
-  
-  var cardDeck: LuckyCardDeckImpl? {
-    luckyCardDeckImpl
-  }
-  
-  
   // MARK: - Constant
   struct Constant {
     enum LuckyCard {
@@ -25,13 +16,26 @@ final class LuckyCardGameManager: CardGameManager {
       static let numberOfSpecificShapeCards = 12
     }
   }
-  
-  typealias Card = LuckyCard
-  
+  typealias CardShape = LuckyCardShapeType
+  typealias CardNumber = LuckyCardNumberType
+  typealias _Card = LuckyCard
   typealias CardDeck = LuckyCardDeckImpl
   
   // MARK: - Properties
   private(set) var headCount: PlayerHeadCountType
+  
+  private(set) var ownerPlayer: Player = .init(
+    cardDeck: .init(cards: []),
+    selectedCardDeck: .init(cards: []))
+  
+  private(set) var otherPlayers: [Player] = [
+    .init(
+      cardDeck: .init(cards: []),
+      selectedCardDeck: .init(cards: []))]
+  
+  var cardDeck: LuckyCardDeckImpl? {
+    luckyCardDeckImpl
+  }
   
   @Published private(set) var luckyCardDeckImpl: CardDeck?
   
@@ -46,6 +50,22 @@ final class LuckyCardGameManager: CardGameManager {
   // MARK: - Lifecycle
   init(headCount: PlayerHeadCountType) {
     self.headCount = headCount
+    let boardTypes: [PlayerBoardType] = [
+      .A, .B, .C, .D, .E]
+    
+    let luckyCardDeckImpls = boardTypes.map {
+      return LuckyCardDeckImpl(
+        cards: divideCardsToPlayer(in: $0))
+    }
+    ownerPlayer = .init(
+      cardDeck: luckyCardDeckImpls[0],
+      selectedCardDeck: .init(cards: []))
+    
+    otherPlayers = (1..<boardTypes.count).map {
+      return Player(
+        cardDeck: luckyCardDeckImpls[$0],
+        selectedCardDeck: .init(cards: []))
+    }
     bind()
     luckyCardDeckImpl = LuckyCardDeckImpl(
       cards: initCardDeck())
@@ -107,7 +127,7 @@ extension LuckyCardGameManager {
     print(luckyCardDeckImpl.description)
   }
   
-  func initCardDeck() -> [Card] {
+  func initCardDeck() -> [_Card] {
     var allCards = (0..<totalCards)
       .map {
         let moduloPlusOne = ($0 % specificShapeCardsCount) + 1

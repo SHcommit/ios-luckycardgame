@@ -19,6 +19,8 @@ protocol CardGameManager {
   associatedtype _Card: Card<CardShape, CardNumber>
   associatedtype CardDeck: Deck
   
+  var ownerPlayer: Player { get }
+  var otherPlayers: [Player] { get }
   var headCount: PlayerHeadCountType { get }
   var cardDeck: CardDeck? { get }
   
