@@ -66,6 +66,10 @@ final class StubLuckyGame: CardGameManager {
     self.cardDeck = cardDeck
   }
   
+  func setupLuckyCardDeckImls() {
+    cardDeck = LuckyCardDeckImpl(cards: initCardDeck())
+  }
+  
   // MARK: - Helper
   func initCardDeck() -> [LuckyCard] {
     let catCardDeck = LuckyCardNumberType.allCases.map {
