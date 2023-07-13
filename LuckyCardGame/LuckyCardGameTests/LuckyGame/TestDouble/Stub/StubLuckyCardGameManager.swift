@@ -25,6 +25,10 @@ final class StubLuckyCardGameManager: CardGameManager {
     .LuckyCard
     .numberOfSpecificShapeCards
   
+  let playerOwnCardsCount = PlayerHeadCountType
+    .five
+    .playerCardsCountInBoard
+  
   // MARK: - Properties
   var headCount: LuckyCardGame.PlayerHeadCountType
   
@@ -57,9 +61,20 @@ final class StubLuckyCardGameManager: CardGameManager {
   func printCardDeckDescription() { print() }
   func divideCardsToPlayer(
     in board: PlayerBoardType
-  ) -> [LuckyCard] { return [] }
+  ) -> [LuckyCard] {
+    guard let cardDeck = cardDeck else { return [] }
+    let boardHeadCount = board.toIndex(with: .five)
+    
+    return (boardHeadCount..<boardHeadCount+headCount.toInt)
+      .map { cardDeck.cards[$0] }
+    
+  }
   func divideRemainingCardsToFooter() -> [LuckyCard] {
-    return []
+    guard let cardDeck = cardDeck else { return [] }
+    let start = numberOfCards - headCount.bottomCardsCountInBoard
+    let end = headCount.bottomCardsCountInBoard
+    
+    return (start..<end).map { cardDeck.cards[$0] }
   }
   
   func showAllPlayerCards() -> [Card] {
