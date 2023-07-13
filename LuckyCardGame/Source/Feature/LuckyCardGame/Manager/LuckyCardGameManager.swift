@@ -143,7 +143,7 @@ extension LuckyCardGameManager {
   func divideCardsToPlayer(
     in board: PlayerBoardType
   ) -> [LuckyCard] {
-    let start = board.toIndex(with: headCount)
+    let start = board.boardTypeToIdxMultiplyHeadCount(with: headCount)
     let end = start + headCount.playerCardsCountInBoard
     guard let luckyCardDeckImpl = luckyCardDeckImpl else {
       print("DEBUG: Not initialization luckyCardImpl...")
@@ -169,7 +169,7 @@ extension LuckyCardGameManager {
   }
   
   func player(with boardType: PlayerBoardType) -> Player {
-    return players[boardType.toInt]
+    return players[boardType.boardTypeToIndex]
   }
   
   func showPlayerCard(
