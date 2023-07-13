@@ -8,7 +8,7 @@
 /// SelectedLuckyCardDeckImpl
 /// Notes:
 /// 1. 사용자가 선택핸 Deck을 관리하는 CardDeck입니다.
-final class SelectedLuckyCardDeckImpl: Deck {
+final class SelectedLuckyCardDeckImpl: SelectedLuckyCardDeckProtocol {
   // MARK: - Constant
   typealias Card = LuckyCard
   
