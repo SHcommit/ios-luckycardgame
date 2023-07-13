@@ -13,7 +13,7 @@ import Foundation
 class LuckyCardDeckImplTests: XCTestCase {
   
   // MARK: - Properties
-  private let gameManager = StubLuckyCardGameManager(headCount: .five)
+  private let gameManager = StubLuckyGame(headCount: .five)
   
   private var sut: LuckyCardDeckImpl!
   
@@ -30,11 +30,11 @@ class LuckyCardDeckImplTests: XCTestCase {
 }
 
 extension LuckyCardDeckImplTests {
-  func testLuckyCardDeckImpl_WhenCalledTheCardDeckDescriptionAndMustSameCountBetweenCardDeckAndSplitedCard_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenCalledTheCardDeckDescriptionAndMustSameEachCardsCountBetweenCardDeckAndSplitedCard_ShouldReturnTrue() {
     // Arrange
     let cardDescription: String = sut.description
     var splitedCardDescriptionCount: Int = 0
-    let numberOfTotalLuckyCards = LuckyCardGameManager
+    let numberOfTotalLuckyCards = LuckyGame
       .Constant
       .LuckyCard
       .numberOfCards
@@ -49,7 +49,7 @@ extension LuckyCardDeckImplTests {
       "The luckyCardDeckImpl's description should have returned Equal for total cards of lucky card deck that appointed LuckyCardGameManager.Constant: \(numberOfTotalLuckyCards). But it has return false")
   }
   
-  func testLuckyCardDeckImpl_WhenTheCardDeckShuffledToComparePrevCardDeck_ShouldReturnNotEqual() {
+  func testLuckyCardDeckImpl_WhenTheCardDeckShuffledCompareToPrevCardDeck_ShouldReturnNotEqual() {
     // Arrange
     let prevCardDeck = sut.cards
     
@@ -63,12 +63,12 @@ extension LuckyCardDeckImplTests {
       "The luckyCardDeckImpl's shuffle() should have returned Not Equal for shuffle the card deck but it has returned Equal.")
   }
   
-  func testLuckyCardDeckImpl_WhenTheCardDeckContainSomeCards_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenTheCardDeckContainCheckSomeCards_ShouldReturnTrue() {
     // Arrange
     let stubLuckyCardNumbers: [LuckyCardNumberType] = [.eight, .five, .one, .six]
     let stubLuckyCardShapes: [LuckyCardShapeType] = [.cat, .cat, .cow, .dog]
     let cnt = stubLuckyCardShapes.count
-    let mockLuckyCards: [LuckyCard] = (0..<cnt)
+    let stubLuckyCards: [LuckyCard] = (0..<cnt)
       .map {
         return LuckyCard(
           number: stubLuckyCardNumbers[$0],
@@ -77,7 +77,7 @@ extension LuckyCardDeckImplTests {
       }
     
     // Act
-    let isContainLuckyCards = sut.contains(of: mockLuckyCards)
+    let isContainLuckyCards = sut.contains(of: stubLuckyCards)
     
     // Assert
     XCTAssertTrue(
@@ -138,6 +138,7 @@ extension LuckyCardDeckImplTests {
     // Act
     let receivedCardForCheckUnderflow = sut.showCard(at: -20)
     let receivedCardForCheckOverflow = sut.showCard(at: gameManager.headCount.toInt + 100)
+    
     // Assert
     XCTAssertNil(
       receivedCardForCheckUnderflow,

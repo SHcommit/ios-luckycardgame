@@ -1,5 +1,5 @@
 //
-//  LuckyCardGameManagerTests.swift
+//  LuckyGameTests.swift
 //  LuckyCardGameTests
 //
 //  Created by 양승현 on 2023/07/12.
@@ -12,7 +12,7 @@ import XCTest
 class LuckyGameTests: XCTestCase {
   // MARK: - Properties
   var sut: LuckyGame!
-  var stubGameManager: StubLuckyCardGameManager! = StubLuckyCardGameManager(headCount: .five)
+  var stubGameManager: StubLuckyGame! = StubLuckyGame(headCount: .five)
   
   // MARK: - Lifecycle
   override func setUp() {
@@ -28,7 +28,7 @@ class LuckyGameTests: XCTestCase {
 
 // MARK: - Tests [1-4] game logic requirements
 extension LuckyGameTests {
-  func testMockLuckyCardGameManager_WhenDivideCardsToPlayerCheckTheCardsCount_ShouldReturnEqual() {
+  func testLuckyGame_WhenDivideCardsToPlayerCheckTheCardsCount_ShouldReturnEqual() {
     // Arrange
     let playerOwnCardsCount = stubGameManager.playerOwnCardsCount
     
@@ -42,7 +42,7 @@ extension LuckyGameTests {
       "The divideCardsToPlayer(in:) should have returnd Equal for divide cards to player, but it has returnd Not Equal")
   }
   
-  func testMockLuckyCardGameManager_WhenDivideCardsToPlayerAndCheckDividedCardInfo_ShouldReturnEqual() {
+  func testLuckyGame_WhenDivideCardsToPlayerAndCheckDividedCardInfo_ShouldReturnEqual() {
     // Arrange
     let playerOwnCardsCount = stubGameManager.playerOwnCardsCount
     guard let mySelfCardDeck = sut.luckyCardDeckImpl else {
@@ -66,7 +66,7 @@ extension LuckyGameTests {
       "The divideCardsToPlayer(in:) should have returned Equal for divide cards to A player, but it has returned Not Equal")
   }
 
-  func testMockLuckyCardGameManager_WhenDivideCardsToFivePlayerAndCheckEachDeck_ShouldReturnNotEqual() {
+  func testLuckyGame_WhenDivideCardsToFivePlayerAndCheckEachDeck_ShouldReturnNotEqual() {
     // Arrange
     let aPlayerDeck: [Card] = sut.divideCardsToPlayer(in: .A)
     let bPlayerDeck: [Card] = sut.divideCardsToPlayer(in: .B)
@@ -81,7 +81,7 @@ extension LuckyGameTests {
     }
   }
   
-  func testMockLuckyCardGame_WhenDivideRemainingCardsToFooter_ShouldReutrnNotEqual() {
+  func testLuckyGame_WhenDivideRemainingCardsToFooter_ShouldReutrnNotEqual() {
     // Arrange
     let eachPlayersDeck: [Card] = stubGameManager
       .showAllPlayerCards()
