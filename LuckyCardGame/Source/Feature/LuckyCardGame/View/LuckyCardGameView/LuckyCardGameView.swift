@@ -49,15 +49,11 @@ final class LuckyCardGameView: BaseRoundView {
     setupUI()
     
     let viewModels: [PlayersCardboardAreaViewModel] = [
+      .init(gameManager: .init(headCount: .three)),
       PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .three),
-        playerHeadCount: .three),
+        gameManager: .init(headCount: .four)),
       PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .four),
-        playerHeadCount: .four),
-      PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .five),
-        playerHeadCount: .five)]
+        gameManager: .init(headCount: .five))]
     
     playersCardAreaViewControllers = [
       .init(
@@ -79,14 +75,11 @@ final class LuckyCardGameView: BaseRoundView {
     setupUI()
     let viewModels: [PlayersCardboardAreaViewModel] = [
       PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .three),
-        playerHeadCount: .three),
+        gameManager: .init(headCount: .three)),
       PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .four),
-        playerHeadCount: .four),
+        gameManager: .init(headCount: .four)),
       PlayersCardboardAreaViewModel(
-        gameManager: .init(headCount: .five),
-        playerHeadCount: .five)]
+        gameManager: .init(headCount: .five))]
     
     playersCardAreaViewControllers = [
       .init(

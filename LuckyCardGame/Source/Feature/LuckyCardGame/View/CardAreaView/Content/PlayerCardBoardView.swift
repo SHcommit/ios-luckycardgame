@@ -74,7 +74,6 @@ final class PlayerCardBoardView: BaseRoundView {
           edgeSpacing: edgeSpacing,
           headCount: .four)
       }
-      
     }
     
     enum HeadCountIsFive {
@@ -87,12 +86,12 @@ final class PlayerCardBoardView: BaseRoundView {
   // MARK: - Properties
   private var cardViews: [LuckyCardView]!
   
-  private var vm: PlayerCardBoardViewModel
+  private var vm: PlayerCardBoardViewModelProtocol!
   
   // MARK: - Lifecycle
   init(
     frame: CGRect,
-    vm: PlayerCardBoardViewModel
+    vm: PlayerCardBoardViewModelProtocol
   ) {
     self.vm = vm
     super.init(with: .playerCardBoardView, frame)
@@ -101,9 +100,6 @@ final class PlayerCardBoardView: BaseRoundView {
   
   // vm, boardTypeFIXME: - vm, boardType를 추가 구현해야 합니다. 디퐅트 값 넣음.
   required init?(coder: NSCoder) {
-    vm = .init(
-      boardType: .A,
-      gameManager: .init(headCount: .five))
     super.init(coder: coder)
     setupUI()
   }

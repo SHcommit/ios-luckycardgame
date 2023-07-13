@@ -32,7 +32,7 @@ final class LuckyCardGameContentView: BaseRoundView {
   
   // gameManagerFIXME: - gameManager를 상위 객체로부터 상속받아야 합니다.
   required init?(coder: NSCoder) {
-    gameManager = .init(headCount: .three)
+    self.gameManager = .init(headCount: .five)
     super.init(coder: coder)
     setupUI()
   }
