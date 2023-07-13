@@ -19,8 +19,7 @@ protocol CardGameManager {
   associatedtype _Card: Card<CardShape, CardNumber>
   associatedtype CardDeck: Deck
   
-  var ownerPlayer: Player { get }
-  var otherPlayers: [Player] { get }
+  var players: [Player] { get }
   var headCount: PlayerHeadCountType { get }
   var cardDeck: CardDeck? { get }
   
@@ -28,4 +27,9 @@ protocol CardGameManager {
   func printCardDeckDescription()
   func divideCardsToPlayer(in board: PlayerBoardType) -> [_Card]
   func divideRemainingCardsToFooter() -> [_Card]
+  func player(with boardType: PlayerBoardType) -> Player 
+  func showPlayerCard(
+    with boardType: PlayerBoardType,
+    at idx: Int
+  ) -> _Card
 }

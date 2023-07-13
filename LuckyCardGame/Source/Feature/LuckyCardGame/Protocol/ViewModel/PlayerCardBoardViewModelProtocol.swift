@@ -8,9 +8,7 @@
 import Foundation
 
 protocol PlayerCardBoardViewModelProtocol {
-  
   var boardType: PlayerBoardType { get }
-  var player: Player { get }
   var gameManager: LuckyCardGameManager { get }
   
   func showPlayerCard(_ idx: Int) -> LuckyCard
