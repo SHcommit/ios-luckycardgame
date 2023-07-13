@@ -162,7 +162,7 @@ extension PlayersCardAreaViewController {
     let playersCardboardVerticalTotalInterItemSpacing = playerInterItemSpacingCount * playersCardBoardVerticalInterItemSpacing
     let playerCardBoardHeightWithoutSpacing = playersCardBoardAreaViewHeight - playersCardboardVerticalTotalInterItemSpacing
     let aPlayerCardBoardHeight = playerCardBoardHeightWithoutSpacing / playerMaxHeadCount
-    let footerCardBoardHeight = vm.playerHeadCount == .five ? Constant
+    let footerCardBoardHeight = vm.headCount == .five ? Constant
       .FooterCardBoardView
       .height : Constant.FooterCardBoardView.height + aPlayerCardBoardHeight
     
