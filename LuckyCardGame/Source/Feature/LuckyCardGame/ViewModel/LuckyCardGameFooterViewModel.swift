@@ -18,6 +18,8 @@ final class LuckyCardGameFooterViewModel {
   ) {
     self.gameManager = gameManager
 
-    remainingDeck = .init(cards: gameManager.divideRemainingCardsToFooter())
+    remainingDeck = .init(
+      cards:
+        gameManager.divideRemainingCardsToFooter())
   }
 }
