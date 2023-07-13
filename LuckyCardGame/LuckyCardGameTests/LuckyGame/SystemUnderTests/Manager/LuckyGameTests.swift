@@ -95,6 +95,19 @@ extension LuckyGameTests {
       dividedRemainingCards,
       "The divideRemainingCardsToFooter() should has returned Not Equal, but it has returned Equal")
   }
+  
+  func testLuckyGame_WhenShowPlayerCardThenComparedReceivedCardDescriptionIsEqualToOriginCardDescriptionInCardDeck_ShouldReturnEqual() {
+    // Arrange
+    let aCard = sut.players[0].cardDeck.cards[3]
+    
+    // Act
+    let receivedCard = sut.showPlayerCard(with: .A, at: 3)
+
+    // Assert
+    XCTAssertEqual(
+      aCard.description(),
+      receivedCard.description())
+  }
 }
 
 // MARK: - Test helper
