@@ -14,20 +14,20 @@ final class PlayersCardboardAreaViewModel {
   // MARK: - Properties
   // 참조를 통해.. 상위 객채와 카드 공유..
   private(set) var gameManager: LuckyCardGameManager
-  private(set) var playerHeadCount: PlayerHeadCountType
   
   // MARK: - Lifecycle
   init(
-    gameManager: LuckyCardGameManager,
-    playerHeadCount: PlayerHeadCountType
+    gameManager: LuckyCardGameManager
   ) {
     self.gameManager = gameManager
-    self.playerHeadCount = playerHeadCount
   }
 }
 
 // MARK: - PlayersCardBoardAreaViewModelProtocol
 extension PlayersCardboardAreaViewModel: PlayersCardBoardAreaViewModelProtocol {
+  var headCount: PlayerHeadCountType {
+    gameManager.headCount
+  }
   
   func divideCards(in board: PlayerBoardType) -> [Card] {
     return gameManager.divideCardsToPlayer(in: board)
