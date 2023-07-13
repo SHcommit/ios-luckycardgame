@@ -55,8 +55,9 @@ final class LuckyCardView: BaseRoundView {
           top: topSpacingForCenterY)
       }
     }
+    
     // 뒷장일 때
-    enum  LogoImageView {
+    enum LogoImageView {
       static let size: CGSize = .init(width: 34, height: 34)
       static let logoName: String = "luckyLogo"
       static func computedSpacing(
@@ -72,6 +73,13 @@ final class LuckyCardView: BaseRoundView {
           top: topSpacingForCenterY)
       }
     }
+    
+    fileprivate enum Animation {
+      static let options: AnimationOptions = [
+        .curveEaseInOut,
+        .transitionFlipFromLeft]
+      static let duration: CGFloat = 0.45
+    }
   }
   
   // MARK: - Properties
@@ -86,24 +94,31 @@ final class LuckyCardView: BaseRoundView {
   private var logoImageView: UIImageView?
   
   private var cardAppearance: LuckyCard.Appearance
+  
+  private var frontViews: [UIView] {
+    guard
+      let leftTopNumberLabel = leftTopNumberLabel,
+      let emojiLabel = emojiLabel,
+      let rightBottomNubmerLabel = rightBottomNubmerLabel
+    else {
+      return []
+    }
+    return [leftTopNumberLabel, emojiLabel, rightBottomNubmerLabel]
+  }
+  
   // MARK: - Lifecycle
   init(frame: CGRect, viewModel: LuckyCardViewModelProtocol, cardAppearance: LuckyCard.Appearance) {
     vm = viewModel
     self.cardAppearance = cardAppearance
     super.init(with: .cardView, frame)
-    layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
-    layer.borderWidth = 0.7
-    setupUI()
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCard))
-    isUserInteractionEnabled = true
-    addGestureRecognizer(tapGesture)
+    configureUI()
   }
   
   // viewModelFIXME: - viewModel, appearnce 초기화 하지 않았습니다.
   required init?(coder: NSCoder) {
     cardAppearance = .front
     super.init(coder: coder)
-    setupUI()
+    configureUI()
   }
 }
 
@@ -129,15 +144,112 @@ extension LuckyCardView {
 
 // MARK: - Private helper
 extension LuckyCardView {
+  func configureUI() {
+    layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
+    layer.borderWidth = 0.7
+    setupUI()
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCard))
+    isUserInteractionEnabled = true
+    addGestureRecognizer(tapGesture)
+  }
   
+  private func hiddenRearAppearance() {
+    logoImageView?.isHidden = true
+  }
+  
+  private func revealRearAppearance() {
+    logoImageView?.isHidden = false
+  }
+  
+  private func hiddenFrontAppearance() {
+    _=frontViews.map { $0.isHidden = true }
+  }
+  
+  private func revealFrontAppearance() {
+    _=frontViews.map { $0.isHidden = false }
+  }
+}
+
+// MARK: - Animation Helper
+extension LuckyCardView {
   private func showFrontAppearanceWithAnimaiton() {
-    hiddenRearAppearance()
-    revealFrontAppearance()
+    UIView.transition(
+      with: self,
+      duration: Constant.Animation.duration,
+      options: Constant.Animation.options
+    ) {
+      self.hiddenRearAppearance()
+      self.revealFrontAppearance()
+    }
   }
   
   private func showRearAppearanceWithAnimation() {
-    hiddenFrontAppearance()
-    revealRearAppearance()
+    UIView.transition(
+      with: self,
+      duration: Constant.Animation.duration,
+      options: Constant.Animation.options
+    ) {
+      self.hiddenFrontAppearance()
+      self.revealRearAppearance()
+    }
+  }
+  
+}
+
+// MARK: - LayoutSupport
+extension LuckyCardView: LayoutSupport {
+  func createSubviews() {
+    initSubviewsInRearCardAppearance()
+    initSubviewsInFrontCardAppearnce()
+    switch cardAppearance {
+    case .front:
+      hiddenRearAppearance()
+    case .rear:
+      hiddenFrontAppearance()
+    }
+  }
+  
+  func addSubviews() {
+    addSubviewsInFrontCardAppearance()
+    addSubviewsInRearCardAppearance()
+  }
+}
+
+// MARK: - LayoutSupport helper
+extension LuckyCardView {
+  private func initLeftTopNumberLabel() -> UILabel {
+    return UILabel(frame: .zero).set {
+      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
+      $0.text = vm.number
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initEmojiLabel() -> UILabel {
+    return UILabel(frame: .zero).set {
+      $0.text = vm.shape
+      $0.font = .systemFont(ofSize: Constant.EmojiLabel.fontSize)
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initRightBottomNubmerLabel() -> UILabel {
+    return UILabel(frame: .zero).set {
+      $0.text = vm.number
+      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
+      $0.sizeToFit()
+    }
+  }
+  
+  private func initLogoImageView() -> UIImageView {
+    return UIImageView(frame: .zero).set {
+      $0.image = UIImage(named: Constant.LogoImageView.logoName)
+    }
+  }
+  
+  private func addSubviewsInRearCardAppearance() {
+    guard let logoImageView = logoImageView else { return }
+    addSubview(logoImageView)
   }
   
   private func addSubviewsInFrontCardAppearance() {
@@ -170,90 +282,9 @@ extension LuckyCardView {
     logoImageView = initLogoImageView()
     logoImageView?.frame = logoImageViewFrame
   }
-  
-  var frontViews: [UIView] {
-    guard
-      let leftTopNumberLabel = leftTopNumberLabel,
-      let emojiLabel = emojiLabel,
-      let rightBottomNubmerLabel = rightBottomNubmerLabel
-    else {
-      return []
-    }
-    return [leftTopNumberLabel, emojiLabel, rightBottomNubmerLabel]
-  }
-  
-  private func addSubviewsInRearCardAppearance() {
-    guard let logoImageView = logoImageView else { return }
-    addSubview(logoImageView)
-  }
-
-  private func initLeftTopNumberLabel() -> UILabel {
-    return UILabel(frame: .zero).set {
-      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
-      $0.text = vm.number
-      $0.sizeToFit()
-    }
-  }
-  
-  private func initEmojiLabel() -> UILabel {
-    return UILabel(frame: .zero).set {
-      $0.text = vm.shape
-      $0.font = .systemFont(ofSize: Constant.EmojiLabel.fontSize)
-      $0.sizeToFit()
-    }
-  }
-  
-  private func initRightBottomNubmerLabel() -> UILabel {
-    return UILabel(frame: .zero).set {
-      $0.text = vm.number
-      $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
-      $0.sizeToFit()
-    }
-  }
-  
-  private func initLogoImageView() -> UIImageView {
-    return UIImageView(frame: .zero).set {
-      $0.image = UIImage(named: Constant.LogoImageView.logoName)
-    }
-  }
-  
-  private func hiddenRearAppearance() {
-    logoImageView?.isHidden = true
-  }
-  
-  private func revealRearAppearance() {
-    logoImageView?.isHidden = false
-  }
-  
-  private func hiddenFrontAppearance() {
-    _=frontViews.map { $0.isHidden = true }
-  }
-  
-  private func revealFrontAppearance() {
-    _=frontViews.map { $0.isHidden = false }
-  }
 }
 
-// MARK: - LayoutSupport
-extension LuckyCardView: LayoutSupport {
-  func createSubviews() {
-    initSubviewsInRearCardAppearance()
-    initSubviewsInFrontCardAppearnce()
-    switch cardAppearance {
-    case .front:
-      hiddenRearAppearance()
-    case .rear: 
-      hiddenFrontAppearance()
-    }
-  }
-  
-  func addSubviews() {
-    addSubviewsInFrontCardAppearance()
-    addSubviewsInRearCardAppearance()
-  }
-}
-
-// MARK: - LayoutSupport helper
+// MARK: - LayoutSupport frame helper
 private extension LuckyCardView {
   var leftTopNumberLabelFrame: CGRect {
     guard let leftTopNLabel = leftTopNumberLabel else { return .zero }
