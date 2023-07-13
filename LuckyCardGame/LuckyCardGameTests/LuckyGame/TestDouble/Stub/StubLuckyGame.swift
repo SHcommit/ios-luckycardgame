@@ -9,20 +9,19 @@ import Foundation
 @testable import LuckyCardGame
 
 /// 플레이어 인원 5명일 경우로 가정했습니다.
-final class StubLuckyCardGameManager: CardGameManager {
+final class StubLuckyGame: CardGameManager {
   // MARK: - Constant
   typealias CardShape = LuckyCardShapeType
   typealias CardNumber = LuckyCardNumberType
   typealias _Card = LuckyCard
-  
   typealias CardDeck = LuckyCardDeckImpl
   
-  let numberOfCards = LuckyCardGameManager
+  let numberOfCards = LuckyGame
     .Constant
     .LuckyCard
     .numberOfCards
   
-  let numberOFShapes = LuckyCardGameManager
+  let numberOFShapes = LuckyGame
     .Constant
     .LuckyCard
     .numberOfSpecificShapeCards
@@ -68,7 +67,7 @@ final class StubLuckyCardGameManager: CardGameManager {
   }
   
   // MARK: - Helper
-  func initCardDeck() -> [LuckyCardGame.LuckyCard] {
+  func initCardDeck() -> [LuckyCard] {
     let catCardDeck = LuckyCardNumberType.allCases.map {
       return LuckyCard(number: $0, shape: .cat, appearance: .front)
     }
@@ -95,13 +94,15 @@ final class StubLuckyCardGameManager: CardGameManager {
   
   func printCardDeckDescription() { print() }
   
+  func wakeUpPlayers() { _=players.isEmpty }
+  
   func divideCardsToPlayer(
     in board: PlayerBoardType
   ) -> [LuckyCard] {
     guard let cardDeck = cardDeck else { return [] }
     let boardHeadCount = board.boardTypeToIdxMultiplyHeadCount(with: .five)
     
-    return (boardHeadCount..<boardHeadCount+headCount.toInt)
+    return (boardHeadCount...boardHeadCount+headCount.toInt)
       .map { cardDeck.cards[$0] }
     
   }

@@ -1,5 +1,5 @@
 //
-//  LuckyCardGameManager.swift
+//  LuckyGame.swift
 //  LuckyCardGame
 //
 //  Created by 양승현 on 2023/07/06.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class LuckyCardGameManager: CardGameManager {
+final class LuckyGame: CardGameManager {
   // MARK: - Constant
   struct Constant {
     enum LuckyCard {
@@ -71,7 +71,7 @@ final class LuckyCardGameManager: CardGameManager {
 
 
 // MARK: - Private helper
-private extension LuckyCardGameManager {
+private extension LuckyGame {
   func bind() {
     subscription = $luckyCardDeckImpl
       .receive(on: RunLoop.main)
@@ -124,7 +124,7 @@ private extension LuckyCardGameManager {
 }
 
 // MARK: - CardManager
-extension LuckyCardGameManager {
+extension LuckyGame {
   func printCardDeckDescription() {
     guard let luckyCardDeckImpl = luckyCardDeckImpl else {
       return

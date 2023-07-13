@@ -10,11 +10,11 @@ import Foundation
 final class LuckyCardGameFooterViewModel {
   // MARK: - Properties
   private(set) var remainingDeck: LuckyCardDeckImpl
-  private(set) var gameManager: LuckyCardGameManager
+  private(set) var gameManager: LuckyGame
   
   // MARK: - Lifecycle
   init(
-    gameManager: LuckyCardGameManager
+    gameManager: LuckyGame
   ) {
     self.gameManager = gameManager
 

@@ -8,14 +8,15 @@
 import XCTest
 @testable import LuckyCardGame
 
-class StubLuckyCardGameManagerTests: XCTestCase {
+class StubLuckyGameTests: XCTestCase {
   // MARK: -  Properties
-  var sut: StubLuckyCardGameManager!
+  var sut: StubLuckyGame!
   
   // MARK: - Lifecycle
   override func setUp() {
     super.setUp()
-    sut = StubLuckyCardGameManager(headCount: .five)
+    sut = StubLuckyGame(headCount: .five)
+    sut.wakeUpPlayers()
   }
   
   override func tearDown() {
@@ -25,7 +26,7 @@ class StubLuckyCardGameManagerTests: XCTestCase {
 }
 
 // MARK: - Test
-extension StubLuckyCardGameManagerTests {
+extension StubLuckyGameTests {
   func testStubLuckyCardGameManager_WhenCalledInitCardDecks_ShouldReturnTrue() {
     // Arrange
     var cards: [LuckyCard] = []
@@ -38,5 +39,16 @@ extension StubLuckyCardGameManagerTests {
       cards.count,
       sut.numberOfCards,
       "The initCardDeck() should have returned equal to match the excepted constant value of \(sut.numberOfCards), but it has return not equal ")
+  }
+  
+  func testStubLcukyCardGameManager_WhenDividedCardsToAPlayerChekcCardsCountIsEqualToBoardMaxCardCount_ShouldReturnTrue() {
+    // Act
+    let APlayerDividedCardsCount = sut.divideCardsToPlayer(in: .B).count
+    
+    // Assert
+    XCTAssertEqual(
+      APlayerDividedCardsCount,
+      sut.headCount.bottomCardsCountInBoard,
+      "The divideCardsToPlayer(in:) should have returned Equal, but it has returned Not Equal cards.")
   }
 }

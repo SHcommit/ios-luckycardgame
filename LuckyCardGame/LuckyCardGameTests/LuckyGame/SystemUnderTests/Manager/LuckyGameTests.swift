@@ -9,15 +9,15 @@ import XCTest
 @testable import LuckyCardGame
 
 // MARK: - 플레이어가 5명일 때 test입니다.
-class LuckyCardGameManagerTests: XCTestCase {
+class LuckyGameTests: XCTestCase {
   // MARK: - Properties
-  var sut: LuckyCardGameManager!
+  var sut: LuckyGame!
   var stubGameManager: StubLuckyCardGameManager! = StubLuckyCardGameManager(headCount: .five)
   
   // MARK: - Lifecycle
   override func setUp() {
     super.setUp()
-    sut = LuckyCardGameManager(headCount: .five)
+    sut = LuckyGame(headCount: .five)
   }
   
   override func tearDown() {
@@ -27,7 +27,7 @@ class LuckyCardGameManagerTests: XCTestCase {
 }
 
 // MARK: - Tests [1-4] game logic requirements
-extension LuckyCardGameManagerTests {
+extension LuckyGameTests {
   func testMockLuckyCardGameManager_WhenDivideCardsToPlayerCheckTheCardsCount_ShouldReturnEqual() {
     // Arrange
     let playerOwnCardsCount = stubGameManager.playerOwnCardsCount
@@ -98,7 +98,7 @@ extension LuckyCardGameManagerTests {
 }
 
 // MARK: - Test helper
-extension LuckyCardGameManagerTests {
+extension LuckyGameTests {
   func failureExpression(_ onePlayer: String, _ anotherPlayer: String) -> String {
     return "The divideCardsToPlayer(in:) has been called for \(onePlayer), \(anotherPlayer) player that should return Not Equal each player's cards, but it has returned Equal"
   }

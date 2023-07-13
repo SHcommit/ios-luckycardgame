@@ -10,12 +10,12 @@ import Foundation
 final class PlayerCardBoardViewModel {
   // MARK: - Properties
   private(set) var boardType: PlayerBoardType
-  private(set) var gameManager: LuckyCardGameManager
+  private(set) var gameManager: LuckyGame
   
   // MARK: - Lifecycle
   init(
     boardType: PlayerBoardType,
-    gameManager: LuckyCardGameManager
+    gameManager: LuckyGame
   ) {
     self.boardType = boardType
     self.gameManager = gameManager

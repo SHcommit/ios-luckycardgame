@@ -9,12 +9,12 @@ import Foundation
 
 final class LuckyCardViewModel {
   // MARK: - Properteis
-  private let gameManager: LuckyCardGameManager
+  private let gameManager: LuckyGame
   private let cardModel: LuckyCard
   
   // MARK: - Lifecycle
   init(
-    gameManager: LuckyCardGameManager,
+    gameManager: LuckyGame,
     cardModel: LuckyCard
   ) {
     self.gameManager = gameManager
