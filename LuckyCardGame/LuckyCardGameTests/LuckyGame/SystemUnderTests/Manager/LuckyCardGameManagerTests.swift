@@ -1,5 +1,5 @@
 //
-//  MockLuckyCardGameManagerTests.swift
+//  LuckyCardGameManagerTests.swift
 //  LuckyCardGameTests
 //
 //  Created by 양승현 on 2023/07/12.
@@ -9,19 +9,15 @@ import XCTest
 @testable import LuckyCardGame
 
 // MARK: - 플레이어가 5명일 때 test입니다.
-class MockLuckyCardGameManagerTests: XCTestCase {
+class LuckyCardGameManagerTests: XCTestCase {
   // MARK: - Properties
-  var sut: MockLuckyCardGameManager!
+  var sut: LuckyCardGameManager!
   var stubGameManager: StubLuckyCardGameManager! = StubLuckyCardGameManager(headCount: .five)
   
   // MARK: - Lifecycle
   override func setUp() {
     super.setUp()
-    let cardDeck: LuckyCardDeckImpl = LuckyCardDeckImpl(
-      cards: stubGameManager.initCardDeck())
-    sut = MockLuckyCardGameManager(
-      cardDeck: cardDeck,
-      headCount: .five)
+    sut = LuckyCardGameManager(headCount: .five)
   }
   
   override func tearDown() {
@@ -31,12 +27,10 @@ class MockLuckyCardGameManagerTests: XCTestCase {
 }
 
 // MARK: - Tests [1-4] game logic requirements
-extension MockLuckyCardGameManagerTests {
+extension LuckyCardGameManagerTests {
   func testMockLuckyCardGameManager_WhenDivideCardsToPlayerCheckTheCardsCount_ShouldReturnEqual() {
     // Arrange
-    let playerOwnCardsCount = PlayerHeadCountType
-      .five
-      .playerCardsCountInBoard
+    let playerOwnCardsCount = stubGameManager.playerOwnCardsCount
     
     // Act
     let dividedCardsToPlayer = sut.divideCardsToPlayer(in: .A).count
@@ -50,10 +44,8 @@ extension MockLuckyCardGameManagerTests {
   
   func testMockLuckyCardGameManager_WhenDivideCardsToPlayerAndCheckDividedCardInfo_ShouldReturnEqual() {
     // Arrange
-    let playerOwnCardsCount = PlayerHeadCountType
-      .five
-      .playerCardsCountInBoard
-    guard let mySelfCardDeck = sut.cardDeck else {
+    let playerOwnCardsCount = stubGameManager.playerOwnCardsCount
+    guard let mySelfCardDeck = sut.luckyCardDeckImpl else {
       XCTAssertTrue(
         false,
         "The MockLuckyCardGameManager.cardDeck should have returned Equal cuz Stub's initCardDeck() returned expexted value, but it has returned Not Equal")
@@ -106,7 +98,7 @@ extension MockLuckyCardGameManagerTests {
 }
 
 // MARK: - Test helper
-extension MockLuckyCardGameManagerTests {
+extension LuckyCardGameManagerTests {
   func failureExpression(_ onePlayer: String, _ anotherPlayer: String) -> String {
     return "The divideCardsToPlayer(in:) has been called for \(onePlayer), \(anotherPlayer) player that should return Not Equal each player's cards, but it has returned Equal"
   }
