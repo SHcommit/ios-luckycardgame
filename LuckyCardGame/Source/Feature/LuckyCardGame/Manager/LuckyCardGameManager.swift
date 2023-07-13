@@ -9,6 +9,15 @@ import Foundation
 import Combine
 
 final class LuckyCardGameManager: CardGameManager {
+  typealias CardShape = LuckyCardShapeType
+  typealias CardNumber = LuckyCardNumberType
+  typealias _Card = LuckyCard
+  
+  var cardDeck: LuckyCardDeckImpl? {
+    luckyCardDeckImpl
+  }
+  
+  
   // MARK: - Constant
   struct Constant {
     enum LuckyCard {
