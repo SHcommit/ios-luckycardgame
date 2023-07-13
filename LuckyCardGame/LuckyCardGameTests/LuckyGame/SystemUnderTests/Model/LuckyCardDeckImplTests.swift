@@ -15,12 +15,12 @@ class LuckyCardDeckImplTests: XCTestCase {
   // MARK: - Properties
   private let gameManager = StubLuckyCardGameManager(headCount: .five)
   
-  private var sut: MockLuckyCardImpl!
+  private var sut: LuckyCardDeckImpl!
   
   // MARK: - Action
   override func setUp() {
     super.setUp()
-    sut = MockLuckyCardImpl(cards: gameManager.initCardDeck())
+    sut = LuckyCardDeckImpl(cards: gameManager.initCardDeck())
   }
   
   override func tearDown() {
@@ -30,7 +30,7 @@ class LuckyCardDeckImplTests: XCTestCase {
 }
 
 extension LuckyCardDeckImplTests {
-  func testLuckyCardDeckImpl_WhenCalledCardDeckDescriptionAndMustSameCountBetweenCardDeckAndSplitedCard_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenCalledTheCardDeckDescriptionAndMustSameCountBetweenCardDeckAndSplitedCard_ShouldReturnTrue() {
     // Arrange
     let cardDescription: String = sut.description
     var splitedCardDescriptionCount: Int = 0
@@ -65,14 +65,14 @@ extension LuckyCardDeckImplTests {
   
   func testLuckyCardDeckImpl_WhenTheCardDeckContainSomeCards_ShouldReturnTrue() {
     // Arrange
-    let mockLuckyCardNumbers: [LuckyCardNumberType] = [.eight, .five, .one, .six]
-    let mockLuckyCardShapes: [LuckyCardShapeType] = [.cat, .cat, .cow, .dog]
-    let cnt = mockLuckyCardShapes.count
+    let stubLuckyCardNumbers: [LuckyCardNumberType] = [.eight, .five, .one, .six]
+    let stubLuckyCardShapes: [LuckyCardShapeType] = [.cat, .cat, .cow, .dog]
+    let cnt = stubLuckyCardShapes.count
     let mockLuckyCards: [LuckyCard] = (0..<cnt)
       .map {
         return LuckyCard(
-          number: mockLuckyCardNumbers[$0],
-          shape: mockLuckyCardShapes[$0],
+          number: stubLuckyCardNumbers[$0],
+          shape: stubLuckyCardShapes[$0],
           appearance: .front)
       }
     
@@ -85,7 +85,7 @@ extension LuckyCardDeckImplTests {
       "The contains(of:) should have returned TRUE for matching some cards in sut's card deck, but it has returned FALSE")
   }
   
-  func testLuckyCardDeckImpl_WhenCalledIsContainCardDeckACard_ShouldReturnTrue() {
+  func testLuckyCardDeckImpl_WhenCalledIsContainTheCardDeckACard_ShouldReturnTrue() {
     // Arrange
     let aLuckyCard = gameManager.initCardDeck()[0]
     
@@ -113,7 +113,7 @@ extension LuckyCardDeckImplTests {
       "The sort() should have returned Not Equal for sorting card deck with ascending order, but it has returned equal")
   }
   
-  func testLuckyCardDeckImpl_WhenClearTHeCardDeck_ShouldReturnEqual() {
+  func testLuckyCardDeckImpl_WhenClearTheCardDeck_ShouldReturnEqual() {
     // Act
     sut.clearDeck()
     
@@ -132,5 +132,32 @@ extension LuckyCardDeckImplTests {
     XCTAssertNil(
       removedCard,
       "The remove(at:) should have returned Nil cuz sut's max number of cards is \(gameManager.numberOfCards), but it has returned Not nil")
+  }
+  
+  func testLuckyCardDeckImpl_WhenCalledShowCardWithUnderflowAndOverflowIndex_ShouldReturnNil() {
+    // Act
+    let receivedCardForCheckUnderflow = sut.showCard(at: -20)
+    let receivedCardForCheckOverflow = sut.showCard(at: gameManager.headCount.toInt + 100)
+    // Assert
+    XCTAssertNil(
+      receivedCardForCheckUnderflow,
+      "The showCard(at:) should have returned Nil, for filtering underflow idx, but it has returned Not Nil ")
+    
+    XCTAssertNil(
+      receivedCardForCheckOverflow,
+      "The showCard(at:) should have returned Nil, for filtering overflow idx, but it has returned Not Nil ")
+  }
+  
+  func testLuckyCardDeckImpl_WhenCalledShowCardWithCardsCountInnerIndex_ShouldReturnNotNil() {
+    // Arrange
+    sut.cards = [sut.cards[0], sut.cards[1]]
+    let maxCardCnt = sut.cards.count
+    
+    // Act
+    let receivedCard = sut.showCard(at: maxCardCnt-1)
+    
+    // Assert
+    XCTAssertNotNil(receivedCard)
+
   }
 }
