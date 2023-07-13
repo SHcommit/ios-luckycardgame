@@ -11,7 +11,7 @@
 - [x] 성장노트 작성 및 그룹 회고 (15m)
 
 🚨 **과제 완성날짜 시간: 2023.07.05 | 02H:11M**
-🚨 **주요 작업** 
+🚨 **주요 작업**
 
 - [x] UIView을 사용할 때 frame으로 position, size 지정
 - [x] LuckyCardGame main UI 구현
@@ -39,7 +39,7 @@ frame은 언제 사용해야 좋을지 생각했습니다... 다양한 디바이
 View의 position과 size를 구하기 쉽다고 느껴진 LyckyCardGameView영역 안의 subviews의 frame을 지정했습니다.
 
 
-<img src="https://github.com/softeerbootcamp-2nd/ios-luckycardgame/assets/96910404/c4845c44-c5dd-4c89-9be2-77c8be9c5dd6"  width="200" /> 
+<img src="https://github.com/softeerbootcamp-2nd/ios-luckycardgame/assets/96910404/c4845c44-c5dd-4c89-9be2-77c8be9c5dd6"  width="200" />
 
 이 3개의 영역은 UIView의 레이아웃을 지정할 때 auto layout을 사용했습니다. 3개 뷰의 영역에 대한 frame이 변경되고, 단 한번 contentView의 subviews의 frame을 지정했습니다. 그 경우는 아래 코드를 총해 초기화 됩니다.
 
@@ -47,7 +47,7 @@ https://github.com/SHcommit/ios-luckycardgame/blame/0a9934f63dd55b0d0a8a9a958f88
 
 예를들어 3개인 경우
 
-<img src="https://github.com/softeerbootcamp-2nd/ios-luckycardgame/assets/96910404/c7f02721-61f0-4ee5-9614-5cab1af55bae"  width="400" /> 
+<img src="https://github.com/softeerbootcamp-2nd/ios-luckycardgame/assets/96910404/c7f02721-61f0-4ee5-9614-5cab1af55bae"  width="400" />
 
 <img width="250" alt="image" src="https://github.com/softeerbootcamp-2nd/ios-luckycardgame/assets/96910404/0b8f5320-ab4b-41d6-b96a-407b6e707ef1">
 
@@ -71,7 +71,7 @@ https://github.com/SHcommit/ios-luckycardgame/blame/0a9934f63dd55b0d0a8a9a958f88
 - [x] 성장노트 작성 및 그룹 회고 (15m)
 
 🚨 **과제 완성날짜 시간: 2023.07.06 | 04H:40M**
-🚨 **주요 작업** 
+🚨 **주요 작업**
 
 - [x] OOP 개념 학습 (5H)
 - [x] 럭키카드 클래스 구현 (11H)
@@ -92,7 +92,7 @@ https://github.com/SHcommit/ios-luckycardgame/blame/0a9934f63dd55b0d0a8a9a958f88
 이름만 알고 있었던 Factory패턴을 그룹원들의 코드를본 후에 설명을 듣고 추가적인 공부를 통해 구현했습니다.
 
 ### [Card, LuckyCard]
-카드는 shpae(Hashable) 타입을 제너릭으로 받습니다. 그 이유는 추후 카드 클래스를 상속받는 child 카드들이 단순히 luckycard가 아니라 포커 카드 등 다양한 shape가 있을 수 있다고 생각했기에 제너릭을 사용했습니다. 
+카드는 shpae(Hashable) 타입을 제너릭으로 받습니다. 그 이유는 추후 카드 클래스를 상속받는 child 카드들이 단순히 luckycard가 아니라 포커 카드 등 다양한 shape가 있을 수 있다고 생각했기에 제너릭을 사용했습니다.
 
 ### [LuckyCardManager]
 게임 프로젝트에서 아키텍처 패턴을 몰라.. 어느 layerd에서 카드들의 초기화를 해야하고, 분배해 주는 코드를 분리해야할지 까다로웟지만 .. LuckyCard와 LuckyCardDeck을 관리한다는 개념으로 Manager를 네이밍했습니다. 인스턴스로 갖지 않고 함수의 매개변수로 luckyCard, luckyCardDeck의 초기화를 부여하고 출력 등의 기능을 담당하도록 했습니다.
@@ -146,14 +146,14 @@ JK님의 PR을 통해 언제 auto layout의 frame이 명확하게 superview로�
 
 ## ✨ [느낀점]
 
-### validation 등에 대해서 오류가 났을 때 등 예기치 못한 상황이 발생할 가능성이 있다면 거의 에러 타입을 만들고 던져서 handling 했습니다. PR에서 JK님의 코드 리뷰를 통해 '옵셔널'타입을 사용해도 좋다는 것을 깨닫게 되었습니다. 
+### validation 등에 대해서 오류가 났을 때 등 예기치 못한 상황이 발생할 가능성이 있다면 거의 에러 타입을 만들고 던져서 handling 했습니다. PR에서 JK님의 코드 리뷰를 통해 '옵셔널'타입을 사용해도 좋다는 것을 깨닫게 되었습니다.
 
 ### Card를 상속받아 다양한 타입의 카드 ex) LuckyCard, PockerCard, BicycleCard를 받는다고 가정했을 때 이들의 모양과 숫자가 전부 다르다는 것을 가정했고 모양과 숫자가 enum타입이나 struct타입일 때 어떻게 이런 카드타입을 허용하는 base class인 Card 객체를 생성할 수 있을까 고민했고..키가 될 수 있는 타입인 Hashable을 적용한 특정 protcol을 채택하도록 제너릭 타입을 적용했습니다.
 
 ## 📸 \[개선된 점\]
 
 - layoutSubviews()에서 초기화 x
-<img width="400" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/5fd456fc-7ebb-49fc-b365-9bb66a982621"> 
+<img width="400" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/5fd456fc-7ebb-49fc-b365-9bb66a982621">
 
 사실 제 코드의 가장 큰 문제는 auto layout으로 header, contentView, footer를 정한 후 bounds가 지정될 때 contentView안 subviews를 contentView.bounds를 통해 지정하는 것이었습니다. 하지만 header, contentView, footer와 LuckyCardGameView 또한 frame으로 지정해주면서 문제를 해결했습니다. header, contentView, footer의 containerView인 LuckyCardGameView는 viewDidLoad시점에 statusBar 높이와 safeAreaLaoutGuide Bottom height를 구함으로써 모든 문제가 해결되었습니다.
 
@@ -161,10 +161,10 @@ JK님의 PR을 통해 언제 auto layout의 frame이 명확하게 superview로�
 ### 오토레이아웃으로 코드 지정했을 때 Constraints
 <img src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/dacb4189-bf04-4bf7-a8f9-ca8b87e948a1" width="350" >
 
-<img width="729" alt="리펙터-제약2" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/50e54423-a333-41fa-b576-d6a7ceb33f34">
+<img width="729" alt="리펙터-제약2" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/50e54423-a333-41fa-b576-d6a7ceb33f34">
 ### frame을 지정했을 때
 
-<img width="819" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/c472885e-c7a1-4ce8-a879-5a3cd5747e62">
+<img width="819" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/c472885e-c7a1-4ce8-a879-5a3cd5747e62">
 
 # 23.07.07. (금, 토, 일)
 
@@ -194,10 +194,10 @@ JK님의 PR을 통해 언제 auto layout의 frame이 명확하게 superview로�
 
 피드백을 통해서 보완하고 리펙터링하면서 목, 금 피드백과 PR 코드 리뷰를 보며 부족하지만 조금은OOP에 대해서 알게 되었습니다.
 
-1주차 미션 할 때  상속 단계 3단계?까지 있는 자식 객체도 구현하면서 "클래스를 왜쓰지?" 하면서 주말에서야 확실히 블로그에 개념을 정리하며 기본 개념을 많이 까먹었다는 것을 알게 되었습니다. 
+1주차 미션 할 때  상속 단계 3단계?까지 있는 자식 객체도 구현하면서 "클래스를 왜쓰지?" 하면서 주말에서야 확실히 블로그에 개념을 정리하며 기본 개념을 많이 까먹었다는 것을 알게 되었습니다.
 
 
-<img width="500" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/dc4e6768-99fe-467a-be95-bfe9b73da277">
+<img width="500" alt="스크린샷 2023-07-07 오전 10 59 32" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/dc4e6768-99fe-467a-be95-bfe9b73da277">
 
 세그먼트 바가 네비게이션 바 높이와 딱 알맞게 44인걸 초반에 전혀 알지 못했습니다. 미션 처음 봤을 때 "상태바 아래부터 top spacing 0으로 해서 44만큼의 길이를 세그먼트 바로 지정하면 되겠다"는 생각을 했습니다. 추후에 세그먼트 바가 동작을 안해서 3시간정도 고민하다가 자식뷰에서 터치가 동작되려면 상위뷰에서 isUserInteractive를 허용했지만 결국 뷰 계층 구조를 통해 네비게이션 바가 있음을 알게 되었습니다.
 
@@ -248,3 +248,63 @@ LuckyCard는 Card의 자식 객체로 description을 오버라이드해서 자�
 카드가 처음 세팅될 때 애니메이션을 넣었습니다.
 
 <img width="847" alt="image" src="https://github.com/SHcommit/ios-luckycardgame/assets/96910404/04946022-6863-4c9d-af9b-50ae435c0090">
+
+---
+
+# 23.07.14. (금)
+
+### \[Title\]: (1-4) 게임 로직 구현하기. (2-1) 게임 로직 구현하기(이어서), (2-2) 게임규칙 추가하기 일부 UI구현
+
+## 📌 \[요약\]
+
+- 클린 코드를 떠올리며 리펙터링을 진행(캡슐화, 코드 길이 분리)
+- 유닛 테스트하기 위해 객체에서 의존성 있는 부분을 의존성 역전 원칙(DIP)에 의한 DI 하기 위한 리펙터링
+- 다른 분들 PR과 제 PR의 코드 리뷰를 바탕으로 코드 리펙터링
+- LuckyGame 추가 ( 기존 LuckyCardGameManager 리펙터링. VM에서 관리하던 player model 또한 LuckyGame으로 이전 후 코드 간소화)
+- protocol을 통해 추상화
+- 카트 터치시 뒷장 보여주는 애니메이션 도입 ( 로직과 아직 미연동 )
+
+---
+
+## ✨ [학습 키워드]
+- Unit Test
+- Test Double
+- Dependency Injection + Dependency Inversion Principle
+- SOLID
+- OOP
+- Protocol
+- 클래스 내 state(속성, 프로퍼티..)의 책임은 메서드한테 있고 private(set)도 좋지만 디미터법칙 지키자.
+- Git command
+
+## 📸 \[구현 기능 + 느낀점\]
+
+### [Unit Test]
+![image](https://github.com/SHcommit/etstestsetset/assets/96910404/d92706f8-364a-431a-95b3-1d72aa8e48ec)
+
+다른 개발자가 봤을 때, SUT(SystemUnderTest) 중인 객체의 핵심 로직을 쉽게 알고, 클래스가 어느 역할을 할 수 있는지 알기 위해 테스트를 진행했습니다.
+
+
+ ```
+func testSUT_어느행동을취했을때_예상되는결과값() { ... }
+```
+
+함수를 봤을 때 어떤 테스트를진행중이며 어느 결과를 예상할 수 있는지 파악하기 쉽도록 작성했습니다. Mock, Stub을 위한 protocol을 선언했는데, var 타입에서 protocol타입을 get set 으로 선언 했지만 Mock 클래스를 구현할 때 특정 protocol은 구현하기 까다로웠습니다. associatedType등을 더 잘 작성해야하고 var 타입은 선언 할 때는 많은 고민 후에 선언해야 좋겠다는 생각이 들었습니다..
+
+직접 알고리즘을 적용한게 아닌 foundation에서 제공하는 함수를 사용했음에도 테스트 케이스가 틀린 경험을 했습니다... 그리고 완벽한 줄 알았던 contains(of:) 함수가 잘못됬단느것을 알게되었습니다. 기존에 개발을 한다면? Model에 관련된 기능 설계 중간에 print, debug를 반복했을 것인데 그리고 실제로 UI component구현 후 이전에 구현했던 로직과 연동 후 예상치 못한 오류를 찾았습니다. 이 방식보다 ? 차라리 미리 내가 구현하는 기능 test코드로 남겨두면 추후에 변경될 수 있지만, 그럼에도 test 코드 작성에 약간호감이 생겼습니다.
+
+### [DIP + DI]
+1주차 때 고민은 "내가 왜 vm을 만드는데 protocol을 선언하지? 파일이랑 코드만 늘어나고 쓰지도 않고.. view안에 인스턴스로 선언할 때도 protocol로 하지 않는데"의 생각은 계속 됬고 유닛 테스트를 위한? testable한 코드는 무엇인지에 대한 고민을 하다 DIP + DI에 대한 공부를 더 자세하게 하게 되었습니다.(TDD로 해야하는데 반대가 됬지만,,) 의존성이 있는 두 객체의 의존성을 느슨하게!! 꼭 필요하다는 생각이 들었습니다.
+
+ 이를 적용하기 위해 리펙터링을 진행했습니다. 몇 개는 DIP + DI 성공했고 몇개는 성공하지 못했습니다. 프로토콜을 사용하는 쪽에서 type이 잘 안맞았고.. 초기에 protocol로 정의한 함수, associatedType등이 아니었기에 관련된 객체가 의존되어있어서 단 기간 내 리펙터링 할 수 없었습니다... 다음 부터 코드를 짠다면 protocol에서 일반화 할 수 있는 타입들을 잘 설계해서 associatedType등으로 선언 후 타입 지정도 잘 활용해야 겠다는 다짐이 들엇습니다.
+
+### [SOLID]
+PR의 코드 리뷰를 통해 테스트를 작성하며, 다른 개발자들이 봤을 때 이 sut의 객체는 어느 기능을 갖고 있는지 충분히 이해할 수 있어야 한다는 생각이 들었습니다. 그래서 sut는 어느 기능을 나타내는지 역할을 명확하게 설계해야 겠다는 생각이 들었습니다. 
+
+### [Github rebase, cherry-pick, reset, revert]
+이전에는 .. 깃허브도 협업으로 좀 다뤘기에 실무에서도 충분히 github을 다룰 수 있을 것이라 생각했는데 전혀 아니였습니다. OTL.. git command 부족한 키워드에 대해서 알게 됬고 시간이 남을 때 공부를 틈틈히 해야겠다는 생각이 들었습니다. 승민님이 도와주셨기에 개념을 좀 이해하게 된 것 같습니다.
+
+### [Flip animation]
+![무야호~](https://github.com/SHcommit/etstestsetset/assets/96910404/07d8f742-932c-439f-885b-debcb64d37e8)
+
+## ✨ \[느낀점\]
+리펙터링과 개념 공부하는데 시간을 너무 들여.. 미션을 모두 완수하지 못한 아쉬움이 있습니다. 그럼에도 단 시간 내에. 어렴풋하게 알고 있었는데 제너릭과 protocol의 활용에 대해서 좀 더 공부한 것 같고, 이 과정에서 특정 protocol의 함수를 선택적으로 준수해서 구현하는 방법, var {  get } 타입의 private(set) var를 통해 읽기모드로 하지만 쓰기 불가. 제너릭과 protocol의 활용, 뷰 라이프싸이클, bounds, frame, Unit Test.., enum 활용 등 많은 개념을 익혔고, 부족한 개념들도 알 수 있어서 정말 좋았습니다!! 
