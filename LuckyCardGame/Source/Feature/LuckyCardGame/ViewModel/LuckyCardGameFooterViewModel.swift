@@ -23,3 +23,26 @@ final class LuckyCardGameFooterViewModel {
         gameManager.divideRemainingCardsToFooter())
   }
 }
+
+// MARK: - Helper
+extension LuckyCardGameFooterViewModel {
+  var bottomCardsCountInOneHorizontalLine: Int {
+    gameManager.headCount.bottomCardsCountInOneHoriLine
+  }
+  
+  var bottomCardsCountInOneVerticalLine: Int {
+    gameManager.headCount.bottomCardsCountInOneVertiLine
+  }
+  
+  var headCount: PlayerHeadCountType {
+    gameManager.headCount
+  }
+  
+  var bottomCardsCountInBoard: Int {
+    gameManager.headCount.bottomCardsCountInBoard
+  }
+  
+  var remainingCards: [LuckyCard] {
+    remainingDeck.cards
+  }
+}

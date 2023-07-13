@@ -114,6 +114,13 @@ private extension LuckyCardGameManager {
         shape: .cat)
     }
   }
+  
+  func checkIsHeadCountThree(_ allCards: inout [_Card]) -> [_Card] {
+    if headCount == .three {
+      allCards.removeAll(where: {$0.number.rawValue == 12})
+    }
+    return allCards
+  }
 }
 
 // MARK: - CardManager
@@ -134,10 +141,7 @@ extension LuckyCardGameManager {
           by: target,
           cardNumber: moduloPlusOne)
         }
-    if headCount == .three {
-      allCards.removeAll(where: {$0.number.rawValue == 12})
-    }
-    return allCards
+    return checkIsHeadCountThree(&allCards)
   }
 
   func divideCardsToPlayer(

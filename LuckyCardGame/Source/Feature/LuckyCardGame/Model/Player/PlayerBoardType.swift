@@ -12,7 +12,6 @@ enum PlayerBoardType {
   case A, B, C, D, E
 }
 
-// MARK: - CustomStringConvertible
 extension PlayerBoardType: CustomStringConvertible {
   var description: String {
     switch self {
@@ -23,10 +22,8 @@ extension PlayerBoardType: CustomStringConvertible {
     case .E: return "E"
     }
   }
-}
-
+  
 // MARK: - Helper
-extension PlayerBoardType {
   var boardTypeToIndex: Int {
     switch self {
     case .A: return 0
