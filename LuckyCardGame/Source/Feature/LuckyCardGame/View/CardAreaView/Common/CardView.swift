@@ -55,8 +55,9 @@ final class LuckyCardView: BaseRoundView {
           top: topSpacingForCenterY)
       }
     }
+    
     // 뒷장일 때
-    enum  LogoImageView {
+    enum LogoImageView {
       static let size: CGSize = .init(width: 34, height: 34)
       static let logoName: String = "luckyLogo"
       static func computedSpacing(
@@ -72,6 +73,13 @@ final class LuckyCardView: BaseRoundView {
           top: topSpacingForCenterY)
       }
     }
+    
+    fileprivate enum Animation {
+      static let options: AnimationOptions = [
+        .curveEaseInOut,
+        .transitionFlipFromLeft]
+      static let duration: CGFloat = 0.45
+    }
   }
   
   // MARK: - Properties
@@ -86,44 +94,129 @@ final class LuckyCardView: BaseRoundView {
   private var logoImageView: UIImageView?
   
   private var cardAppearance: LuckyCard.Appearance
+  
+  private var frontViews: [UIView] {
+    guard
+      let leftTopNumberLabel = leftTopNumberLabel,
+      let emojiLabel = emojiLabel,
+      let rightBottomNubmerLabel = rightBottomNubmerLabel
+    else {
+      return []
+    }
+    return [leftTopNumberLabel, emojiLabel, rightBottomNubmerLabel]
+  }
+  
   // MARK: - Lifecycle
   init(frame: CGRect, viewModel: LuckyCardViewModelProtocol, cardAppearance: LuckyCard.Appearance) {
     vm = viewModel
     self.cardAppearance = cardAppearance
     super.init(with: .cardView, frame)
-    layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
-    layer.borderWidth = 0.7
-    setupUI()
-    
+    configureUI()
   }
   
   // viewModelFIXME: - viewModel, appearnce 초기화 하지 않았습니다.
   required init?(coder: NSCoder) {
     cardAppearance = .front
     super.init(coder: coder)
-    setupUI()
+    configureUI()
+  }
+}
+
+// MARK: - Action
+extension LuckyCardView {
+  @objc func didTapCard() {
+    updateAppearance()
+  }
+}
+
+// MARK: - Helper
+extension LuckyCardView {
+  func updateAppearance() {
+    guard cardAppearance == .rear else {
+      showRearAppearanceWithAnimation()
+      cardAppearance = .rear
+      return
+    }
+    showFrontAppearanceWithAnimaiton()
+    cardAppearance = .front
   }
 }
 
 // MARK: - Private helper
 extension LuckyCardView {
-  private func addFrontCardAppearanceSubviews() {
-    guard
-      let leftTopNumberLabel = leftTopNumberLabel,
-      let rightBottomNubmerLabel = rightBottomNubmerLabel,
-      let emojiLabel = emojiLabel
-    else {
-      print("DEBUG: Subview is optional")
-      return
-    }
-    _=[leftTopNumberLabel,
-       emojiLabel,
-       rightBottomNubmerLabel]
-      .map {
-        addSubview($0)
-      }
+  func configureUI() {
+    layer.borderColor = UIColor.black.withAlphaComponent(0.8).cgColor
+    layer.borderWidth = 0.7
+    setupUI()
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCard))
+    isUserInteractionEnabled = true
+    addGestureRecognizer(tapGesture)
   }
   
+  private func hiddenRearAppearance() {
+    logoImageView?.isHidden = true
+  }
+  
+  private func revealRearAppearance() {
+    logoImageView?.isHidden = false
+  }
+  
+  private func hiddenFrontAppearance() {
+    _=frontViews.map { $0.isHidden = true }
+  }
+  
+  private func revealFrontAppearance() {
+    _=frontViews.map { $0.isHidden = false }
+  }
+}
+
+// MARK: - Animation Helper
+extension LuckyCardView {
+  private func showFrontAppearanceWithAnimaiton() {
+    UIView.transition(
+      with: self,
+      duration: Constant.Animation.duration,
+      options: Constant.Animation.options
+    ) {
+      self.hiddenRearAppearance()
+      self.revealFrontAppearance()
+    }
+  }
+  
+  private func showRearAppearanceWithAnimation() {
+    UIView.transition(
+      with: self,
+      duration: Constant.Animation.duration,
+      options: Constant.Animation.options
+    ) {
+      self.hiddenFrontAppearance()
+      self.revealRearAppearance()
+    }
+  }
+  
+}
+
+// MARK: - LayoutSupport
+extension LuckyCardView: LayoutSupport {
+  func createSubviews() {
+    initSubviewsInRearCardAppearance()
+    initSubviewsInFrontCardAppearnce()
+    switch cardAppearance {
+    case .front:
+      hiddenRearAppearance()
+    case .rear:
+      hiddenFrontAppearance()
+    }
+  }
+  
+  func addSubviews() {
+    addSubviewsInFrontCardAppearance()
+    addSubviewsInRearCardAppearance()
+  }
+}
+
+// MARK: - LayoutSupport helper
+extension LuckyCardView {
   private func initLeftTopNumberLabel() -> UILabel {
     return UILabel(frame: .zero).set {
       $0.font = .monospacedSystemFont(ofSize: Constant.LeftTopNumberLabel.fontSize, weight: .heavy)
@@ -153,37 +246,45 @@ extension LuckyCardView {
       $0.image = UIImage(named: Constant.LogoImageView.logoName)
     }
   }
-}
-
-// MARK: - LayoutSupport
-extension LuckyCardView: LayoutSupport {
-  func createSubviews() {
-    switch cardAppearance {
-    case .front:
-      leftTopNumberLabel = initLeftTopNumberLabel()
-      emojiLabel = initEmojiLabel()
-      rightBottomNubmerLabel = initRightBottomNubmerLabel()
-      leftTopNumberLabel?.frame = leftTopNumberLabelFrame
-      emojiLabel?.frame = emojiLabelFrame
-      rightBottomNubmerLabel?.frame = rightBottomNumberLabelFrame
-    case .rear:
-      logoImageView = initLogoImageView()
-      logoImageView?.frame = logoImageViewFrame
-    }
+  
+  private func addSubviewsInRearCardAppearance() {
+    guard let logoImageView = logoImageView else { return }
+    addSubview(logoImageView)
   }
   
-  func addSubviews() {
-    switch cardAppearance {
-    case .front:
-      addFrontCardAppearanceSubviews()
-    case .rear:
-      guard let logoImageView = logoImageView else { return }
-      addSubview(logoImageView)
+  private func addSubviewsInFrontCardAppearance() {
+    guard
+      let leftTopNumberLabel = leftTopNumberLabel,
+      let rightBottomNubmerLabel = rightBottomNubmerLabel,
+      let emojiLabel = emojiLabel
+    else {
+      print("DEBUG: Subview is optional")
+      return
     }
+    _=[leftTopNumberLabel,
+       emojiLabel,
+       rightBottomNubmerLabel]
+      .map {
+        addSubview($0)
+      }
+  }
+  
+  private func initSubviewsInFrontCardAppearnce() {
+    leftTopNumberLabel = initLeftTopNumberLabel()
+    leftTopNumberLabel?.frame = leftTopNumberLabelFrame
+    emojiLabel = initEmojiLabel()
+    emojiLabel?.frame = emojiLabelFrame
+    rightBottomNubmerLabel = initRightBottomNubmerLabel()
+    rightBottomNubmerLabel?.frame = rightBottomNumberLabelFrame
+  }
+  
+  private func initSubviewsInRearCardAppearance() {
+    logoImageView = initLogoImageView()
+    logoImageView?.frame = logoImageViewFrame
   }
 }
 
-// MARK: - LayoutSupport helper
+// MARK: - LayoutSupport frame helper
 private extension LuckyCardView {
   var leftTopNumberLabelFrame: CGRect {
     guard let leftTopNLabel = leftTopNumberLabel else { return .zero }

@@ -10,11 +10,7 @@ import UIKit
 final class LuckyCardGameHeader: BaseRoundView {
   // MARK: - Properties
   private lazy var playerHeadCountMenu: UISegmentedControl = {
-    return .init(
-      items: PlayerHeadCountType
-        .allCases
-        .map { $0.description }
-    ).set {
+    return .init(items: PlayerHeadCountType.allCases.map { $0.description }).set {
       $0.addTarget(
         self,
         action: #selector(didChangePlayerHeadCountMenu(segment:)),
@@ -45,11 +41,8 @@ final class LuckyCardGameHeader: BaseRoundView {
 // MARK: - Action
 extension LuckyCardGameHeader {
   @objc func didChangePlayerHeadCountMenu(segment: UISegmentedControl) {
-    let specificType = PlayerHeadCountType
-      .allCases
-      .first(
-        where: {
-          ($0.toInt - PlayerHeadCountType.caseCount) == segment.selectedSegmentIndex }) ?? .three
+    let specificType = PlayerHeadCountType.allCases.first(
+        where: {($0.toInt - PlayerHeadCountType.caseCount) == segment.selectedSegmentIndex }) ?? .three
     let userInfo: [String: PlayerHeadCountType] = [
       PlayerHeadCountType.notificationUserInfoKey: specificType]
     NotificationCenter.default.post(

@@ -15,6 +15,12 @@
  Unicode를 콘솔창에도 출력할 수 있는형태인 UnicodeScalar로 변환해야 합니다.
  */
 enum LuckyCardShapeType: CardShapeEnumProtocol {
+  typealias RawValue = String
+  
+  case dog
+  case cat
+  case cow
+  
   init?(rawValue: String) {
     switch rawValue {
     case "cat":
@@ -35,16 +41,7 @@ enum LuckyCardShapeType: CardShapeEnumProtocol {
     case .dog: return "dog"
     }
   }
-  
-  typealias RawValue = String
-  
-  case dog
-  case cat
-  case cow
-}
 
-// MARK: - Computed Properties
-extension LuckyCardShapeType {
   private var unicode: String {
     switch self {
     case .cat:
@@ -55,11 +52,7 @@ extension LuckyCardShapeType {
       return "U+1F42E"
     }
   }
-}
 
-
-// MARK: - CustomStringConvertible
-extension LuckyCardShapeType {
   var description: String {
     self.unicode.toUnicodeTypeString()
   }

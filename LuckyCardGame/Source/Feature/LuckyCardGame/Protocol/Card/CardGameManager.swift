@@ -14,11 +14,22 @@
 /// 4. 플레이어에게 카드 분배
 /// 5. 나머지 카드 footer에게 분배
 protocol CardGameManager {
-  associatedtype Card
+  associatedtype CardShape: CardShapeEnumProtocol
+  associatedtype CardNumber: CardNumberEnumProtocol
+  associatedtype _Card: Card<CardShape, CardNumber>
   associatedtype CardDeck: Deck
   
-  func initCardDeck() -> [Card]
+  var players: [Player] { get }
+  var headCount: PlayerHeadCountType { get }
+  var cardDeck: CardDeck? { get }
+  
+  func initCardDeck() -> [_Card]
   func printCardDeckDescription()
-  func divideCardsToPlayer(in board: PlayerBoardType) -> [Card]
-  func divideRemainingCardsToFooter() -> [Card]
+  func divideCardsToPlayer(in board: PlayerBoardType) -> [_Card]
+  func divideRemainingCardsToFooter() -> [_Card]
+  func player(with boardType: PlayerBoardType) -> Player 
+  func showPlayerCard(
+    with boardType: PlayerBoardType,
+    at idx: Int
+  ) -> _Card
 }

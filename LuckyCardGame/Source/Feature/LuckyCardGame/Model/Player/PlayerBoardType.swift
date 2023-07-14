@@ -12,7 +12,6 @@ enum PlayerBoardType {
   case A, B, C, D, E
 }
 
-// MARK: - CustomStringConvertible
 extension PlayerBoardType: CustomStringConvertible {
   var description: String {
     switch self {
@@ -23,11 +22,9 @@ extension PlayerBoardType: CustomStringConvertible {
     case .E: return "E"
     }
   }
-}
-
+  
 // MARK: - Helper
-extension PlayerBoardType {
-  private var toInt: Int {
+  var boardTypeToIndex: Int {
     switch self {
     case .A: return 0
     case .B: return 1
@@ -37,7 +34,7 @@ extension PlayerBoardType {
     }
   }
   
-  func toIndex(with headCount: PlayerHeadCountType) -> Int {
-    return self.toInt * headCount.playerCardsCountInBoard
+  func boardTypeToIdxMultiplyHeadCount(with headCount: PlayerHeadCountType) -> Int {
+    return self.boardTypeToIndex * headCount.playerCardsCountInBoard
   }
 }

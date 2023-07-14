@@ -18,12 +18,12 @@ final class LuckyCardGameContentView: BaseRoundView {
   // MARK: - Properties
   private var playerCardBoardViews: [PlayerCardBoardView]!
   
-  private var gameManager :LuckyCardGameManager
+  private var gameManager :LuckyGame
   
   // MARK: - Lifecycle
   init(
     frame: CGRect,
-    gameManager: LuckyCardGameManager
+    gameManager: LuckyGame
   ) {
     self.gameManager = gameManager
     super.init(with: .contentView, frame)
@@ -32,7 +32,7 @@ final class LuckyCardGameContentView: BaseRoundView {
   
   // gameManagerFIXME: - gameManager를 상위 객체로부터 상속받아야 합니다.
   required init?(coder: NSCoder) {
-    gameManager = .init(headCount: .three)
+    self.gameManager = .init(headCount: .five)
     super.init(coder: coder)
     setupUI()
   }

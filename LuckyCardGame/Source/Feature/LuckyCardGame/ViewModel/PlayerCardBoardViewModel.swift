@@ -10,24 +10,33 @@ import Foundation
 final class PlayerCardBoardViewModel {
   // MARK: - Properties
   private(set) var boardType: PlayerBoardType
-  private(set) var player: Player
-  private(set) var gameManager: LuckyCardGameManager
+  private(set) var gameManager: LuckyGame
   
   // MARK: - Lifecycle
   init(
     boardType: PlayerBoardType,
-    gameManager: LuckyCardGameManager
+    gameManager: LuckyGame
   ) {
     self.boardType = boardType
     self.gameManager = gameManager
-    let playerOwnTheDeck: LuckyCardDeckImpl = .init(
-      cards: gameManager.divideCardsToPlayer(in: boardType))
-    self.player = .init(cardDeck: playerOwnTheDeck)
   }
 }
 
+// MARK: - PlayerCardBoardViewModelProtocol
 extension PlayerCardBoardViewModel: PlayerCardBoardViewModelProtocol {
+  func playerCardsCountInBoard() -> Int {
+    return gameManager.headCount.playerCardsCountInBoard
+  }
+  
+  func playerHeadCount() -> PlayerHeadCountType {
+    return gameManager.headCount
+  }
+  
   func showPlayerCard(_ idx: Int) -> LuckyCard {
-    return player.showMyCard(idx)
+    return gameManager
+      .showPlayerCard(
+        with: boardType,
+        at: idx)
+    
   }
 }
