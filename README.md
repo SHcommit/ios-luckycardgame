@@ -279,7 +279,8 @@ LuckyCard는 Card의 자식 객체로 description을 오버라이드해서 자�
 ## 📸 \[구현 기능 + 느낀점\]
 
 ### [Unit Test]
-![image](https://github.com/SHcommit/etstestsetset/assets/96910404/d92706f8-364a-431a-95b3-1d72aa8e48ec)
+
+![스크린샷 2023-07-23 오후 1 32 13](https://github.com/SHcommit/ios-luckycardgame/assets/96910404/9d255a6c-b61d-40da-bac6-e454d6da76bc)
 
 다른 개발자가 봤을 때, SUT(SystemUnderTest) 중인 객체의 핵심 로직을 쉽게 알고, 클래스가 어느 역할을 할 수 있는지 알기 위해 테스트를 진행했습니다.
 
@@ -304,7 +305,9 @@ PR의 코드 리뷰를 통해 테스트를 작성하며, 다른 개발자들이 
 이전에는 .. 깃허브도 협업으로 좀 다뤘기에 실무에서도 충분히 github을 다룰 수 있을 것이라 생각했는데 전혀 아니였습니다. OTL.. 이번주에 2일 정도는 PR올릴 때 초기 입력한 커밋이 올라가지 않도록 수정하기위해 힘썼고 .. 50개정도의 커밋에 대한 rebase 수정하면서 .pbxproj 컨플릭트에 대해 친근감이 생겼습니다. Git command 부족한 키워드에 대해서 알게 됬고 시간이 남을 때 공부를 틈틈히 하려고 합니다. 승민님이 도와주지 않았다면 지금도 계속해서 초기 커밋이 올라갈 것이라는 생각이 들었습니다.
 
 ### [Flip animation]
-![무야호~](https://github.com/SHcommit/etstestsetset/assets/96910404/07d8f742-932c-439f-885b-debcb64d37e8)
+
+![무야호](https://github.com/SHcommit/ios-luckycardgame/assets/96910404/68c7ce89-4269-4752-aee5-ee9851807097)
+
 
 ## ✨ \[느낀점\]
 리펙터링과 개념 공부하는데 시간을 너무 들여.. 미션을 모두 완수하지 못한 아쉬움이 있습니다. 그럼에도 어렴풋하게 알고 있었던 제너릭과 protocol의 활용에 대해서 코드와 에러, 리펙터링으로 부딪치며 좀 더 공부한 것 같고, 이 과정에서 특정 protocol의 함수를 선택적으로 준수해서 구현하는 방법, var {  get } 타입의 private(set) var를 통해 읽기모드로 but 쓰기 불가. 제너릭과 protocol의 활용, Unit Test.., enum 활용 등 많은 개념을 익혔고, 부족한 개념들도 알 수 있어 좋았습니다 +_+
